@@ -57,7 +57,7 @@
                  (ChatRoomData.Name == "Leona's Mansion" || ChatRoomData.Name == "Leona's  Mansion") ) {
                 if ( (Player.Position.X == 30 || Player.Position.X == 31) &&
                      (Player.Position.Y == 30 || Player.Position.Y == 31) ) {
-                    sendLocalMessage("Inside the location！");
+                    DrawButton(790, 10, 200, 60, "Clean Dishes");
                 }    
             }
             await sleep(500);
