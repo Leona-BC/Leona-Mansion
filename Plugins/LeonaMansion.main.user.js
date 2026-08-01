@@ -53,10 +53,10 @@
 
     async function mainThread() {
         while(true) {
-            if (ChatRoomData.MapData.Type == "Always" && 
-                 (ChatRoomData.Name == "Leona's Mansion" || ChatRoomData.Name "Leona's  Mansion")) {
+            if (  ChatRoomData.MapData.Type == "Always" && 
+                 (ChatRoomData.Name == "Leona's Mansion" || ChatRoomData.Name == "Leona's  Mansion") ) {
                 if ( (Player.Position.X == 30 || Player.Position.X == 31) &&
-                     (Player.Position.Y == 30 || Player.Position.Y == 31)) {
+                     (Player.Position.Y == 30 || Player.Position.Y == 31) ) {
                     sendLocalMessage("Inside the location！");
                 }    
             }
