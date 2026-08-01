@@ -48,6 +48,47 @@
         });
     }
 
+    function setupHooks() {
+        safeHookFunction("ChatRoomLoad", 0, (args, next) => {
+            const result = next(args);
+            if (!hookBound) {
+                hookBound = true;
+
+                try {
+                    if (ServerSocket && typeof ServerSocket.on === 'function') {
+                        if (socketListener) {
+                            ServerSocket.off("ChatRoomMessage", socketListener);
+                        }
+
+                        socketListener = handleMessage;
+                        ServerSocket.on("ChatRoomMessage", socketListener);
+                        DebugMsg("setupHooks ServerSocket hook successful.");
+                    } else {
+                        DebugMsg("setupHooks ServerSocket hook unavailable.");
+                    }
+                } catch (e) {
+                        DebugMsg("setupHooks ServerSocket failed.");
+                }
+            }
+            return result;
+        });
+        safeHookFunction("DrawProcess", 4, (args, next) => {
+            const result = next(args);
+            try {
+               if (typeof CurrentScreen !== 'undefined' && CurrentScreen === 'ChatRoom' && (typeof CurrentCharacter === 'undefined' || CurrentCharacter === null)) {
+                    DrawButton(
+                        btnX, btnY, size, size,
+                        autoEnabled ? "🧹" : "⚙️",
+                        autoEnabled ? "Orange" : "Gray", "", "Something, something"
+                    );
+                }
+            } catch (e) {
+                DebugMsg("setupHooks DrawProcess failed.");
+            }
+            return result;
+        });
+    }
+
     async function initializeModApi() {
         const success = await waitForBcModSdk();
         if (!success) {
