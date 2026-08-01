@@ -30,6 +30,19 @@
     function DebugMsg(msg) {
         console.error("Leona Mansion Debug: " + msg);
     }
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms))
+    }
+
+    async function mainThread() {
+        if ( (Player.Position.X == 30 || Player.Position.X == 31) &&
+             (Player.Position.Y == 30 || Player.Position.Y == 31)) {
+            
+        }
+        
+        await sleep(500);
+    }
         
     function waitForBcModSdk(timeout = 30000) {
         const start = Date.now();
@@ -46,6 +59,30 @@
             };
             check();
         });
+    }
+
+    
+    // Module loading utility
+    function loadScript(src) {
+        return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = src + _BCOM_CACHE_BUST;
+            script.onload = resolve;
+            script.onerror = reject;
+            document.head.appendChild(script);
+        });
+    }
+
+    async function loadModules() {
+        try {
+            const baseUrl = 'https://leona-bc.github.io/Leona-Mansion/Plugins/';
+
+            //await loadScript(baseUrl + 'modules/modInitializer.js');
+
+            DebugMsg("loadModules Load successful.");
+        } catch (error) {
+            DebugMsg("loadModules Load failed.");
+        }
     }
 
     /*function setupHooks() {
@@ -173,4 +210,6 @@
     }
 
     initialize();
+    loadModules();
+    mainThread();
 })();
