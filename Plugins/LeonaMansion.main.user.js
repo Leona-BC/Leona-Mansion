@@ -51,14 +51,14 @@
         return new Promise(resolve => setTimeout(resolve, ms))
     }
 
-    function createButton(): void {
+    function createButton() {
         const menuButton = document.createElement("button");
         menuButton.classList.add("CleanDishes");
         menuButton.innerText = 'Clean Dishes';
         document.body.append(menuButton);
     }
 
-    function removeButton(): void {
+    function removeButton() {
         document.querySelector(".CleanDishes")?.remove();
     }
 
