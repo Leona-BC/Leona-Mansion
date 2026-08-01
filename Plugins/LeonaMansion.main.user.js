@@ -51,14 +51,31 @@
         return new Promise(resolve => setTimeout(resolve, ms))
     }
 
+    function createButton(): void {
+        const menuButton = document.createElement("button");
+        menuButton.classList.add("CleanDishes");
+        menuButton.innerText = 'Clean Dishes';
+        document.body.append(menuButton);
+    }
+
+    function removeButton(): void {
+        document.querySelector(".CleanDishes")?.remove();
+    }
+
     async function mainThread() {
         while(true) {
             if (  ChatRoomData.MapData.Type == "Always" && 
                  (ChatRoomData.Name == "Leona's Mansion" || ChatRoomData.Name == "Leona's  Mansion") ) {
                 if ( (Player.Position.X == 30 || Player.Position.X == 31) &&
                      (Player.Position.Y == 30 || Player.Position.Y == 31) ) {
-                    DrawButton(790, 10, 200, 60, "Clean Dishes");
-                }    
+                    if( document.querySelector(".CleanDishes") == null) {
+                        createButton();
+                    }
+                }
+                else
+                {
+                    removeButton();
+                }
             }
             await sleep(500);
         }
