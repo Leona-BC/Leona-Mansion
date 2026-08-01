@@ -23,9 +23,9 @@
     const MOD_VER = "0.1";
     let modApi = null;
 
-    window.LeonaMansion = window.Liko ?? {};
-    if (window.Liko.RM) return;
-    window.Liko.RM = MOD_VER;
+    window.LeonaMansion = window.LeonaMansion ?? {};
+    if (window.LeonaMansion.RM) return;
+    window.LeonaMansion.RM = MOD_VER;
 
     function DebugMsg(msg) {
         console.error("Leona Mansion Debug: " + msg);
