@@ -62,10 +62,10 @@
                 version: MOD_VER,
                 repository: "https://gitgud.io/LeonaBC/leonamansion",
             });
-            DebugMsg("Load successful.");
+            DebugMsg("initializeModApi Load successful.");
             return modApi;
         } catch (e) {
-            DebugMsg("Load failed.");
+            DebugMsg("initializeModApi load failed.");
             return null;
         }
     }
