@@ -145,7 +145,7 @@
             }
 
         } catch (e) {
-            DebugMsg("initialize failed.");
+            DebugMsg("initialize failed." + e.message);
         }
     }
 
