@@ -23,9 +23,9 @@
     const MOD_VER = "0.1";
     let modApi = null;
 
-    /*window.Liko = window.Liko ?? {};
+    window.LeonaMansion = window.Liko ?? {};
     if (window.Liko.RM) return;
-    window.Liko.RM = MOD_VER;*/
+    window.Liko.RM = MOD_VER;
 
     function DebugMsg(msg) {
         console.error("Leona Mansion Debug: " + msg);
@@ -48,7 +48,7 @@
         });
     }
 
-    function setupHooks() {
+    /*function setupHooks() {
         safeHookFunction("ChatRoomLoad", 0, (args, next) => {
             const result = next(args);
             if (!hookBound) {
@@ -87,7 +87,7 @@
             }
             return result;
         });
-    }
+    }*/
 
     async function initializeModApi() {
         const success = await waitForBcModSdk();
@@ -123,7 +123,7 @@
                 return;
             }
 
-            setupHooks();
+            //setupHooks();
 
             if (modApi && typeof modApi.onUnload === 'function') {
                 modApi.onUnload(() => {
