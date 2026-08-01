@@ -31,6 +31,22 @@
         console.error("Leona Mansion Debug: " + msg);
     }
 
+    function sendLocalMessage(message) {
+        try {
+            if (CurrentScreen !== "ChatRoom") {
+                console.warn("Not in a chatroom");
+                return;
+            }
+            ChatRoomMessage({
+                Content: `<font color="#00FF00">[Release Maid] ${message}</font>`,
+                Type: "LocalMessage",
+                Sender: Player.MemberNumber
+            });
+        } catch (e) {
+            console.error("sendLocalMessage failed:", e.message);
+        }
+    }
+
     function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms))
     }
