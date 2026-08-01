@@ -17,7 +17,7 @@
 (function() {
   const n = document.createElement('script');
   n.setAttribute('type', 'text/javascript');
-  n.setAttribute('src', 'https://gitgud.io/LeonaBC/leonamansion/-/raw/master/Plugins/LeonaMansion.main.user.js?t=' + Date.now());
+  n.setAttribute('src', 'https://leona-bc.github.io/Leona-Mansion/Plugins/LeonaMansion.main.user.js?t=' + Date.now());
   n.onload = function() { n.remove(); };
   document.head.appendChild(n);
 })();
