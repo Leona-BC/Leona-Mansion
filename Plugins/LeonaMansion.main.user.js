@@ -110,6 +110,29 @@
             return null;
         }
     }
+    
+    function waitForGame(timeout = 30000) {
+        const start = Date.now();
+        return new Promise(resolve => {
+            const check = () => {
+                if (typeof CurrentScreen !== 'undefined' &&
+                    typeof DrawImage === 'function' &&
+                    typeof DrawButton === 'function' &&
+                    typeof MouseIn === 'function' &&
+                    typeof Player !== 'undefined' &&
+                    Player?.ExtensionSettings &&
+                    Player?.OnlineSharedSettings) {
+                    resolve(true);
+                } else if (Date.now() - start > timeout) {
+                    DebugMsg("waitForGame timed out.");
+                    resolve(false);
+                } else {
+                    setTimeout(check, 100);
+                }
+            };
+            check();
+        });
+    }
 
     async function initialize() {
         DebugMsg("Initializing.");
