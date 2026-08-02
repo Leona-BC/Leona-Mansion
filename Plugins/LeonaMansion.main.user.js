@@ -51,6 +51,127 @@
         return new Promise(resolve => setTimeout(resolve, ms))
     }
 
+    document.getElementById("startFishing").onclick = () => createFishingPopup();
+
+    function createFishingPopup() {
+
+        // --- Create <style> dynamically ---
+        const style = document.createElement("style");
+        style.textContent = `
+            dialog { width: 400px; height: 300px; padding: 0; border: none; border-radius: 10px; position: relative; overflow: hidden; font-family: Arial, sans-serif; }
+            .ring { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 12px; height: 12px; border: 10px solid blue; border-radius: 50%; background: transparent; animation: growCircle 2s linear infinite; opacity: 0.4;pointer-events: none; }
+            @keyframes growCircle { from { width: 12px; height: 12px; opacity: 0.8; } to   { width: 1000px; height: 1000px; opacity: 0.2; } }
+            #hook { position: absolute; top: 50%; left: 50%; width: 40px; height: 40px; transform: translate(-50%, -50%); animation: hookBobble 2s ease-in-out infinite; z-index: 10; cursor: pointer; }
+            @keyframes hookBobble { 0%   { transform: translate(-50%, -50%) translateY(0); } 12%  { transform: translate(-50%, -50%) translateY(10px); } 25%  { transform: translate(-50%, -50%) translateY(0); } 100% { transform: translate(-50%, -50%) translateY(0); } }
+            @keyframes hookStruggle { 0%   { transform: translate(-50%, -50%) translateY(0); } 25%  { transform: translate(-50%, -50%) translateY(20px); } 50%  { transform: translate(-50%, -50%) translateY(-10px); } 75%  { transform: translate(-50%, -50%) translateY(15px); } 100% { transform: translate(-50%, -50%) translateY(0); } }
+            #message { position: absolute; bottom: 20px; width: 100%; text-align: center; font-size: 20px; z-index: 20; }
+            #closeBtn {  position: absolute; top: 10px; right: 10px; z-index: 20; }`;
+        document.head.appendChild(style);
+        // --- Create dialog ---
+        const dlg = document.createElement("dialog");
+        dlg.id = "fishingPopup";
+
+        // --- Close button ---
+        const closeBtn = document.createElement("button");
+        closeBtn.id = "closeBtn";
+        closeBtn.textContent = "Close";
+        closeBtn.onclick = () => dlg.close();
+        dlg.appendChild(closeBtn);
+
+        // --- Base ring ---
+        const baseRing = document.createElement("div");
+        baseRing.className = "ring";
+        baseRing.id = "baseRing";
+        dlg.appendChild(baseRing);
+
+        // --- Hook SVG ---
+        const hook = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        hook.setAttribute("id", "hook");
+        hook.setAttribute("viewBox", "0 0 64 64");
+
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        path.setAttribute("d", "M32 4v28a10 10 0 1 0 10 10");
+        path.setAttribute("fill", "none");
+        path.setAttribute("stroke", "#0033cc");
+        path.setAttribute("stroke-width", "6");
+        path.setAttribute("stroke-linecap", "round");
+        path.setAttribute("stroke-linejoin", "round");
+
+        hook.appendChild(path);
+        dlg.appendChild(hook);
+
+        // --- Message area ---
+        const msg = document.createElement("div");
+        msg.id = "message";
+        dlg.appendChild(msg);
+
+        // Add dialog to page
+        document.body.appendChild(dlg);
+        dlg.showModal();
+
+        // --- Fishing logic ---
+        let fishTimeout;
+        let reactionTimeout;
+        let fishActive = false;
+        
+        startFishing();
+
+        function startFishing() {
+            msg.textContent = "";
+            hook.style.animation = "hookBobble 2s ease-in-out infinite";
+            baseRing.style.animation = "growCircle 2s linear infinite";
+            fishActive = false;
+
+            const waitTime = Math.random() * 10000 + 10000; // 10–20 seconds
+            fishTimeout = setTimeout(() => fishBites(), waitTime);
+          }
+
+          function fishBites() {
+            fishActive = true;
+
+            // Stop calm ring
+            baseRing.style.animation = "none";
+
+            // Hook struggles
+            hook.style.animation = "hookStruggle 0.3s linear infinite";
+
+            // Extra rings
+            addExtraRings();
+
+            // Reaction window
+            reactionTimeout = setTimeout(() => {
+              if (fishActive) endFishing(false);
+            }, 3000);
+          }
+
+          function addExtraRings() {
+            for (let i = 0; i < 3; i++) {
+              const ring = document.createElement("div");
+              ring.className = "ring";
+              ring.style.animationDuration = (0.8 + Math.random() * 0.4) + "s";
+              dlg.appendChild(ring);
+
+              setTimeout(() => ring.remove(), 1500);
+            }
+          }
+
+          hook.onclick = () => {
+            if (fishActive) endFishing(true);
+          };
+
+          function endFishing(success) {
+            fishActive = false;
+            clearTimeout(fishTimeout);
+            clearTimeout(reactionTimeout);
+
+            hook.style.animation = "none";
+            baseRing.style.animation = "none";
+
+            msg.textContent = success ? "You got a fish!" : "The fish got away...";
+          }
+    }
+
+
     function createButton() {
         const menuButton = document.createElement("button");
         menuButton.classList.add("CleanDishes");
