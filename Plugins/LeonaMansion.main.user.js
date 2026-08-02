@@ -170,14 +170,12 @@
         menuButton.id = "StartFishing";
         menuButton.classList.add("StartFishing");
         menuButton.innerText = 'Start Fishing';
-        const style = document.createElement("style");
-        style.textContent = `.menuButton { position: absolute; top: 20px; left: 20px; z-index: 9999;}`;
         menuButton.style.position = "absolute";
         menuButton.style.top = "20px";
         menuButton.style.left = "20px";
         menuButton.style.zIndex = "9999";
+        menuButton.onclick = () => createFishingPopup();
         document.body.append(menuButton);
-        document.getElementById("StartFishing").onclick = () => createFishingPopup();
     }
 
     function removeButton() {
