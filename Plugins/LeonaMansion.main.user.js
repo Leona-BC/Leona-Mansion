@@ -175,7 +175,7 @@
         menuButton.classList.add("StartFishing");
         menuButton.innerText = 'Start Fishing';
         const style = document.createElement("style");
-        style.textContent = `.menuButton { position: absolute; top: 20px; left: 20px; z-index: 10;}';
+        style.textContent = `.menuButton { position: absolute; top: 20px; left: 20px; z-index: 10;}`;
         document.body.append(menuButton);
         document.getElementById("StartFishing").onclick = () => createFishingPopup();
     }
