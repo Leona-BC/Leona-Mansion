@@ -174,8 +174,8 @@
         const menuButton = document.createElement("button");
         menuButton.classList.add("StartFishing");
         menuButton.innerText = 'Start Fishing';
-        document.getElementById("StartFishing").onclick = () => createFishingPopup();
         document.body.append(menuButton);
+        document.getElementById("StartFishing").onclick = () => createFishingPopup();
     }
 
     function removeButton() {
