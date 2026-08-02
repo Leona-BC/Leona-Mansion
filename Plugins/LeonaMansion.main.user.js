@@ -172,7 +172,7 @@
 
     function createButton() {
         const menuButton = document.createElement("button");
-        menuButton.id = "Start Fishing";
+        menuButton.id = "StartFishing";
         menuButton.classList.add("StartFishing");
         menuButton.innerText = 'Start Fishing';
         const style = document.createElement("style");
