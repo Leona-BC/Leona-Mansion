@@ -56,7 +56,7 @@
         // --- Create <style> dynamically ---
         const style = document.createElement("style");
         style.textContent = `
-            dialog { width: 400px; height: 300px; padding: 0; border: none; border-radius: 10px; position: relative; overflow: hidden; font-family: Arial, sans-serif; }
+            dialog { width: 400px; height: 300px; z-index: 99999; padding: 0; border: none; border-radius: 10px; position: relative; overflow: hidden; font-family: Arial, sans-serif; }
             .ring { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 12px; height: 12px; border: 10px solid blue; border-radius: 50%; background: transparent; animation: growCircle 2s linear infinite; opacity: 0.4;pointer-events: none; }
             @keyframes growCircle { from { width: 12px; height: 12px; opacity: 0.8; } to   { width: 1000px; height: 1000px; opacity: 0.2; } }
             #hook { position: absolute; top: 50%; left: 50%; width: 40px; height: 40px; transform: translate(-50%, -50%); animation: hookBobble 2s ease-in-out infinite; z-index: 10; cursor: pointer; }
@@ -174,6 +174,8 @@
         const menuButton = document.createElement("button");
         menuButton.classList.add("StartFishing");
         menuButton.innerText = 'Start Fishing';
+        const style = document.createElement("style");
+        style.textContent = `.menuButton { position: absolute; top: 20px; left: 20px; z-index: 10;}';
         document.body.append(menuButton);
         document.getElementById("StartFishing").onclick = () => createFishingPopup();
     }
