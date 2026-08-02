@@ -168,8 +168,8 @@
     function createButton() {
         const menuButton = document.createElement("button");
         menuButton.id = "StartFishing";
-        menuButton.classList.add("StartFishing");
-        menuButton.innerText = 'Start Fishing';
+        menuButton.classList.add("CleanDishes");
+        menuButton.innerText = 'Clean Dishes';
         menuButton.style.position = "absolute";
         menuButton.style.top = "20px";
         menuButton.style.left = "20px";
@@ -179,7 +179,7 @@
     }
 
     function removeButton() {
-        document.querySelector(".StartFishing")?.remove();
+        document.querySelector(".CleanDishes")?.remove();
     }
 
     async function mainThread() {
