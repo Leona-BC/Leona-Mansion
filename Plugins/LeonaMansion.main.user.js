@@ -119,23 +119,18 @@
             hook.style.animation = "hookBobble 2s ease-in-out infinite";
             baseRing.style.animation = "growCircle 2s linear infinite";
             fishActive = false;
-
             const waitTime = Math.random() * 10000 + 10000; // 10–20 seconds
             fishTimeout = setTimeout(() => fishBites(), waitTime);
           }
 
           function fishBites() {
             fishActive = true;
-
             // Stop calm ring
             baseRing.style.animation = "none";
-
             // Hook struggles
             hook.style.animation = "hookStruggle 0.3s linear infinite";
-
             // Extra rings
             addExtraRings();
-
             // Reaction window
             reactionTimeout = setTimeout(() => {
               if (fishActive) endFishing(false);
