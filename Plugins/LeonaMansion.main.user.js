@@ -51,8 +51,6 @@
         return new Promise(resolve => setTimeout(resolve, ms))
     }
 
-    document.getElementById("startFishing").onclick = () => createFishingPopup();
-
     function createFishingPopup() {
 
         // --- Create <style> dynamically ---
@@ -174,8 +172,9 @@
 
     function createButton() {
         const menuButton = document.createElement("button");
-        menuButton.classList.add("CleanDishes");
-        menuButton.innerText = 'Clean Dishes';
+        menuButton.classList.add("StartFishing");
+        menuButton.innerText = 'Start Fishing';
+        document.getElementById("StartFishing").onclick = () => createFishingPopup();
         document.body.append(menuButton);
     }
 
