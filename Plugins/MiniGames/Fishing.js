@@ -22,6 +22,7 @@ function startFishingGame() {
         console.log("Canvas bounding box:", canvas.getBoundingClientRect());
         canvas.style.left = `calc(50% - ${rect.width / 2}px)`;
         canvas.style.top = `calc(50% - ${rect.height / 2}px)`;
+        canvas.style.zIndex = "99999";
 
         // Update close button position AFTER centering
         closeButton.x = W / 2 - 60;
