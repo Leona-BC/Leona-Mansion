@@ -306,5 +306,5 @@ function startFishingGame() {
     // --- Start game ---
     fishingActive = true;
     startFishTimer();
-    loop();
+    requestAnimationFrame(loop);
 }
