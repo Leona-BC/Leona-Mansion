@@ -71,36 +71,43 @@
     async function mainThread() {
         while (true) {
     
-            // --- SAFETY GUARDS ---
-            if (!window.ChatRoomData ||
-                !ChatRoomData.MapData ||
-                !window.Player ||
-                !Player.Position) {
-                await sleep(500);
-                continue;
-            }
+            try {
     
-            // --- Only run inside Leona's Mansion ---
-            const inMansion = ChatRoomData.MapData.Type === "Always" && (ChatRoomData.Name === "Leona's Mansion" || ChatRoomData.Name === "Leona's  Mansion");
+                // --- Only run if game state is valid ---
+                if (window.ChatRoomData &&
+                    ChatRoomData.MapData &&
+                    window.Player &&
+                    Player.Position) {
     
-            if (!inMansion) {
-                removeButton();
-                await sleep(500);
-                continue;
-            }
+                    const inMansion =
+                        ChatRoomData.MapData.Type === "Always" &&
+                        (ChatRoomData.Name === "Leona's Mansion" ||
+                         ChatRoomData.Name === "Leona's  Mansion");
     
-            // --- Player position check ---
-            const px = Player.Position.X;
-            const py = Player.Position.Y;
+                    if (inMansion) {
     
-            const insideFishingZone = px >= 30 && px <= 36 && py >= 30 && py <= 34;
+                        const px = Player.Position.X;
+                        const py = Player.Position.Y;
     
-            if (insideFishingZone) {
-                if (!document.querySelector(".StartFishing")) {
-                    createButton();
+                        const insideFishingZone =
+                            px >= 30 && px <= 36 &&
+                            py >= 30 && py <= 34;
+    
+                        if (insideFishingZone) {
+                            if (!document.querySelector(".StartFishing")) {
+                                createButton();
+                            }
+                        } else {
+                            removeButton();
+                        }
+    
+                    } else {
+                        removeButton();
+                    }
                 }
-            } else {
-                removeButton();
+    
+            } catch (err) {
+                DebugMsg("MainThread failed, because... " + err.message);
             }
     
             await sleep(500);
