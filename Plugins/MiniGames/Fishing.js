@@ -1,9 +1,9 @@
 // Fishing Mini‑Game Module
 // This file defines ONE function: startFishingGame()
 // Nothing runs automatically until you call startFishingGame()
-console.log("Fishing.js loaded!");
+
 function startFishingGame() {
-console.log("Fishing game started!");
+
     // --- Create canvas ---
     const canvas = document.createElement("canvas");
     canvas.width = 600;
@@ -19,6 +19,7 @@ console.log("Fishing game started!");
     // Center AFTER the browser paints it
     requestAnimationFrame(() => {
         const rect = canvas.getBoundingClientRect();
+        console.log("Canvas bounding box:", canvas.getBoundingClientRect());
         canvas.style.left = `calc(50% - ${rect.width / 2}px)`;
         canvas.style.top = `calc(50% - ${rect.height / 2}px)`;
 
