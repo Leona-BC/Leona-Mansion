@@ -69,51 +69,26 @@
     }
 
     async function mainThread() {
-        while (true) {
+        while(true) {
+            if (ChatRoomData != null &&
+                ChatRoomData.MapData.Type == "Always" && 
+                (ChatRoomData.Name == "Leona's Mansion" || ChatRoomData.Name == "Leona's  Mansion")) {
     
-            try {
+                if ((Player.Position.X >= 30 && Player.Position.X <= 36) &&
+                    (Player.Position.Y >= 30 && Player.Position.Y <= 34)) {
     
-                // --- Only run if game state is valid ---
-                if (window.ChatRoomData &&
-                    ChatRoomData.MapData &&
-                    window.Player &&
-                    Player.Position) {
-    
-                    const inMansion =
-                        ChatRoomData.MapData.Type === "Always" &&
-                        (ChatRoomData.Name === "Leona's Mansion" ||
-                         ChatRoomData.Name === "Leona's  Mansion");
-    
-                    if (inMansion) {
-    
-                        const px = Player.Position.X;
-                        const py = Player.Position.Y;
-    
-                        const insideFishingZone =
-                            px >= 30 && px <= 36 &&
-                            py >= 30 && py <= 34;
-    
-                        if (insideFishingZone) {
-                            if (!document.querySelector(".StartFishing")) {
-                                createButton();
-                            }
-                        } else {
-                            removeButton();
-                        }
-    
-                    } else {
-                        removeButton();
+                    if (document.querySelector(".StartFishing") == null) {
+                        createButton();
                     }
-                }
     
-            } catch (err) {
-                DebugMsg("MainThread failed, because... " + err.message);
+                } else {
+                    removeButton();
+                }
             }
     
             await sleep(500);
         }
     }
-
         
     function waitForBcModSdk(timeout = 30000) {
         const start = Date.now();
