@@ -78,15 +78,6 @@ function startFishingGame() {
     let instructionActive = true;
     setTimeout(() => instructionActive = false, 5000);
 
-    // Close button rectangle
-    const closeButton = {
-        x: W / 2 - 60,
-        y: H / 2 + 40,
-        width: 120,
-        height: 40,
-        visible: false
-    };
-
     // --- Start fish timer ---
     function startFishTimer() {
         const wait = 10000 + Math.random() * 5000;
