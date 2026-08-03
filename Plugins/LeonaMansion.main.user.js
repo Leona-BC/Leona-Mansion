@@ -46,6 +46,10 @@
             console.error("sendLocalMessage failed:", e.message);
         }
     }
+    
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms))
+    }
 
     function createButton() {
         const menuButton = document.createElement("button");
@@ -65,31 +69,31 @@
     }
 
     async function mainThread() {
-         setInterval(() => {
+        while (true) {
+    
             // --- SAFETY GUARDS ---
-            if (!window.ChatRoomData) return;
-            if (!ChatRoomData.MapData) return;
-            if (!window.Player) return;
-            if (!Player.Position) return;
+            if (!window.ChatRoomData ||
+                !ChatRoomData.MapData ||
+                !window.Player ||
+                !Player.Position) {
+                await sleep(500);
+                continue;
+            }
     
             // --- Only run inside Leona's Mansion ---
-            const inMansion =
-                ChatRoomData.MapData.Type === "Always" &&
-                (ChatRoomData.Name === "Leona's Mansion" ||
-                 ChatRoomData.Name === "Leona's  Mansion");
+            const inMansion = ChatRoomData.MapData.Type === "Always" && (ChatRoomData.Name === "Leona's Mansion" || ChatRoomData.Name === "Leona's  Mansion");
     
             if (!inMansion) {
                 removeButton();
-                return;
+                await sleep(500);
+                continue;
             }
     
             // --- Player position check ---
             const px = Player.Position.X;
             const py = Player.Position.Y;
     
-            const insideFishingZone =
-                px >= 30 && px <= 36 &&
-                py >= 30 && py <= 34;
+            const insideFishingZone = px >= 30 && px <= 36 && py >= 30 && py <= 34;
     
             if (insideFishingZone) {
                 if (!document.querySelector(".StartFishing")) {
@@ -98,7 +102,9 @@
             } else {
                 removeButton();
             }
-        }, 500);
+    
+            await sleep(500);
+        }
     }
         
     function waitForBcModSdk(timeout = 30000) {
