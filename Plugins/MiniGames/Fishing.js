@@ -84,31 +84,44 @@ function startFishingGame() {
         fishTimer = setTimeout(() => fishBites(), wait);
     }
 
-    // --- Fish bites ---
+    // Start the fish timer (10–15 seconds)
+    function startFishTimer() {
+        const wait = 10000 + Math.random() * 5000;
+        fishTimer = setTimeout(() => fishBites(), wait);
+    }
+    
+    startFishTimer();
+
+    // When fish bites
     function fishBites() {
         fishActive = true;
         fishFight = true;
-
+    
+        // Strong downward pull
         bobber.vy += 10;
+    
+        // Add sideways wobble
         bobber.x += (Math.random() - 0.5) * 20;
-
+    
+        // Make water more violent
         waveHeight = 22;
         waveSpeed = 0.06;
-
+    
+        // Splash effect (phase jump)
         t += 0.5;
-
+    
+        // Start 5‑second reaction window
         reactionTimer = setTimeout(() => {
             if (!gameOver) endGame(false);
         }, 5000);
     }
 
-    // --- Canvas click handler ---
+    // Click = try to catch fish OR click the close button
     canvas.addEventListener("click", (event) => {
         const rect = canvas.getBoundingClientRect();
         const mx = event.clientX - rect.left;
         const my = event.clientY - rect.top;
-
-        // Close button
+    
         if (closeButton.visible) {
             if (
                 mx >= closeButton.x &&
@@ -116,120 +129,154 @@ function startFishingGame() {
                 my >= closeButton.y &&
                 my <= closeButton.y + closeButton.height
             ) {
-                cleanup();
+                canvas.remove();
                 return;
             }
         }
-
-        // Catch fish
+    
         if (fishActive && !gameOver) {
             endGame(true);
         }
     });
 
-    // --- End game ---
+    // End game (success or failure)
     function endGame(success) {
         gameOver = true;
         fishActive = false;
         fishFight = false;
-
+    
         clearTimeout(fishTimer);
         clearTimeout(reactionTimer);
-
+    
+        // Calm water again
         waveHeight = 12;
         waveSpeed = 0.03;
-
+    
         message = success ? "You got a fish!" : "The fish got away...";
-
+    
+        // Show canvas button
         closeButton.visible = true;
     }
 
-    // --- Cleanup function ---
-    function cleanup() {
-        clearTimeout(fishTimer);
-        clearTimeout(reactionTimer);
-        canvas.remove();
-    }
-
-    // --- Draw functions ---
+    // Draw instruction message (first 5 seconds)
     function drawInstruction() {
         if (!instructionActive || gameOver) return;
+    
         ctx.fillStyle = "white";
         ctx.font = "20px Arial";
         ctx.textAlign = "center";
-        ctx.fillText("Click the bobber when the fish bites!", W / 2, 40);
+        ctx.fillText("Click on the bobber when the fish is on the line.", W / 2, 40);
     }
-
+    
+    // Draw result message
     function drawMessage() {
         if (!gameOver) return;
+    
         ctx.fillStyle = "white";
         ctx.font = "28px Arial";
         ctx.textAlign = "center";
         ctx.fillText(message, W / 2, H / 2);
     }
 
+    // Draw close button inside canvas
     function drawCloseButton() {
         if (!closeButton.visible) return;
-
+    
         ctx.fillStyle = "#222";
         ctx.fillRect(closeButton.x, closeButton.y, closeButton.width, closeButton.height);
-
+    
         ctx.strokeStyle = "white";
         ctx.lineWidth = 2;
         ctx.strokeRect(closeButton.x, closeButton.y, closeButton.width, closeButton.height);
-
+    
         ctx.fillStyle = "white";
         ctx.font = "20px Arial";
         ctx.textAlign = "center";
         ctx.fillText("Close", closeButton.x + closeButton.width / 2, closeButton.y + 27);
     }
 
+    // Draw water
     function drawWater() {
         ctx.fillStyle = "#4fa3f7";
         ctx.fillRect(0, 0, W, H);
-
+    
         ctx.beginPath();
         ctx.moveTo(0, H / 2);
-
+    
         for (let x = 0; x < W; x++) {
             const y = H / 2 + Math.sin(x * 0.02 + t) * waveHeight;
             ctx.lineTo(x, y);
         }
-
+    
         ctx.lineTo(W, H);
         ctx.lineTo(0, H);
         ctx.closePath();
-
+    
         ctx.fillStyle = "#3b82d6";
         ctx.fill();
     }
 
+    // Update bobber physics
+    // Horizontal fight target (updated once per second)
+    let fightTargetX = W / 2;
+
     function updateBobber() {
         if (gameOver) return;
-
-        bobber.vy += gravity;
-
-        const waveY = H / 2 + Math.sin(bobber.x * 0.02 + t) * waveHeight;
-
+    
         if (fishFight) {
-            bobber.vy += 0.4;
-            if (bobber.y > waveY) bobber.vy -= 0.15;
-            bobber.vy *= 0.90;
-        } else {
-            if (bobber.y > waveY) bobber.vy -= buoyancy;
-            bobber.vy *= (1 - drag);
+    		// --- Stronger, faster vertical sinusoidal movement ---
+    		const fightSpeed = 0.9;   // twice as fast
+    		const amplitude = 80;     // twice as strong
+    
+    		const baseY = H / 2 + 30; // center of fight zone (lower half)
+    
+    		// Vertical fight: big, smooth up/down
+    		bobber.y = baseY + Math.sin(t * fightSpeed) * amplitude;
+    
+    		// Clamp to lower half
+    		const minY = H / 2 - 5;
+    		const maxY = H - bobber.radius - 10;
+    		if (bobber.y < minY) bobber.y = minY;
+    		if (bobber.y > maxY) bobber.y = maxY;
+    
+    		// --- Horizontal random movement (unchanged) ---
+    		if (Math.floor(t) !== Math.floor(t - waveSpeed)) {
+    			fightTargetX = W / 2 + (Math.random() * 40 - 20); // ±20px
+    		}
+    
+    		bobber.x += (fightTargetX - bobber.x) * 0.08;
+    
+    		const minX = bobber.radius + 10;
+    		const maxX = W - bobber.radius - 10;
+    		if (bobber.x < minX) bobber.x = minX;
+    		if (bobber.x > maxX) bobber.x = maxX;
+    
+    		bobber.vy = 0;
+    		return;
+    	}
+    
+        // NORMAL PHYSICS (when not fighting)
+        const waveY = H / 2 + Math.sin(bobber.x * 0.02 + t) * waveHeight;
+    
+        bobber.vy += gravity;
+    
+        if (bobber.y > waveY) {
+            bobber.vy -= buoyancy;
         }
-
+    
+        bobber.vy *= (1 - drag);
         bobber.y += bobber.vy;
-
-        if (bobber.y > H - bobber.radius) {
-            bobber.y = H - bobber.radius;
+    
+        const maxDepth = H - bobber.radius - 10;
+        if (bobber.y > maxDepth) {
+            bobber.y = maxDepth;
             bobber.vy = 0;
         }
     }
-
+    // Draw bobber (hidden when game ends)
     function drawBobber() {
         if (gameOver) return;
+    
         ctx.beginPath();
         ctx.arc(bobber.x, bobber.y, bobber.radius, 0, Math.PI * 2);
         ctx.fillStyle = "red";
