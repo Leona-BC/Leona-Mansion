@@ -136,8 +136,17 @@ function startFishingGame() {
             }
         }
     
+        // --- Check if clicking the bobber ---
         if (fishActive && !gameOver) {
-            endGame(true);
+            const dx = mx - bobber.x;
+            const dy = my - bobber.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+    		
+            if (distance <= bobber.radius * 1.6) {
+                endGame(true);   // SUCCESS
+            }
+            // If click is NOT on bobber → do nothing
+            return;
         }
     });
 
