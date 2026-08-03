@@ -60,7 +60,7 @@
         menuButton.style.top = "20px";
         menuButton.style.left = "20px";
         menuButton.style.zIndex = "9999";
-        menuButton.onclick = () => loadFishingModule();
+        menuButton.onclick = () => startFishingGame();
         document.body.append(menuButton);
     }
 
