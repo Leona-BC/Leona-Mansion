@@ -1,6 +1,7 @@
 // Fishing Mini‑Game Module
 // This file defines ONE function: startFishingGame()
 // Nothing runs automatically until you call startFishingGame()
+let fishingActive = false;
 
 function startFishingGame() {
 
@@ -129,6 +130,7 @@ function startFishingGame() {
                 my >= closeButton.y &&
                 my <= closeButton.y + closeButton.height
             ) {
+                fishingActive = false;
                 canvas.remove();
                 return;
             }
@@ -288,6 +290,7 @@ function startFishingGame() {
 
     // --- Main loop ---
     function loop() {
+        if (!fishingActive) return; // stop immediately
         t += waveSpeed;
 
         drawWater();
@@ -301,6 +304,7 @@ function startFishingGame() {
     }
 
     // --- Start game ---
+    fishingActive = true;
     startFishTimer();
     loop();
 }
