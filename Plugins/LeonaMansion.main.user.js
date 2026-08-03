@@ -82,6 +82,7 @@
     
             // --- Only run inside Leona's Mansion ---
             const inMansion = ChatRoomData.MapData.Type === "Always" && (ChatRoomData.Name === "Leona's Mansion" || ChatRoomData.Name === "Leona's  Mansion");
+    
             if (!inMansion) {
                 removeButton();
                 await sleep(500);
@@ -93,6 +94,7 @@
             const py = Player.Position.Y;
     
             const insideFishingZone = px >= 30 && px <= 36 && py >= 30 && py <= 34;
+    
             if (insideFishingZone) {
                 if (!document.querySelector(".StartFishing")) {
                     createButton();
@@ -104,6 +106,7 @@
             await sleep(500);
         }
     }
+
         
     function waitForBcModSdk(timeout = 30000) {
         const start = Date.now();
