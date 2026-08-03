@@ -182,44 +182,64 @@ function drawWater() {
 }
 
 // Update bobber physics
+// Horizontal fight target (updated once per second)
+let fightTargetX = W / 2;
+
 function updateBobber() {
     if (gameOver) return;
 
-    // Apply gravity
-    bobber.vy += gravity;
+    if (fishFight) {
+		// --- Stronger, faster vertical sinusoidal movement ---
+		const fightSpeed = 0.9;   // twice as fast
+		const amplitude = 80;     // twice as strong
 
+		const baseY = H / 2 + 30; // center of fight zone (lower half)
+
+		// Vertical fight: big, smooth up/down
+		bobber.y = baseY + Math.sin(t * fightSpeed) * amplitude;
+
+		// Clamp to lower half
+		const minY = H / 2 - 5;
+		const maxY = H - bobber.radius - 10;
+		if (bobber.y < minY) bobber.y = minY;
+		if (bobber.y > maxY) bobber.y = maxY;
+
+		// --- Horizontal random movement (unchanged) ---
+		if (Math.floor(t) !== Math.floor(t - waveSpeed)) {
+			fightTargetX = W / 2 + (Math.random() * 40 - 20); // ±20px
+		}
+
+		bobber.x += (fightTargetX - bobber.x) * 0.08;
+
+		const minX = bobber.radius + 10;
+		const maxX = W - bobber.radius - 10;
+		if (bobber.x < minX) bobber.x = minX;
+		if (bobber.x > maxX) bobber.x = maxX;
+
+		bobber.vy = 0;
+		return;
+	}
+
+    // NORMAL PHYSICS (when not fighting)
     const waveY = H / 2 + Math.sin(bobber.x * 0.02 + t) * waveHeight;
 
-    if (fishFight) {
-        // Stronger gravity effect
-        bobber.vy += 0.4;
+    bobber.vy += gravity;
 
-        // Reduced buoyancy (harder to float)
-        if (bobber.y > waveY) {
-            bobber.vy -= 0.15;
-        }
-
-        // Extra drag to simulate tension
-        bobber.vy *= 0.90;
-    } else {
-        // Normal buoyancy
-        if (bobber.y > waveY) {
-            bobber.vy -= buoyancy;
-        }
-
-        // Normal drag
-        bobber.vy *= (1 - drag);
+    if (bobber.y > waveY) {
+        bobber.vy -= buoyancy;
     }
 
-    // Update position
+    bobber.vy *= (1 - drag);
     bobber.y += bobber.vy;
 
-    // Prevent sinking too deep
-    if (bobber.y > H - bobber.radius) {
-        bobber.y = H - bobber.radius;
+    const maxDepth = H - bobber.radius - 10;
+    if (bobber.y > maxDepth) {
+        bobber.y = maxDepth;
         bobber.vy = 0;
     }
 }
+
+
 
 // Draw bobber (hidden when game ends)
 function drawBobber() {
