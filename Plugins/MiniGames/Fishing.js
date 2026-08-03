@@ -8,22 +8,28 @@ function startFishingGame() {
     const canvas = document.createElement("canvas");
     canvas.width = 600;
     canvas.height = 300;
-    canvas.style.left = "100px";
-    canvas.style.top = "100px";
     canvas.style.border = "2px solid #333";
-
-   // Position the canvas (no transforms!)
     canvas.style.position = "absolute";
     canvas.style.zIndex = "99999";
     
-    // Center AFTER the browser paints it
+    // Append canvas FIRST
+    document.body.appendChild(canvas);
+    
+    // Create context AFTER append
+    const ctx = canvas.getContext("2d");
+    
+    // Define W and H AFTER context creation
+    const W = canvas.width;
+    const H = canvas.height;
+    
+    // Center AFTER browser paints it
     requestAnimationFrame(() => {
         const rect = canvas.getBoundingClientRect();
-        console.log("Canvas bounding box:", canvas.getBoundingClientRect());
+        console.log("Canvas bounding box:", rect);
+    
         canvas.style.left = `calc(50% - ${rect.width / 2}px)`;
         canvas.style.top = `calc(50% - ${rect.height / 2}px)`;
-        canvas.style.zIndex = "99999";
-
+    
         // Update close button position AFTER centering
         closeButton.x = W / 2 - 60;
         closeButton.y = H / 2 + 40;
