@@ -41,8 +41,8 @@ function startFishingGame() {
     requestAnimationFrame(() => {
         const rect = canvas.getBoundingClientRect();
     
-        canvas.style.left = "100px";
-        canvas.style.top = "100px";
+        canvas.style.left = "-200px";
+        canvas.style.top = "-200px";
     
         // Update close button position AFTER centering
         closeButton.x = W / 2 - 60;
