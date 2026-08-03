@@ -10,15 +10,20 @@ function startFishingGame() {
     canvas.height = 300;
     canvas.style.border = "2px solid #333";
 
-    // Position the canvas safely (no transforms!)
+   // Position the canvas (no transforms!)
     canvas.style.position = "absolute";
     canvas.style.zIndex = "99999";
+    
+    // Center AFTER the browser paints it
+    requestAnimationFrame(() => {
+        const rect = canvas.getBoundingClientRect();
+        canvas.style.left = `calc(50% - ${rect.width / 2}px)`;
+        canvas.style.top = `calc(50% - ${rect.height / 2}px)`;
 
-    // Center using JS so click math stays correct
-    document.body.appendChild(canvas);
-    const rect = canvas.getBoundingClientRect();
-    canvas.style.left = `calc(50% - ${rect.width / 2}px)`;
-    canvas.style.top = `calc(50% - ${rect.height / 2}px)`;
+        // Update close button position AFTER centering
+        closeButton.x = W / 2 - 60;
+        closeButton.y = H / 2 + 40;
+    });
 
     const ctx = canvas.getContext("2d");
 
