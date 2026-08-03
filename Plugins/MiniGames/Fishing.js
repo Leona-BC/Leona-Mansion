@@ -35,11 +35,6 @@ function startFishingGame() {
         closeButton.y = H / 2 + 40;
     });
 
-    const ctx = canvas.getContext("2d");
-
-    const W = canvas.width;
-    const H = canvas.height;
-
     // Water wave parameters
     let t = 0;
     let waveHeight = 12;
