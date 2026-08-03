@@ -65,7 +65,7 @@
     }
 
     function removeButton() {
-        document.querySelector(".CleanDishes")?.remove();
+        document.querySelector(".StartFishing")?.remove();
     }
 
     async function mainThread() {
