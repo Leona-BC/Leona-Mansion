@@ -27,7 +27,7 @@ function startFishingGame() {
     const W = canvas.width;
     const H = canvas.height;
     
-    // --- Define close button BEFORE centering ---
+    // --- Declare closeButton ONLY ONCE ---
     const closeButton = {
         x: W / 2 - 60,
         y: H / 2 + 40,
@@ -39,7 +39,6 @@ function startFishingGame() {
     // --- Center AFTER browser paints it ---
     requestAnimationFrame(() => {
         const rect = canvas.getBoundingClientRect();
-        console.log("Canvas bounding box:", rect);
     
         canvas.style.left = `calc(50% - ${rect.width / 2}px)`;
         canvas.style.top = `calc(50% - ${rect.height / 2}px)`;
