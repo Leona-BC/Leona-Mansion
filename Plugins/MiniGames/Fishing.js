@@ -22,7 +22,7 @@ function startFishingGame() {
     const W = canvas.width;
     const H = canvas.height;
     
-    // Center AFTER browser paints it
+    // Center AFTER browser paints it.
     requestAnimationFrame(() => {
         const rect = canvas.getBoundingClientRect();
         console.log("Canvas bounding box:", rect);
