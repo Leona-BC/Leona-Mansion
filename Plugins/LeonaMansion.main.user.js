@@ -47,10 +47,6 @@
         }
     }
 
-    function sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms))
-    }
-
     function createButton() {
         const menuButton = document.createElement("button");
         menuButton.id = "StartFishing";
@@ -69,23 +65,40 @@
     }
 
     async function mainThread() {
-        while(true) {
-            if (  ChatRoomData != null &&
-                  ChatRoomData.MapData.Type == "Always" && 
-                (ChatRoomData.Name == "Leona's Mansion" || ChatRoomData.Name == "Leona's  Mansion") ) {
-                if ( (Player.Position.X >= 30 && Player.Position.X <= 36) &&
-                     (Player.Position.Y >= 30 && Player.Position.Y <= 34) ) {
-                    if( document.querySelector(".CleanDishes") == null) {
-                        createButton();
-                    }
-                }
-                else
-                {
-                    removeButton();
-                }
+         setInterval(() => {
+            // --- SAFETY GUARDS ---
+            if (!window.ChatRoomData) return;
+            if (!ChatRoomData.MapData) return;
+            if (!window.Player) return;
+            if (!Player.Position) return;
+    
+            // --- Only run inside Leona's Mansion ---
+            const inMansion =
+                ChatRoomData.MapData.Type === "Always" &&
+                (ChatRoomData.Name === "Leona's Mansion" ||
+                 ChatRoomData.Name === "Leona's  Mansion");
+    
+            if (!inMansion) {
+                removeButton();
+                return;
             }
-            await sleep(500);
-        }
+    
+            // --- Player position check ---
+            const px = Player.Position.X;
+            const py = Player.Position.Y;
+    
+            const insideFishingZone =
+                px >= 30 && px <= 36 &&
+                py >= 30 && py <= 34;
+    
+            if (insideFishingZone) {
+                if (!document.querySelector(".StartFishing")) {
+                    createButton();
+                }
+            } else {
+                removeButton();
+            }
+        }, 500);
     }
         
     function waitForBcModSdk(timeout = 30000) {
