@@ -8,41 +8,47 @@ function startFishingGame() {
     const canvas = document.createElement("canvas");
     canvas.width = 600;
     canvas.height = 300;
-
-    // ⭐ ADD THIS BLOCK
+    
+    // Force correct display size
     canvas.style.width = "600px";
     canvas.style.height = "300px";
-    canvas.style.maxWidth = "600px";
-    canvas.style.maxHeight = "300px";
-    canvas.style.minWidth = "600px";
-    canvas.style.minHeight = "300px";
-    canvas.style.boxSizing = "content-box";
-
+    
     canvas.style.border = "2px solid #333";
     canvas.style.position = "absolute";
     canvas.style.zIndex = "99999";
-
+    
     // Append canvas FIRST
     document.body.appendChild(canvas);
-
+    
     // Create context AFTER append
     const ctx = canvas.getContext("2d");
-
+    
     // Define W and H AFTER context creation
     const W = canvas.width;
     const H = canvas.height;
-
-    // NOW update close button position
-    closeButton.x = W / 2 - 60;
-    closeButton.y = H / 2 + 40;
-
-    // Center AFTER browser paints it
+    
+    // --- Define close button BEFORE centering ---
+    const closeButton = {
+        x: W / 2 - 60,
+        y: H / 2 + 40,
+        width: 120,
+        height: 40,
+        visible: false
+    };
+    
+    // --- Center AFTER browser paints it ---
     requestAnimationFrame(() => {
         const rect = canvas.getBoundingClientRect();
+        console.log("Canvas bounding box:", rect);
+    
         canvas.style.left = `calc(50% - ${rect.width / 2}px)`;
         canvas.style.top = `calc(50% - ${rect.height / 2}px)`;
+    
+        // Update close button position AFTER centering
+        closeButton.x = W / 2 - 60;
+        closeButton.y = H / 2 + 40;
     });
-
+    
     // Water wave parameters
     let t = 0;
     let waveHeight = 12;
