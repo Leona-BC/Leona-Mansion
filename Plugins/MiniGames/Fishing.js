@@ -8,6 +8,8 @@ function startFishingGame() {
     const canvas = document.createElement("canvas");
     canvas.width = 600;
     canvas.height = 300;
+    canvas.style.left = "100px";
+    canvas.style.top = "100px";
     canvas.style.border = "2px solid #333";
 
    // Position the canvas (no transforms!)
