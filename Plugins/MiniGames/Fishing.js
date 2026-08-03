@@ -9,9 +9,14 @@ function startFishingGame() {
     canvas.width = 600;
     canvas.height = 300;
 
-    // Force correct display size
+    // ⭐ ADD THIS BLOCK
     canvas.style.width = "600px";
     canvas.style.height = "300px";
+    canvas.style.maxWidth = "600px";
+    canvas.style.maxHeight = "300px";
+    canvas.style.minWidth = "600px";
+    canvas.style.minHeight = "300px";
+    canvas.style.boxSizing = "content-box";
 
     canvas.style.border = "2px solid #333";
     canvas.style.position = "absolute";
