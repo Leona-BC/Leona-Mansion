@@ -3,6 +3,10 @@ const canvas = document.createElement("canvas");
 canvas.width = 600;
 canvas.height = 300;
 canvas.style.border = "2px solid #333";
+canvas.style.position = "absolute";
+canvas.style.top = "50%";
+canvas.style.left = "50%";
+canvas.style.zIndex = "99999";
 document.body.appendChild(canvas);
 
 const ctx = canvas.getContext("2d");
