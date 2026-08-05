@@ -105,12 +105,12 @@
                 if ((Player.Position.X >= 13 && Player.Position.X <= 19) &&
                     (Player.Position.Y >= 24 && Player.Position.Y <= 29)) {
     
-                    if (document.querySelector(".StartFishing") == null) {
-                        createButton();
+                    if (document.querySelector(".StartCleanUp") == null) {
+                        createMaidCleanButton();
                     }
     
                 } else {
-                    removeButton();
+                    removeMaidCleanButton();
                 }
             }
     
