@@ -64,6 +64,23 @@
         document.body.append(menuButton);
     }
 
+    function createMaidCleanButton() {
+        const menuButton = document.createElement("button");
+        menuButton.id = "StartCleanUp";
+        menuButton.classList.add("StartCleanUp");
+        menuButton.innerText = 'Start Cleaning';
+        menuButton.style.position = "absolute";
+        menuButton.style.top = "20px";
+        menuButton.style.left = "20px";
+        menuButton.style.zIndex = "9999";
+        menuButton.onclick = () => startMaidCleanUpGame("https://leona-bc.github.io/Leona-Mansion/Assets/Mansion-BG.png", 3);
+        document.body.append(menuButton);
+    }
+
+    function removeMaidCleanButton() {
+        document.querySelector(".StartCleanUp")?.remove();
+    }
+
     function removeButton() {
         document.querySelector(".StartFishing")?.remove();
     }
@@ -76,6 +93,17 @@
     
                 if ((Player.Position.X >= 30 && Player.Position.X <= 36) &&
                     (Player.Position.Y >= 30 && Player.Position.Y <= 34)) {
+    
+                    if (document.querySelector(".StartFishing") == null) {
+                        createButton();
+                    }
+    
+                } else {
+                    removeButton();
+                }
+
+                if ((Player.Position.X >= 13 && Player.Position.X <= 19) &&
+                    (Player.Position.Y >= 24 && Player.Position.Y <= 29)) {
     
                     if (document.querySelector(".StartFishing") == null) {
                         createButton();
@@ -125,6 +153,10 @@
             script.src = "https://leona-bc.github.io/Leona-Mansion/Plugins/MiniGames/Fishing.js";
             document.head.appendChild(script);
 
+            const maidMiniGameUrl = 'https://leona-bc.github.io/Leona-Mansion/Plugins/';
+            const maidMiniGamescript = document.createElement("script");
+            maidMiniGamescript.src = "https://leona-bc.github.io/Leona-Mansion/Plugins/MiniGames/MaidCleanUp.js";
+            document.head.appendChild(maidMiniGamescript);
             //await loadScript(baseUrl + 'modules/modInitializer.js');
 
             DebugMsg("loadModules Load successful.");
