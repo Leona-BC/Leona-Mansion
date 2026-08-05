@@ -137,18 +137,29 @@ function animateOpen() {
 
   panel.style.opacity = "1";
 
-  panel.style.transition = "none";
-  panel.style.width = "0";
-  panel.style.height = "0";
-  panel.offsetWidth;
-
-  panel.style.transition = "width 0.5s ease, height 0.5s ease";
-  panel.style.width = natural.width + "px";
-
-  setTimeout(() => {
-    panel.style.height = natural.height + "px";
-  }, 500);
-}
+  // If panel is CLOSED → animate from 0
+  if (!isOpen) {
+      panel.style.transition = "none";
+      panel.style.width = "0";
+      panel.style.height = "0";
+      panel.offsetWidth; // force reflow
+      panel.style.transition = "width 0.5s ease, height 0.5s ease";
+    }
+  
+    // If panel is OPEN → animate from current size
+    else {
+      panel.style.transition = "width 0.5s ease, height 0.5s ease";
+    }
+  
+    // Animate width
+    panel.style.width = natural.width + "px";
+  
+    // Animate height
+    setTimeout(() => {
+      panel.style.height = natural.height + "px";
+    }, 500);
+  }
+  
 
 // Animate close
 function animateClose() {
