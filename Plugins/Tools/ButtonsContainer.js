@@ -32,7 +32,7 @@ style.textContent = `
 
   #menuWrapper {
     position: absolute;
-    top: 20px;
+    top: 0px;
     left: 20px;
     font-family: sans-serif;
   }
