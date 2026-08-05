@@ -96,7 +96,7 @@
     
                     if (document.querySelector(".StartFishing") == null) {
                         createButton();
-                        AddButton("Start Fishing", () => startFishingGame(););
+                        AddButton("Start Fishing", () => startFishingGame());
                     }
     
                 } else {
@@ -108,7 +108,7 @@
     
                     if (document.querySelector(".StartCleanUp") == null) {
                         createMaidCleanButton();
-                        AddButton("Start Cleaning", () => startMaidCleanUpGame("https://leona-bc.github.io/Leona-Mansion/Assets/Mansion-BG.png", Math.ceil(CharacterGetClumsiness(Player)), 100););
+                        AddButton("Start Cleaning", () => startMaidCleanUpGame("https://leona-bc.github.io/Leona-Mansion/Assets/Mansion-BG.png", Math.ceil(CharacterGetClumsiness(Player)), 100));
                     }
     
                 } else {
