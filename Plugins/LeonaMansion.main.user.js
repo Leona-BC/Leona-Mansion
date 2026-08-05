@@ -60,12 +60,12 @@
                 if ((Player.Position.X >= 30 && Player.Position.X <= 36) &&
                     (Player.Position.Y >= 30 && Player.Position.Y <= 34)) {
     
-                    if (document.querySelector(".StartFishing") == null) {
+                    if (!buttonRegistry["Start Fishing"]) {
                         AddButton("Start Fishing", () => startFishingGame());
                     }
     
                 } else {
-                    if (document.querySelector(".StartFishing") != null) {
+                    if (buttonRegistry["Start Fishing"]) {
                         RemoveButton("Start Fishing");
                     }
                 }
@@ -73,12 +73,12 @@
                 if ((Player.Position.X >= 23 && Player.Position.X <= 29) &&
                     (Player.Position.Y >= 24 && Player.Position.Y <= 29)) {
     
-                    if (document.querySelector(".StartCleanUp") == null) {
+                    if (!buttonRegistry["Start Cleaning"]) {
                         AddButton("Start Cleaning", () => startMaidCleanUpGame("https://leona-bc.github.io/Leona-Mansion/Assets/Mansion-BG.png", Math.ceil(CharacterGetClumsiness(Player)), 100));
                     }
     
                 } else {
-                    if (document.querySelector(".StartCleanUp") != null) {
+                    if (buttonRegistry["Start Cleaning"]) {
                         RemoveButton("Start Cleaning");
                     }
                 }
