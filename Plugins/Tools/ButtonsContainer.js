@@ -5,6 +5,10 @@ const menuWrapper = document.createElement("div");
 menuWrapper.id = "menuWrapper";
 document.body.appendChild(menuWrapper);
 
+// Mirror the page's color-scheme
+const pageScheme = getComputedStyle(document.documentElement).colorScheme;
+menuWrapper.style.colorScheme = pageScheme;
+
 // Toggle button
 const toggle = document.createElement("button");
 toggle.id = "menuToggle";
@@ -25,10 +29,6 @@ panel.appendChild(emptyMessage);
 // Inject CSS
 const style = document.createElement("style");
 style.textContent = `
-  :root {
-    color-scheme: light dark;
-  }
-
   #menuWrapper {
     position: absolute;
     top: 0px;
