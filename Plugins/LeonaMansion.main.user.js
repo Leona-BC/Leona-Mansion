@@ -63,7 +63,7 @@
         menuButton.onclick = () => startFishingGame();
         document.body.append(menuButton);
     }
-
+    
     function createMaidCleanButton() {
         const menuButton = document.createElement("button");
         menuButton.id = "StartCleanUp";
@@ -96,6 +96,7 @@
     
                     if (document.querySelector(".StartFishing") == null) {
                         createButton();
+                        AddButton("Start Fishing", () => startFishingGame(););
                     }
     
                 } else {
@@ -107,6 +108,7 @@
     
                     if (document.querySelector(".StartCleanUp") == null) {
                         createMaidCleanButton();
+                        AddButton("Start Cleaning", () => startMaidCleanUpGame("https://leona-bc.github.io/Leona-Mansion/Assets/Mansion-BG.png", Math.ceil(CharacterGetClumsiness(Player)), 100););
                     }
     
                 } else {
@@ -148,15 +150,18 @@
 
     async function loadModules() {
         try {
-            const baseUrl = 'https://leona-bc.github.io/Leona-Mansion/Plugins/';
-            const script = document.createElement("script");
-            script.src = "https://leona-bc.github.io/Leona-Mansion/Plugins/MiniGames/Fishing.js";
-            document.head.appendChild(script);
+            const btnContainerScript = document.createElement("script");
+            btnContainerScript.src = "https://leona-bc.github.io/Leona-Mansion/Plugins/Tools/ButtonsContrainer.js";
+            document.head.appendChild(btnContainerScript);
 
-            const maidMiniGameUrl = 'https://leona-bc.github.io/Leona-Mansion/Plugins/';
+            const fishingMiniGamescript = document.createElement("script");
+            fishingMiniGamescript.src = "https://leona-bc.github.io/Leona-Mansion/Plugins/MiniGames/Fishing.js";
+            document.head.appendChild(fishingMiniGamescript);
+
             const maidMiniGamescript = document.createElement("script");
             maidMiniGamescript.src = "https://leona-bc.github.io/Leona-Mansion/Plugins/MiniGames/MaidCleanUp.js";
             document.head.appendChild(maidMiniGamescript);
+            
             //await loadScript(baseUrl + 'modules/modInitializer.js');
 
             DebugMsg("loadModules Load successful.");
