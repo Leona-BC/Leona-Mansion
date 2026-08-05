@@ -205,8 +205,3 @@ function RemoveButton(name) {
 
   if (isOpen) animateOpen();
 }
-
-// --- Example usage ---
-AddButton("Fishing", () => console.log("Fishing started"));
-AddButton("Dust", () => console.log("Dust game started"));
-AddButton("Inventory", () => console.log("Inventory opened"));
