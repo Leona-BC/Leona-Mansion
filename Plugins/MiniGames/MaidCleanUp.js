@@ -69,10 +69,10 @@ function startMaidCleanUpGame(imageURL, clumsyLevel = 0) {
 
     // --- Load assets ---
     const dusterImg = new Image();
-    dusterImg.src = "duster.png";
+    dusterImg.src = "https://leona-bc.github.io/Leona-Mansion/Assets/duster.png";
 
     const dustImg = new Image();
-    dustImg.src = "dust.png";
+    dustImg.src = "https://leona-bc.github.io/Leona-Mansion/Assets/dust.png";
 
     const bgImg = new Image();
     bgImg.src = imageURL;
