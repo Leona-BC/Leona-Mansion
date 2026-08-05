@@ -73,7 +73,7 @@
         menuButton.style.top = "20px";
         menuButton.style.left = "20px";
         menuButton.style.zIndex = "9999";
-        menuButton.onclick = () => startMaidCleanUpGame("https://leona-bc.github.io/Leona-Mansion/Assets/Mansion-BG.png", Math.ceil(CharacterGetClumsiness(Player)));
+        menuButton.onclick = () => startMaidCleanUpGame("https://leona-bc.github.io/Leona-Mansion/Assets/Mansion-BG.png", Math.ceil(CharacterGetClumsiness(Player)), 100);
         document.body.append(menuButton);
     }
 
