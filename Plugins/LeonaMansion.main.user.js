@@ -151,7 +151,7 @@
     async function loadModules() {
         try {
             const btnContainerScript = document.createElement("script");
-            btnContainerScript.src = "https://leona-bc.github.io/Leona-Mansion/Plugins/Tools/ButtonsContrainer.js";
+            btnContainerScript.src = "https://leona-bc.github.io/Leona-Mansion/Plugins/Tools/ButtonsContainer.js";
             document.head.appendChild(btnContainerScript);
 
             const fishingMiniGamescript = document.createElement("script");
