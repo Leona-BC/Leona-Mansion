@@ -79,7 +79,7 @@
     
                 } else {
                     if (document.querySelector(".StartCleanUp") != null) {
-                        removeMaidCleanButton("Start Cleaning");
+                        RemoveButton("Start Cleaning");
                     }
                 }
             }
@@ -116,22 +116,32 @@
         });
     }
 
-    async function loadModules() {
+   async function loadModules() {
         try {
-            const btnContainerScript = document.createElement("script");
-            btnContainerScript.src = "https://leona-bc.github.io/Leona-Mansion/Plugins/Tools/ButtonsContainer.js";
-            document.head.appendChild(btnContainerScript);
-
-            const fishingMiniGamescript = document.createElement("script");
-            fishingMiniGamescript.src = "https://leona-bc.github.io/Leona-Mansion/Plugins/MiniGames/Fishing.js";
-            document.head.appendChild(fishingMiniGamescript);
-
-            const maidMiniGamescript = document.createElement("script");
-            maidMiniGamescript.src = "https://leona-bc.github.io/Leona-Mansion/Plugins/MiniGames/MaidCleanUp.js";
-            document.head.appendChild(maidMiniGamescript);
-            
-            //await loadScript(baseUrl + 'modules/modInitializer.js');
-
+            await new Promise((resolve, reject) => {
+                const btnContainerScript = document.createElement("script");
+                btnContainerScript.src = "https://leona-bc.github.io/Leona-Mansion/Plugins/Tools/ButtonsContainer.js";
+                btnContainerScript.onload = resolve;
+                btnContainerScript.onerror = reject;
+                document.head.appendChild(btnContainerScript);
+            });
+    
+            await new Promise((resolve, reject) => {
+                const fishingMiniGamescript = document.createElement("script");
+                fishingMiniGamescript.src = "https://leona-bc.github.io/Leona-Mansion/Plugins/MiniGames/Fishing.js";
+                fishingMiniGamescript.onload = resolve;
+                fishingMiniGamescript.onerror = reject;
+                document.head.appendChild(fishingMiniGamescript);
+            });
+    
+            await new Promise((resolve, reject) => {
+                const maidMiniGamescript = document.createElement("script");
+                maidMiniGamescript.src = "https://leona-bc.github.io/Leona-Mansion/Plugins/MiniGames/MaidCleanUp.js";
+                maidMiniGamescript.onload = resolve;
+                maidMiniGamescript.onerror = reject;
+                document.head.appendChild(maidMiniGamescript);
+            });
+    
             DebugMsg("loadModules Load successful.");
         } catch (error) {
             DebugMsg("loadModules Load failed.");
@@ -263,6 +273,7 @@
     }
 
     initialize();
-    loadModules();
-    mainThread();
+    loadModules().then(() => {
+        mainThread();
+});
 })();
