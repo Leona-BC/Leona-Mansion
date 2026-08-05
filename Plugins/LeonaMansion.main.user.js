@@ -102,7 +102,7 @@
                     removeButton();
                 }
 
-                if ((Player.Position.X >= 13 && Player.Position.X <= 19) &&
+                if ((Player.Position.X >= 23 && Player.Position.X <= 29) &&
                     (Player.Position.Y >= 24 && Player.Position.Y <= 29)) {
     
                     if (document.querySelector(".StartCleanUp") == null) {
