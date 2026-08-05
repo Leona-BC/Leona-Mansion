@@ -51,40 +51,6 @@
         return new Promise(resolve => setTimeout(resolve, ms))
     }
 
-    function createButton() {
-        const menuButton = document.createElement("button");
-        menuButton.id = "StartFishing";
-        menuButton.classList.add("StartFishing");
-        menuButton.innerText = 'Start Fishing';
-        menuButton.style.position = "absolute";
-        menuButton.style.top = "20px";
-        menuButton.style.left = "20px";
-        menuButton.style.zIndex = "9999";
-        menuButton.onclick = () => startFishingGame();
-        document.body.append(menuButton);
-    }
-    
-    function createMaidCleanButton() {
-        const menuButton = document.createElement("button");
-        menuButton.id = "StartCleanUp";
-        menuButton.classList.add("StartCleanUp");
-        menuButton.innerText = 'Start Cleaning';
-        menuButton.style.position = "absolute";
-        menuButton.style.top = "20px";
-        menuButton.style.left = "20px";
-        menuButton.style.zIndex = "9999";
-        menuButton.onclick = () => startMaidCleanUpGame("https://leona-bc.github.io/Leona-Mansion/Assets/Mansion-BG.png", Math.ceil(CharacterGetClumsiness(Player)), 100);
-        document.body.append(menuButton);
-    }
-
-    function removeMaidCleanButton() {
-        document.querySelector(".StartCleanUp")?.remove();
-    }
-
-    function removeButton() {
-        document.querySelector(".StartFishing")?.remove();
-    }
-
     async function mainThread() {
         while(true) {
             if (ChatRoomData != null &&
@@ -95,24 +61,26 @@
                     (Player.Position.Y >= 30 && Player.Position.Y <= 34)) {
     
                     if (document.querySelector(".StartFishing") == null) {
-                        createButton();
                         AddButton("Start Fishing", () => startFishingGame());
                     }
     
                 } else {
-                    removeButton();
+                    if (document.querySelector(".StartFishing") != null) {
+                        RemoveButton("Start Fishing");
+                    }
                 }
 
                 if ((Player.Position.X >= 23 && Player.Position.X <= 29) &&
                     (Player.Position.Y >= 24 && Player.Position.Y <= 29)) {
     
                     if (document.querySelector(".StartCleanUp") == null) {
-                        createMaidCleanButton();
                         AddButton("Start Cleaning", () => startMaidCleanUpGame("https://leona-bc.github.io/Leona-Mansion/Assets/Mansion-BG.png", Math.ceil(CharacterGetClumsiness(Player)), 100));
                     }
     
                 } else {
-                    removeMaidCleanButton();
+                    if (document.querySelector(".StartCleanUp") != null) {
+                        removeMaidCleanButton("Start Cleaning");
+                    }
                 }
             }
     
