@@ -30,7 +30,7 @@
     function DebugMsg(msg) {
         console.error("Leona Mansion Debug: " + msg);
     }
-
+ 
     function sendLocalMessage(message) {
         try {
             if (CurrentScreen !== "ChatRoom") {
