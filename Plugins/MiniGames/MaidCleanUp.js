@@ -42,9 +42,9 @@ function startMaidCleanUpGame(imageURL, clumsyLevel = 0) {
 
     // --- Center canvas AFTER paint ---
     requestAnimationFrame(() => {
-        canvas.style.left = "-400px";
+        canvas.style.left = "-600px";
         canvas.style.top = "-200px";
-        overlay.style.left = "-400px";
+        overlay.style.left = "-600px";
         overlay.style.top = "-200px";
     });
 
