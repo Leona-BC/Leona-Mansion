@@ -1,7 +1,7 @@
 // Maid Clean‑Up Mini‑Game Module
 // Defines ONE function: startMaidCleanUpGame(imageURL, clumsyLevel)
 
-function startMaidCleanUpGame(imageURL, clumsyLevel = 0) {
+function startMaidCleanUpGame(imageURL, clumsyLevel = 0, dustLevel = 100) {
 
     // Prevent multiple instances
     if (window.maidGameActive) return;
@@ -86,7 +86,7 @@ function startMaidCleanUpGame(imageURL, clumsyLevel = 0) {
     };
 
     function initDust() {
-        let dustCount = 100; // default
+        let dustCount = dustLevel; // default
 
         // Dust level based on image size
         if (W * H < 200000) dustCount = 40;
@@ -228,7 +228,7 @@ function startMaidCleanUpGame(imageURL, clumsyLevel = 0) {
 
     // --- Cleaning Logic ---
     function cleanDust() {
-        const radius = 60;
+        const radius = 30;
         let cleanedSomething = false;
 
         dustList.forEach(d => {
