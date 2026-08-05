@@ -25,7 +25,6 @@ panel.appendChild(emptyMessage);
 // Inject CSS
 const style = document.createElement("style");
 style.textContent = `
-  /* Enable browser theme colors (light, dark, high-contrast) */
   :root {
     color-scheme: light dark;
   }
@@ -98,6 +97,9 @@ document.head.appendChild(style);
 // Registry
 const buttonRegistry = {};
 
+// Track whether the panel is visually open
+let panelVisible = false;
+
 // Show/hide empty message
 function updateEmptyMessage() {
   const hasButtons = Object.keys(buttonRegistry).length > 0;
@@ -137,29 +139,29 @@ function animateOpen() {
 
   panel.style.opacity = "1";
 
-  // If panel is CLOSED → animate from 0
-  if (!isOpen) {
-      panel.style.transition = "none";
-      panel.style.width = "0";
-      panel.style.height = "0";
-      panel.offsetWidth; // force reflow
-      panel.style.transition = "width 0.5s ease, height 0.5s ease";
-    }
-  
-    // If panel is OPEN → animate from current size
-    else {
-      panel.style.transition = "width 0.5s ease, height 0.5s ease";
-    }
-  
-    // Animate width
-    panel.style.width = natural.width + "px";
-  
-    // Animate height
-    setTimeout(() => {
-      panel.style.height = natural.height + "px";
-    }, 500);
+  // If panel was CLOSED → animate from 0
+  if (!panelVisible) {
+    panel.style.transition = "none";
+    panel.style.width = "0";
+    panel.style.height = "0";
+    panel.offsetWidth; // force reflow
+    panel.style.transition = "width 0.5s ease, height 0.5s ease";
   }
-  
+
+  // If panel was OPEN → animate from current size
+  else {
+    panel.style.transition = "width 0.5s ease, height 0.5s ease";
+  }
+
+  // Animate width
+  panel.style.width = natural.width + "px";
+
+  // Animate height
+  setTimeout(() => {
+    panel.style.height = natural.height + "px";
+    panelVisible = true; // mark as open
+  }, 500);
+}
 
 // Animate close
 function animateClose() {
@@ -171,6 +173,7 @@ function animateClose() {
 
   setTimeout(() => {
     panel.style.opacity = "0";
+    panelVisible = false; // mark as closed
   }, 1000);
 }
 
