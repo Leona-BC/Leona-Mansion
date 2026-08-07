@@ -1,5 +1,5 @@
 // =====================================================
-// DishCleaning.js - Full Standalone Mini-Game
+// DishCleaning.js - Unified with Maid Clean-Up System
 // =====================================================
 
 // -------------------------------
@@ -22,6 +22,8 @@ const DishGameState = {
     lastSpongeY: 0,
     failed: false,
     trembleLevel: 0,
+
+    active: false
 };
 
 // -------------------------------
@@ -32,83 +34,97 @@ const Images = {
     dirtOverlay: new Image(),
     sponge: new Image(),
     handGrabWrist: new Image(),
+    background: new Image()
 };
 
-Images.handGrabWrist.src = "./MaidHand.png";
-Images.plate.src = "./Plate.png";
-Images.dirtOverlay.src = "./DirtOverlay.png";
-Images.sponge.src = "./Sponge.png";
+Images.handGrabWrist.src = "https://leona-bc.github.io/Leona-Mansion/Assets/MaidHand.png";
+Images.plate.src = "https://leona-bc.github.io/Leona-Mansion/Assets/Plate.png";
+Images.dirtOverlay.src = "https://leona-bc.github.io/Leona-Mansion/Assets/DirtOverlay.png";
+Images.sponge.src = "https://leona-bc.github.io/Leona-Mansion/Assets/Sponge.png";
+Images.background.src = "https://leona-bc.github.io/Leona-Mansion/Assets/DishBackground.png";
 
 let imagesLoaded = 0;
-const totalImages = 4;
+const totalImages = 5;
 
 function checkImagesLoaded() {
     imagesLoaded++;
+    if (imagesLoaded === totalImages) {
+        document.dispatchEvent(new Event("DishImagesReady"));
+    }
 }
 
 Images.plate.onload = checkImagesLoaded;
 Images.dirtOverlay.onload = checkImagesLoaded;
 Images.sponge.onload = checkImagesLoaded;
 Images.handGrabWrist.onload = checkImagesLoaded;
+Images.background.onload = checkImagesLoaded;
 
 // =====================================================
-// Start Dish Cleaning Mini-Game
+// Start Dish Cleaning Mini-Game (Unified Display System)
 // =====================================================
 function startDishesCleaningMiniGame(trembleLevel = 0) {
+
+    if (DishGameState.active) return;
+    DishGameState.active = true;
 
     DishGameState.trembleLevel = Math.max(0, Math.min(100, trembleLevel));
 
     // -------------------------------
-    // Window
-    // -------------------------------
-    const gameWindow = document.createElement("div");
-    gameWindow.id = "DishCleaningWindow";
-    gameWindow.width = 600;
-    gameWindow.height = 300;
-    gameWindow.style.width = "600px";
-    gameWindow.style.height = "300px";
-    gameWindow.style.position = "absolute";
-    gameWindow.style.left = "0px";
-    gameWindow.style.top = "0px";
-    gameWindow.style.zIndex = "100000";
-    gameWindow.style.pointerEvents = "none";
-    gameWindow.style.cursor = "none";
-
-    // ⭐ STATIC BACKGROUND IMAGE
-    gameWindow.style.backgroundImage = "url('./DishBackground.png')";
-    gameWindow.style.backgroundSize = "cover";
-    gameWindow.style.backgroundPosition = "center";
-    gameWindow.style.imageRendering = "pixelated";
-
-    document.body.appendChild(gameWindow);
-
-    // -------------------------------
-    // Canvas
+    // MAIN CANVAS (same style as maid game)
     // -------------------------------
     const canvas = document.createElement("canvas");
-    canvas.id = "dishCanvas";
-    canvas.style.position = "absolute";
-    canvas.width = "600px";
-    canvas.height = "300px";
-    canvas.style.background = "transparent"; // background handled by gameWindow
-    canvas.style.imageRendering = "pixelated";
-    canvas.style.cursor = "none";
-    gameWindow.appendChild(canvas);
+    canvas.width = 600;
+    canvas.height = 300;
 
+    canvas.style.width = "600px";
+    canvas.style.height = "300px";
+    canvas.style.position = "absolute";
+    canvas.style.zIndex = "99999";
+    canvas.style.cursor = "none";
+
+    document.body.appendChild(canvas);
     const ctx = canvas.getContext("2d");
 
     const W = canvas.width;
     const H = canvas.height;
 
     // -------------------------------
-    // Positions (adjusted for 600×300)
+    // OVERLAY CANVAS (for hand/sponge)
+    // -------------------------------
+    const overlay = document.createElement("canvas");
+    overlay.width = 600;
+    overlay.height = 300;
+
+    overlay.style.width = "600px";
+    overlay.style.height = "300px";
+    overlay.style.position = "absolute";
+    overlay.style.zIndex = "100000";
+    overlay.style.pointerEvents = "none";
+    overlay.style.cursor = "none";
+
+    document.body.appendChild(overlay);
+    const octx = overlay.getContext("2d");
+
+    // -------------------------------
+    // CENTER BOTH CANVASES
+    // -------------------------------
+    requestAnimationFrame(() => {
+        canvas.style.left = "-600px";
+        canvas.style.top = "-200px";
+
+        overlay.style.left = "-600px";
+        overlay.style.top = "-200px";
+    });
+
+    // -------------------------------
+    // Positions
     // -------------------------------
     const SpongeHome = { x: 100, y: 220 };
     const PlatePos   = { x: 300, y: 220 };
     const StackPos   = { x: 500, y: 240 };
 
     // -------------------------------
-    // Canvas Close Button
+    // Close Button
     // -------------------------------
     const closeButton = {
         x: W / 2 - 60,
@@ -117,18 +133,6 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
         height: 40,
         visible: false
     };
-    
-    // --- Center AFTER browser paints it ---
-    requestAnimationFrame(() => {    
-        canvas.style.left = "-600px";
-        canvas.style.top = "-200px";
-        gameWindow.style.left = "-600px";
-        gameWindow.style.top = "-200px";
-    
-        // Update close button position AFTER centering
-        closeButton.x = W / 2 - 60;
-        closeButton.y = H / 2 + 40;
-    });
 
     // -------------------------------
     // Init State
@@ -143,7 +147,7 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
             radius: 80,
             cleaned: false,
             stacked: false,
-            angle: 0,
+            angle: 0
         });
     }
 
@@ -193,51 +197,56 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     }
 
     // -------------------------------
-    // Draw Functions
-    // -------------------------------
-    function drawPlate(ctx, plate) {
-        ctx.save();
-        ctx.translate(plate.x, plate.y);
-        ctx.rotate(plate.angle);
-        ctx.drawImage(
+    // Draw Functions (main canvas)
+// -------------------------------
+    function drawBackground() {
+        ctx.clearRect(0, 0, W, H);
+        ctx.drawImage(Images.background, 0, 0, W, H);
+    }
+
+    function drawPlate(ctxLocal, plate) {
+        ctxLocal.save();
+        ctxLocal.translate(plate.x, plate.y);
+        ctxLocal.rotate(plate.angle);
+        ctxLocal.drawImage(
             Images.plate,
             -plate.radius,
             -plate.radius,
             plate.radius * 2,
             plate.radius * 2
         );
-        ctx.restore();
+        ctxLocal.restore();
     }
 
-    function drawPlateStack(ctx) {
+    function drawPlateStack(ctxLocal) {
         const stacked = DishGameState.plates.filter(p => p.stacked);
 
         stacked.forEach((plate, index) => {
             plate.x = StackPos.x;
             plate.y = StackPos.y - (index * 8);
             plate.angle = 0;
-            drawPlate(ctx, plate);
+            drawPlate(ctxLocal, plate);
         });
     }
 
-    function drawCurrentPlate(ctx) {
+    function drawCurrentPlate(ctxLocal) {
         if (!DishGameState.currentPlate) return;
         if (DishGameState.holdingPlate) return;
-        drawPlate(ctx, DishGameState.currentPlate);
+        drawPlate(ctxLocal, DishGameState.currentPlate);
     }
 
-    function drawHeldPlate(ctx) {
+    function drawHeldPlate(ctxLocal) {
         if (!DishGameState.holdingPlate || !DishGameState.currentPlate) return;
-        drawPlate(ctx, DishGameState.currentPlate);
+        drawPlate(ctxLocal, DishGameState.currentPlate);
     }
 
-    function drawDirt(ctx) {
+    function drawDirt(ctxLocal) {
         if (!DishGameState.currentPlate) return;
         if (DishGameState.dirtLevel <= 0) return;
 
-        ctx.globalAlpha = DishGameState.dirtLevel;
+        ctxLocal.globalAlpha = DishGameState.dirtLevel;
 
-        ctx.drawImage(
+        ctxLocal.drawImage(
             Images.dirtOverlay,
             DishGameState.currentPlate.x - DishGameState.currentPlate.radius,
             DishGameState.currentPlate.y - DishGameState.currentPlate.radius,
@@ -245,12 +254,12 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
             DishGameState.currentPlate.radius * 2
         );
 
-        ctx.globalAlpha = 1;
+        ctxLocal.globalAlpha = 1;
     }
 
-    function drawWorldSponge(ctx) {
+    function drawWorldSponge(ctxLocal) {
         if (!DishGameState.spongeActive) {
-            ctx.drawImage(
+            ctxLocal.drawImage(
                 Images.sponge,
                 SpongeHome.x - 40,
                 SpongeHome.y - 40,
@@ -260,10 +269,48 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
         }
     }
 
-    function drawHeldSponge(ctx) {
+    function drawInstruction(ctxLocal) {
+        ctxLocal.fillStyle = "white";
+        ctxLocal.font = "20px Arial";
+        ctxLocal.textAlign = "center";
+
+        if (DishGameState.failed) {
+            ctxLocal.fillText("The stack collapsed!", W / 2, 40);
+            return;
+        }
+
+        if (DishGameState.dirtLevel > 0 && DishGameState.currentPlate) {
+            ctxLocal.fillText("Clean the plate", W / 2, 40);
+        } else if (DishGameState.currentPlate) {
+            ctxLocal.fillText("Place the plate on the stack", W / 2, 40);
+        } else {
+            ctxLocal.fillText("All plates cleaned!", W / 2, 40);
+        }
+    }
+
+    function drawCloseButton(ctxLocal) {
+        if (!closeButton.visible) return;
+
+        ctxLocal.fillStyle = "#222";
+        ctxLocal.fillRect(closeButton.x, closeButton.y, closeButton.width, closeButton.height);
+
+        ctxLocal.strokeStyle = "white";
+        ctxLocal.lineWidth = 2;
+        ctxLocal.strokeRect(closeButton.x, closeButton.y, closeButton.width, closeButton.height);
+
+        ctxLocal.fillStyle = "white";
+        ctxLocal.font = "20px Arial";
+        ctxLocal.textAlign = "center";
+        ctxLocal.fillText("Close", closeButton.x + closeButton.width / 2, closeButton.y + 27);
+    }
+
+    // -------------------------------
+    // Overlay Draw (hand + held sponge)
+// -------------------------------
+    function drawHeldSponge(octxLocal) {
         if (!DishGameState.spongeActive) return;
 
-        ctx.drawImage(
+        octxLocal.drawImage(
             Images.sponge,
             DishGameState.mouseX - 40,
             DishGameState.mouseY - 40,
@@ -272,49 +319,14 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
         );
     }
 
-    function drawCursor(ctx) {
-        ctx.drawImage(
+    function drawCursor(octxLocal) {
+        octxLocal.drawImage(
             Images.handGrabWrist,
             DishGameState.mouseX - 32,
             DishGameState.mouseY - 32,
             64,
             64
         );
-    }
-
-    function drawInstruction(ctx) {
-        ctx.fillStyle = "white";
-        ctx.font = "20px Arial";
-        ctx.textAlign = "center";
-
-        if (DishGameState.failed) {
-            ctx.fillText("The stack collapsed!", W / 2, 40);
-            return;
-        }
-
-        if (DishGameState.dirtLevel > 0 && DishGameState.currentPlate) {
-            ctx.fillText("Clean the plate", W / 2, 40);
-        } else if (DishGameState.currentPlate) {
-            ctx.fillText("Place the plate on the stack", W / 2, 40);
-        } else {
-            ctx.fillText("All plates cleaned!", W / 2, 40);
-        }
-    }
-
-    function drawCloseButton() {
-        if (!closeButton.visible) return;
-
-        ctx.fillStyle = "#222";
-        ctx.fillRect(closeButton.x, closeButton.y, closeButton.width, closeButton.height);
-
-        ctx.strokeStyle = "white";
-        ctx.lineWidth = 2;
-        ctx.strokeRect(closeButton.x, closeButton.y, closeButton.width, closeButton.height);
-
-        ctx.fillStyle = "white";
-        ctx.font = "20px Arial";
-        ctx.textAlign = "center";
-        ctx.fillText("Close", closeButton.x + closeButton.width / 2, closeButton.y + 27);
     }
 
     // -------------------------------
@@ -374,9 +386,8 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
             p.stacked = false;
             p.cleaned = true;
 
-            // Adjusted scatter for 600×300 canvas
-            p.x = StackPos.x + (Math.random() * 160 - 80);   // ±80px
-            p.y = StackPos.y + (Math.random() * 80 - 40);    // ±40px
+            p.x = StackPos.x + (Math.random() * 160 - 80);
+            p.y = StackPos.y + (Math.random() * 80 - 40);
 
             p.angle = (Math.random() * Math.PI * 2);
         });
@@ -447,7 +458,9 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
                 my >= closeButton.y &&
                 my <= closeButton.y + closeButton.height
             ) {
-                document.body.removeChild(gameWindow);
+                DishGameState.active = false;
+                document.body.removeChild(canvas);
+                document.body.removeChild(overlay);
                 return;
             }
         }
@@ -495,10 +508,10 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     });
 
     // -------------------------------
-    // Draw Loop (collapse fix + hand on top)
+    // Draw Loop
     // -------------------------------
     function drawLoop() {
-        ctx.clearRect(0, 0, W, H);
+        if (!DishGameState.active) return;
 
         const tremble = getTrembleOffset();
         DishGameState.mouseX = DishGameState.rawMouseX + tremble.x;
@@ -509,24 +522,24 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
             DishGameState.currentPlate.y = DishGameState.mouseY;
         }
 
+        // Main canvas
+        drawBackground();
         if (!DishGameState.failed) {
             drawPlateStack(ctx);
             drawCurrentPlate(ctx);
             drawDirt(ctx);
             drawHeldPlate(ctx);
         } else {
-            // ⭐ Draw ALL plates when collapsed
             DishGameState.plates.forEach(p => drawPlate(ctx, p));
         }
-
         drawWorldSponge(ctx);
-        drawHeldSponge(ctx);
-
         drawInstruction(ctx);
-        drawCloseButton();
+        drawCloseButton(ctx);
 
-        // ⭐ HAND DRAWN LAST
-        drawCursor(ctx);
+        // Overlay canvas
+        octx.clearRect(0, 0, W, H);
+        drawHeldSponge(octx);
+        drawCursor(octx);
 
         requestAnimationFrame(drawLoop);
     }
