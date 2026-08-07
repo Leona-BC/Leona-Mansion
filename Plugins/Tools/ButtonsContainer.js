@@ -236,3 +236,21 @@ function RemoveButton(name) {
 
   if (isOpen) animateResize();
 }
+
+function UpdateManagerVisibility() {
+  const insideMansion =
+    ChatRoomData != null &&
+    ChatRoomData.MapData?.Type === "Always" &&
+    (ChatRoomData.Name === "Leona's Mansion" ||
+     ChatRoomData.Name === "Leona's  Mansion");
+
+  if (insideMansion) {
+    menuWrapper.style.display = "block";
+    MenuLock(false); // unlock if previously locked
+  } else {
+    menuWrapper.style.display = "none";
+    MenuLock(true); // lock everything while hidden
+    isOpen = false;
+    panelVisible = false;
+  }
+}
