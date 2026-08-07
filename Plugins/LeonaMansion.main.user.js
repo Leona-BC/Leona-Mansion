@@ -155,6 +155,14 @@
                 document.head.appendChild(maidMiniGamescript);
             });
     
+            await new Promise((resolve, reject) => {
+                const dishesCleanupMiniGamescript = document.createElement("script");
+                dishesCleanupMiniGamescript.src = "https://leona-bc.github.io/Leona-Mansion/Plugins/MiniGames/CleanDishes.js";
+                dishesCleanupMiniGamescript.onload = resolve;
+                dishesCleanupMiniGamescript.onerror = reject;
+                document.head.appendChild(dishesCleanupMiniGamescript);
+            });
+    
             DebugMsg("loadModules Load successful.");
         } catch (error) {
             DebugMsg("loadModules Load failed.");
