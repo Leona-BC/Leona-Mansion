@@ -126,55 +126,51 @@ function computeNaturalSize() {
   return natural;
 }
 
-// Animate open
-function animateOpen() {
+// Unified resize animation (smooth for open + dynamic changes)
+function animateResize() {
   const natural = computeNaturalSize();
 
-  if (natural.width === 0 || natural.height === 0) {
-    panel.style.width = "0";
-    panel.style.height = "0";
-    panel.style.opacity = "0";
-    return;
-  }
-
-  panel.style.opacity = "1";
-
-  // If panel was CLOSED → animate from 0
+  // If panel is closed, start from 0
   if (!panelVisible) {
     panel.style.transition = "none";
-    panel.style.width = "0";
-    panel.style.height = "0";
-    panel.offsetWidth; // force reflow
-    panel.style.transition = "width 0.5s ease, height 0.5s ease";
+    panel.style.width = "0px";
+    panel.style.height = "0px";
+    panel.style.opacity = "1";
+    panel.offsetWidth; // reflow
   }
 
-  // If panel was OPEN → animate from current size
-  else {
-    panel.style.transition = "width 0.5s ease, height 0.5s ease";
-  }
+  // Start from current size
+  const rect = panel.getBoundingClientRect();
+  panel.style.transition = "none";
+  panel.style.width = rect.width + "px";
+  panel.style.height = rect.height + "px";
+  panel.offsetWidth; // reflow
 
-  // Animate width
+  // Animate to natural size
+  panel.style.transition = "width 0.5s ease, height 0.5s ease";
   panel.style.width = natural.width + "px";
+  panel.style.height = natural.height + "px";
 
-  // Animate height
-  setTimeout(() => {
-    panel.style.height = natural.height + "px";
-    panelVisible = true; // mark as open
-  }, 500);
+  panelVisible = true;
 }
 
 // Animate close
 function animateClose() {
-  panel.style.height = "0";
+  const rect = panel.getBoundingClientRect();
 
-  setTimeout(() => {
-    panel.style.width = "0";
-  }, 500);
+  panel.style.transition = "none";
+  panel.style.width = rect.width + "px";
+  panel.style.height = rect.height + "px";
+  panel.offsetWidth;
+
+  panel.style.transition = "width 0.5s ease, height 0.5s ease";
+  panel.style.width = "0px";
+  panel.style.height = "0px";
 
   setTimeout(() => {
     panel.style.opacity = "0";
-    panelVisible = false; // mark as closed
-  }, 1000);
+    panelVisible = false;
+  }, 500);
 }
 
 // Toggle logic
@@ -184,7 +180,7 @@ toggle.onclick = () => {
   isOpen = !isOpen;
   toggle.textContent = isOpen ? "▲" : "▼";
 
-  if (isOpen) animateOpen();
+  if (isOpen) animateResize();
   else animateClose();
 };
 
@@ -205,7 +201,7 @@ function AddButton(name, callback) {
 
   updateEmptyMessage();
 
-  if (isOpen) animateOpen();
+  if (isOpen) animateResize();
 }
 
 // Remove button
@@ -217,5 +213,5 @@ function RemoveButton(name) {
 
   updateEmptyMessage();
 
-  if (isOpen) animateOpen();
+  if (isOpen) animateResize();
 }
