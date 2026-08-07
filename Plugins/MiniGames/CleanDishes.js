@@ -42,6 +42,7 @@ Images.sponge.src = "https://leona-bc.github.io/Leona-Mansion/Assets/Sponge.png"
 let imagesLoaded = 0;
 const totalImages = 4;
 
+// ⭐ FIXED LOADER — REQUIRED FOR DRAW LOOP TO ALWAYS START
 function checkImagesLoaded() {
     imagesLoaded++;
     if (imagesLoaded === totalImages) {
@@ -314,6 +315,10 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
         ctx.fillText("Close", closeButton.x + closeButton.width / 2, closeButton.y + 27);
     }
 
+    // =====================================================
+    // PART 2 — GAME LOGIC
+    // =====================================================
+
     // -------------------------------
     // Scrubbing Logic (RAW mouse)
     // -------------------------------
@@ -362,7 +367,7 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
 
     // -------------------------------
     // Collapse Stack (Failure)
-// -------------------------------
+    // -------------------------------
     function collapseStack() {
         DishGameState.failed = true;
         closeButton.visible = true;
@@ -371,9 +376,8 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
             p.stacked = false;
             p.cleaned = true;
 
-            // Adjusted scatter for 600×300 canvas
-            p.x = StackPos.x + (Math.random() * 160 - 80);   // ±80px
-            p.y = StackPos.y + (Math.random() * 80 - 40);    // ±40px
+            p.x = StackPos.x + (Math.random() * 160 - 80);
+            p.y = StackPos.y + (Math.random() * 80 - 40);
 
             p.angle = (Math.random() * Math.PI * 2);
         });
@@ -492,8 +496,8 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     });
 
     // -------------------------------
-    // Draw Loop (collapse fix + hand on top)
-// -------------------------------
+    // Draw Loop
+    // -------------------------------
     function drawLoop() {
         ctx.clearRect(0, 0, W, H);
 
@@ -512,7 +516,6 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
             drawDirt(ctx);
             drawHeldPlate(ctx);
         } else {
-            // ⭐ Draw ALL plates when collapsed
             DishGameState.plates.forEach(p => drawPlate(ctx, p));
         }
 
@@ -522,12 +525,14 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
         drawInstruction(ctx);
         drawCloseButton();
 
-        // ⭐ HAND DRAWN LAST
         drawCursor(ctx);
 
         requestAnimationFrame(drawLoop);
     }
 
+    // -------------------------------
+    // Start draw loop when images ready
+    // -------------------------------
     if (imagesLoaded === totalImages) {
         drawLoop();
     } else {
