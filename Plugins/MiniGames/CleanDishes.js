@@ -119,14 +119,6 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
         visible: false
     };
 
-    // --- Center canvas AFTER paint ---
-    requestAnimationFrame(() => {
-        canvas.style.left = "-600px";
-        canvas.style.top = "-200px";
-        gameWindow.style.left = "-600px";
-        gameWindow.style.top = "-200px";
-    });
-
     // -------------------------------
     // Init State
     // -------------------------------
