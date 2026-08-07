@@ -96,6 +96,19 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     canvas.style.cursor = "none";
     gameWindow.appendChild(canvas);
 
+    // Center AFTER browser paints it
+    requestAnimationFrame(() => {
+        const rect = gameWindow.getBoundingClientRect();
+    
+        // Set your custom starting position here
+        gameWindow.style.left = "-600px";
+        gameWindow.style.top = "-200px";
+    
+        // If you want to update the close button after repositioning:
+        closeButton.x = W / 2 - 60;
+        closeButton.y = H / 2 + 40;
+    });
+
     const ctx = canvas.getContext("2d");
 
     const W = canvas.width;
