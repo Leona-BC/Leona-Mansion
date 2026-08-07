@@ -53,6 +53,9 @@
 
     async function mainThread() {
         while(true) {
+
+            UpdateManagerVisibility();
+            
             if (ChatRoomData != null &&
                 ChatRoomData.MapData.Type == "Always" && 
                 (ChatRoomData.Name == "Leona's Mansion" || ChatRoomData.Name == "Leona's  Mansion")) {
