@@ -63,7 +63,8 @@ Images.background.onload = checkImagesLoaded;
 // Start Dish Cleaning Mini-Game (Unified Display System)
 // =====================================================
 function startDishesCleaningMiniGame(trembleLevel = 0) {
-
+    MenuLock(true);
+    
     if (DishGameState.active) return;
     DishGameState.active = true;
 
@@ -461,6 +462,7 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
                 DishGameState.active = false;
                 document.body.removeChild(canvas);
                 document.body.removeChild(overlay);
+                MenuLock(false);
                 return;
             }
         }
