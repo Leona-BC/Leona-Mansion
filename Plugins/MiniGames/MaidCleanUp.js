@@ -2,7 +2,8 @@
 // Defines ONE function: startMaidCleanUpGame(imageURL, clumsyLevel)
 
 function startMaidCleanUpGame(imageURL, clumsyLevel = 0, dustLevel = 100) {
-
+    MenuLock(true);
+    
     // Prevent multiple instances
     if (window.maidGameActive) return;
     window.maidGameActive = true;
@@ -289,5 +290,6 @@ function startMaidCleanUpGame(imageURL, clumsyLevel = 0, dustLevel = 100) {
         canvas.remove();
         overlay.remove();
         window.maidGameActive = false;
+        MenuLock(false);
     });
 }
