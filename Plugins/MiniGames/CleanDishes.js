@@ -63,7 +63,7 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     // -------------------------------
     const gameWindow = document.createElement("div");
     gameWindow.id = "DishCleaningWindow";
-    gameWindow.style.position = "fixed";
+    gameWindow.style.position = "absolute";
     gameWindow.style.top = "50%";
     gameWindow.style.left = "50%";
     gameWindow.style.transform = "translate(-50%, -50%)";
@@ -89,6 +89,7 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     // -------------------------------
     const canvas = document.createElement("canvas");
     canvas.id = "dishCanvas";
+    canvas.style.position = "absolute";
     canvas.width = 600;
     canvas.height = 300;
     canvas.style.background = "transparent"; // background handled by gameWindow
@@ -118,6 +119,18 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
         height: 40,
         visible: false
     };
+    
+    // --- Center AFTER browser paints it ---
+    requestAnimationFrame(() => {    
+        canvas.style.left = "-600px";
+        canvas.style.top = "-200px";
+        gameWindow.style.left = "-600px";
+        gameWindow.style.top = "-200px";
+    
+        // Update close button position AFTER centering
+        closeButton.x = W / 2 - 60;
+        closeButton.y = H / 2 + 40;
+    });
 
     // -------------------------------
     // Init State
