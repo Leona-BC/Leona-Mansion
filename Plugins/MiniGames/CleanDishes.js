@@ -44,6 +44,9 @@ const totalImages = 4;
 
 function checkImagesLoaded() {
     imagesLoaded++;
+    if (imagesLoaded === totalImages) {
+        document.dispatchEvent(new Event("DishImagesReady"));
+    }
 }
 
 Images.plate.onload = checkImagesLoaded;
@@ -59,30 +62,33 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     DishGameState.trembleLevel = Math.max(0, Math.min(100, trembleLevel));
 
     // -------------------------------
-    // Window
+    // Window (positioned like fishing mini-game)
     // -------------------------------
     const gameWindow = document.createElement("div");
     gameWindow.id = "DishCleaningWindow";
-    gameWindow.style.position = "absolute";   // only this
-    gameWindow.style.left = "-600px";         // custom position
+
+    // EXACT SAME POSITIONING STYLE AS FISHING MINI-GAME
+    gameWindow.style.position = "absolute";
+    gameWindow.style.left = "-600px";
     gameWindow.style.top = "-200px";
+
     gameWindow.style.width = "600px";
     gameWindow.style.height = "300px";
     gameWindow.style.border = "3px solid white";
-    gameWindow.style.zIndex = "9999";
+    gameWindow.style.zIndex = "99999";
     gameWindow.style.display = "flex";
     gameWindow.style.flexDirection = "column";
     gameWindow.style.alignItems = "center";
     gameWindow.style.justifyContent = "center";
-    
-    // background
+
+    // Background image
     gameWindow.style.backgroundImage = "url('https://leona-bc.github.io/Leona-Mansion/Assets/DishBackground.png')";
     gameWindow.style.backgroundSize = "cover";
     gameWindow.style.backgroundPosition = "center";
     gameWindow.style.imageRendering = "pixelated";
-    
+
     document.body.appendChild(gameWindow);
-    
+
     // -------------------------------
     // Canvas
     // -------------------------------
@@ -90,11 +96,15 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     canvas.id = "dishCanvas";
     canvas.width = 600;
     canvas.height = 300;
+
+    canvas.style.width = "600px";
+    canvas.style.height = "300px";
     canvas.style.background = "transparent";
     canvas.style.imageRendering = "pixelated";
     canvas.style.cursor = "none";
+
     gameWindow.appendChild(canvas);
-    
+
     const ctx = canvas.getContext("2d");
     const W = canvas.width;
     const H = canvas.height;
@@ -116,15 +126,6 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
         height: 40,
         visible: false
     };
-    
-    // Center AFTER browser paints it
-    requestAnimationFrame(() => {
-        gameWindow.style.left = "-600px";
-        gameWindow.style.top = "-200px";
-    
-        closeButton.x = W / 2 - 60;
-        closeButton.y = H / 2 + 40;
-    });
 
     // -------------------------------
     // Init State
