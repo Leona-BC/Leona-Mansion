@@ -4,7 +4,8 @@
 let fishingActive = false;
 
 function startFishingGame() {
-
+    MenuLock(true);
+    
     // --- Create canvas ---
     const canvas = document.createElement("canvas");
     canvas.width = 600;
@@ -132,6 +133,7 @@ function startFishingGame() {
             ) {
                 fishingActive = false;
                 canvas.remove();
+                MenuLock(false);
                 return;
             }
         }
