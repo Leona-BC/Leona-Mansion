@@ -87,7 +87,7 @@
                     (Player.Position.Y >= 30 && Player.Position.Y <= 31)) {
     
                     if (!buttonRegistry["Start Cleaning"]) {
-                        AddButton("Start Cleaning", () => startDishesCleaningMiniGame(Player.ArousalSettings.Progress);
+                        AddButton("Start Cleaning", () => startDishesCleaningMiniGame(Player.ArousalSettings.Progress));
                     }
     
                 } else {
