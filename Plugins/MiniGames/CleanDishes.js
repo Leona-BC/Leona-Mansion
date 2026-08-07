@@ -63,10 +63,9 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     // -------------------------------
     const gameWindow = document.createElement("div");
     gameWindow.id = "DishCleaningWindow";
-    gameWindow.style.position = "fixed";
-    gameWindow.style.top = "50%";
-    gameWindow.style.left = "50%";
-    gameWindow.style.transform = "translate(-50%, -50%)";
+    gameWindow.style.position = "absolute";   // only this
+    gameWindow.style.left = "-600px";         // custom position
+    gameWindow.style.top = "-200px";
     gameWindow.style.width = "600px";
     gameWindow.style.height = "300px";
     gameWindow.style.border = "3px solid white";
@@ -75,15 +74,15 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     gameWindow.style.flexDirection = "column";
     gameWindow.style.alignItems = "center";
     gameWindow.style.justifyContent = "center";
-
-    // ⭐ STATIC BACKGROUND IMAGE
+    
+    // background
     gameWindow.style.backgroundImage = "url('https://leona-bc.github.io/Leona-Mansion/Assets/DishBackground.png')";
     gameWindow.style.backgroundSize = "cover";
     gameWindow.style.backgroundPosition = "center";
     gameWindow.style.imageRendering = "pixelated";
-
+    
     document.body.appendChild(gameWindow);
-
+    
     // -------------------------------
     // Canvas
     // -------------------------------
@@ -91,26 +90,12 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     canvas.id = "dishCanvas";
     canvas.width = 600;
     canvas.height = 300;
-    canvas.style.background = "transparent"; // background handled by gameWindow
+    canvas.style.background = "transparent";
     canvas.style.imageRendering = "pixelated";
     canvas.style.cursor = "none";
     gameWindow.appendChild(canvas);
-
-    // Center AFTER browser paints it
-    requestAnimationFrame(() => {
-        const rect = gameWindow.getBoundingClientRect();
     
-        // Set your custom starting position here
-        gameWindow.style.left = "-600px";
-        gameWindow.style.top = "-200px";
-    
-        // If you want to update the close button after repositioning:
-        closeButton.x = W / 2 - 60;
-        closeButton.y = H / 2 + 40;
-    });
-
     const ctx = canvas.getContext("2d");
-
     const W = canvas.width;
     const H = canvas.height;
 
@@ -131,6 +116,15 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
         height: 40,
         visible: false
     };
+    
+    // Center AFTER browser paints it
+    requestAnimationFrame(() => {
+        gameWindow.style.left = "-600px";
+        gameWindow.style.top = "-200px";
+    
+        closeButton.x = W / 2 - 60;
+        closeButton.y = H / 2 + 40;
+    });
 
     // -------------------------------
     // Init State
