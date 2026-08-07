@@ -123,8 +123,8 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     requestAnimationFrame(() => {
         canvas.style.left = "-600px";
         canvas.style.top = "-200px";
-        overlay.style.left = "-600px";
-        overlay.style.top = "-200px";
+        gameWindow.style.left = "-600px";
+        gameWindow.style.top = "-200px";
     });
 
     // -------------------------------
