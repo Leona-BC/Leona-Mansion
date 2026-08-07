@@ -63,18 +63,16 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     // -------------------------------
     const gameWindow = document.createElement("div");
     gameWindow.id = "DishCleaningWindow";
-    gameWindow.style.position = "absolute";
-    gameWindow.style.top = "50%";
-    gameWindow.style.left = "50%";
-    gameWindow.style.transform = "translate(-50%, -50%)";
+    gameWindow.width = 600;
+    gameWindow.height = 300;
     gameWindow.style.width = "600px";
     gameWindow.style.height = "300px";
-    gameWindow.style.border = "3px solid white";
-    gameWindow.style.zIndex = "9999";
-    gameWindow.style.display = "flex";
-    gameWindow.style.flexDirection = "column";
-    gameWindow.style.alignItems = "center";
-    gameWindow.style.justifyContent = "center";
+    gameWindow.style.position = "absolute";
+    gameWindow.style.left = "0px";
+    gameWindow.style.top = "0px";
+    gameWindow.style.zIndex = "100000";
+    gameWindow.style.pointerEvents = "none";
+    gameWindow.style.cursor = "none";
 
     // ⭐ STATIC BACKGROUND IMAGE
     gameWindow.style.backgroundImage = "url('./DishBackground.png')";
@@ -90,8 +88,8 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     const canvas = document.createElement("canvas");
     canvas.id = "dishCanvas";
     canvas.style.position = "absolute";
-    canvas.width = 600;
-    canvas.height = 300;
+    canvas.width = "600px";
+    canvas.height = "300px";
     canvas.style.background = "transparent"; // background handled by gameWindow
     canvas.style.imageRendering = "pixelated";
     canvas.style.cursor = "none";
