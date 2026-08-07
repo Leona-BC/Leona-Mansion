@@ -34,10 +34,10 @@ const Images = {
     handGrabWrist: new Image(),
 };
 
-Images.handGrabWrist.src = "./MaidHand.png";
-Images.plate.src = "./Plate.png";
-Images.dirtOverlay.src = "./DirtOverlay.png";
-Images.sponge.src = "./Sponge.png";
+Images.handGrabWrist.src = "https://leona-bc.github.io/Leona-Mansion/Assets/MaidHand.png";
+Images.plate.src = "https://leona-bc.github.io/Leona-Mansion/Assets/Plate.png";
+Images.dirtOverlay.src = "https://leona-bc.github.io/Leona-Mansion/Assets/DirtOverlay.png";
+Images.sponge.src = "https://leona-bc.github.io/Leona-Mansion/Assets/Sponge.png";
 
 let imagesLoaded = 0;
 const totalImages = 4;
@@ -77,7 +77,7 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     gameWindow.style.justifyContent = "center";
 
     // ⭐ STATIC BACKGROUND IMAGE
-    gameWindow.style.backgroundImage = "url('./DishBackground.png')";
+    gameWindow.style.backgroundImage = "url('https://leona-bc.github.io/Leona-Mansion/Assets/DishBackground.png')";
     gameWindow.style.backgroundSize = "cover";
     gameWindow.style.backgroundPosition = "center";
     gameWindow.style.imageRendering = "pixelated";
