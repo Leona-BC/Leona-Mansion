@@ -86,13 +86,13 @@
                 if ((Player.Position.X >= 32 && Player.Position.X <= 35) &&
                     (Player.Position.Y >= 30 && Player.Position.Y <= 31)) {
     
-                    if (!buttonRegistry["Start Cleaning"]) {
-                        AddButton("Start Cleaning", () => startDishesCleaningMiniGame(Player.ArousalSettings.Progress));
+                    if (!buttonRegistry["Clean Dishes"]) {
+                        AddButton("Clean Dishes", () => startDishesCleaningMiniGame(Player.ArousalSettings.Progress));
                     }
     
                 } else {
-                    if (buttonRegistry["Start Cleaning"]) {
-                        RemoveButton("Start Cleaning");
+                    if (buttonRegistry["Clean Dishes"]) {
+                        RemoveButton("Clean Dishes");
                     }
                 }
             }
