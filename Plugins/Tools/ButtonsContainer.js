@@ -84,7 +84,7 @@ style.textContent = `
     border: 1px solid ButtonBorder;
     border-radius: 4px;
 
-    transition: background 0.2s ease;
+    transition: background 0.2s ease, opacity 0.2s ease;
   }
 
   .menuButton:hover {
@@ -99,6 +99,21 @@ const buttonRegistry = {};
 
 // Track whether the panel is visually open
 let panelVisible = false;
+
+// Lock state (mini-game running)
+let menuLocked = false;
+
+// Lock/unlock menu buttons
+function MenuLock(state) {
+  menuLocked = state;
+
+  for (const name in buttonRegistry) {
+    const btn = buttonRegistry[name];
+    btn.disabled = state;
+    btn.style.opacity = state ? "0.5" : "1";
+    btn.style.pointerEvents = state ? "none" : "auto";
+  }
+}
 
 // Show/hide empty message
 function updateEmptyMessage() {
@@ -177,6 +192,8 @@ function animateClose() {
 let isOpen = false;
 
 toggle.onclick = () => {
+  if (menuLocked) return; // cannot open/close while mini-game running
+
   isOpen = !isOpen;
   toggle.textContent = isOpen ? "▲" : "▼";
 
@@ -194,7 +211,11 @@ function AddButton(name, callback) {
   const btn = document.createElement("button");
   btn.className = "menuButton";
   btn.textContent = name;
-  btn.onclick = callback;
+
+  btn.onclick = () => {
+    if (menuLocked) return;
+    callback();
+  };
 
   panel.appendChild(btn);
   buttonRegistry[name] = btn;
