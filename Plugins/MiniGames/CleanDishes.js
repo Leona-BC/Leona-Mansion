@@ -63,15 +63,14 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     DishGameState.trembleLevel = Math.max(0, Math.min(100, trembleLevel));
 
     // -------------------------------
-    // Window (positioned like fishing mini-game)
+    // Window (same position as Fishing + Maid Cleaning)
     // -------------------------------
     const gameWindow = document.createElement("div");
     gameWindow.id = "DishCleaningWindow";
 
-    // EXACT SAME POSITIONING STYLE AS FISHING MINI-GAME
     gameWindow.style.position = "absolute";
-    gameWindow.style.left = "-600px";
-    gameWindow.style.top = "-200px";
+    gameWindow.style.left = "calc(50% - 300px)";
+    gameWindow.style.top = "calc(50% - 150px)";
 
     gameWindow.style.width = "600px";
     gameWindow.style.height = "300px";
@@ -82,7 +81,6 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     gameWindow.style.alignItems = "center";
     gameWindow.style.justifyContent = "center";
 
-    // Background image
     gameWindow.style.backgroundImage = "url('https://leona-bc.github.io/Leona-Mansion/Assets/DishBackground.png')";
     gameWindow.style.backgroundSize = "cover";
     gameWindow.style.backgroundPosition = "center";
