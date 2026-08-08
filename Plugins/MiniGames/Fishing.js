@@ -6,27 +6,34 @@ let fishingActive = false;
 function startFishingGame() {
     MenuLock(true);
     
-    // Create the canvas entirely from JavaScript
     const canvas = document.createElement("canvas");
-    canvas.width = 600;
-    canvas.height = 300;
-    canvas.style.border = "2px solid #333";
     
-    // Append canvas first
-    document.body.appendChild(canvas);
-    
-    // Position relative to MainCanvas
+    // Get rendered MainCanvas size
     const mc = document.getElementById("MainCanvas");
     const rect = mc.getBoundingClientRect();
     
-    // Anchor the fishing canvas to the top-left of the map
+    // Choose height based on map size
+    const H = rect.height / 2;   // half the map height
+    const W = H * 2;             // maintain 2:1 ratio
+    
+    // Apply internal canvas size
+    canvas.width  = W;
+    canvas.height = H;
+    
+    // Apply CSS size (must match!)
+    canvas.style.width  = W + "px";
+    canvas.style.height = H + "px";
+    
+    canvas.style.border = "2px solid #333";
     canvas.style.position = "absolute";
+    
+    // Position it at the top-left of the map
     canvas.style.left = rect.left + "px";
-    canvas.style.top = rect.top + "px";
+    canvas.style.top  = rect.top + "px";
+    
+    document.body.appendChild(canvas);
     
     const ctx = canvas.getContext("2d");
-    const W = canvas.width;
-    const H = canvas.height;
     
     // --- Declare closeButton ONLY ONCE ---
     const closeButton = {
