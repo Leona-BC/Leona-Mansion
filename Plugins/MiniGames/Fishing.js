@@ -10,28 +10,20 @@ function startFishingGame() {
     canvas.style.position = "absolute";
     canvas.style.border = "2px solid #333";
     
-    // Append first
+    // INTERNAL resolution (2:1 ratio)
+    canvas.width = 1200;
+    canvas.height = 600;
+    
+    // CSS size (small enough to avoid BC centering)
+    canvas.style.width = "600px";
+    canvas.style.height = "300px";
+    
     document.body.appendChild(canvas);
     
-    // Get map position
+    // Anchor to MainCanvas
     const mc = document.getElementById("MainCanvas");
     const rect = mc.getBoundingClientRect();
     
-    // Anchor BEFORE resizing
-    canvas.style.left = rect.left + "px";
-    canvas.style.top  = rect.top + "px";
-    
-    // Now resize while keeping 2:1 ratio
-    const H = rect.height / 2;   // or whatever fraction you want
-    const W = H * 2;
-    
-    canvas.width  = W;
-    canvas.height = H;
-    
-    canvas.style.width  = W + "px";
-    canvas.style.height = H + "px";
-    
-    // Re‑anchor AFTER resizing (important!)
     canvas.style.left = rect.left + "px";
     canvas.style.top  = rect.top + "px";
     
