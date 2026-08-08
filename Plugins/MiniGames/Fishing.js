@@ -6,39 +6,28 @@ let fishingActive = false;
 function startFishingGame() {
     MenuLock(true);
     
-    // Create canvas and basic style
-const canvas = document.createElement("canvas");
-canvas.style.position = "absolute";
-canvas.style.border = "2px solid #333";
-
-// Append early so it exists in DOM (but keep CSS footprint small)
-document.body.appendChild(canvas);
-
-// Get rendered MainCanvas position/size
-const mc = document.getElementById("MainCanvas");
-const rect = mc.getBoundingClientRect();
-
-// Anchor to the map BEFORE large resizing to avoid BC centering
-canvas.style.left = rect.left + "px";
-canvas.style.top  = rect.top + "px";
-
-// INTERNAL resolution (2:1 ratio) - high-res drawing
-canvas.width  = 1200;   // internal pixels (example)
-canvas.height = 600;    // internal pixels (internal ratio 2:1)
-
-// CSS size (small enough to avoid BC centering)
-canvas.style.width  = "600px";   // visual size
-canvas.style.height = "300px";   // visual size
-
-// Re-anchor after resizing (ensures position is exact)
-canvas.style.left = rect.left + "px";
-canvas.style.top  = rect.top + "px";
-
-// Now define W and H for your code
-const W = canvas.width;
-const H = canvas.height;
-
-const ctx = canvas.getContext("2d");
+    // --- Create canvas ---
+    const canvas = document.createElement("canvas");
+    canvas.width = 600;
+    canvas.height = 300;
+    
+    // Force correct display size
+    canvas.style.width = "600px";
+    canvas.style.height = "300px";
+    
+    canvas.style.border = "2px solid #333";
+    canvas.style.position = "absolute";
+    canvas.style.zIndex = "99999";
+    
+    // Append canvas FIRST
+    document.body.appendChild(canvas);
+    
+    // Create context AFTER append
+    const ctx = canvas.getContext("2d");
+    
+    // Define W and H AFTER context creation
+    const W = canvas.width;
+    const H = canvas.height;
     
     // --- Declare closeButton ONLY ONCE ---
     const closeButton = {
@@ -48,6 +37,18 @@ const ctx = canvas.getContext("2d");
         height: 40,
         visible: false
     };
+    
+    // --- Center AFTER browser paints it ---
+    requestAnimationFrame(() => {
+        const rect = canvas.getBoundingClientRect();
+    
+        canvas.style.left = "-600px";
+        canvas.style.top = "-200px";
+    
+        // Update close button position AFTER centering
+        closeButton.x = W / 2 - 60;
+        closeButton.y = H / 2 + 40;
+    });
     
     // Water wave parameters
     let t = 0;
