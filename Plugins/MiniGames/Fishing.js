@@ -6,26 +6,25 @@ let fishingActive = false;
 function startFishingGame() {
     MenuLock(true);
     
-    // --- Create canvas ---
+    // Create the canvas entirely from JavaScript
     const canvas = document.createElement("canvas");
     canvas.width = 600;
     canvas.height = 300;
-    
-    // Force correct display size
-    canvas.style.width = "600px";
-    canvas.style.height = "300px";
-    
     canvas.style.border = "2px solid #333";
-    canvas.style.position = "absolute";
-    canvas.style.zIndex = "99999";
     
-    // Append canvas FIRST
+    // Append canvas first
     document.body.appendChild(canvas);
     
-    // Create context AFTER append
-    const ctx = canvas.getContext("2d");
+    // Position relative to MainCanvas
+    const mc = document.getElementById("MainCanvas");
+    const rect = mc.getBoundingClientRect();
     
-    // Define W and H AFTER context creation
+    // Anchor the fishing canvas to the top-left of the map
+    canvas.style.position = "absolute";
+    canvas.style.left = rect.left + "px";
+    canvas.style.top = rect.top + "px";
+    
+    const ctx = canvas.getContext("2d");
     const W = canvas.width;
     const H = canvas.height;
     
@@ -37,18 +36,6 @@ function startFishingGame() {
         height: 40,
         visible: false
     };
-    
-    // --- Center AFTER browser paints it ---
-    requestAnimationFrame(() => {
-        const rect = canvas.getBoundingClientRect();
-    
-        canvas.style.left = "-600px";
-        canvas.style.top = "-200px";
-    
-        // Update close button position AFTER centering
-        closeButton.x = W / 2 - 60;
-        closeButton.y = H / 2 + 40;
-    });
     
     // Water wave parameters
     let t = 0;
