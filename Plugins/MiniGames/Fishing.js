@@ -7,31 +7,33 @@ function startFishingGame() {
     MenuLock(true);
     
     const canvas = document.createElement("canvas");
+    canvas.style.position = "absolute";
+    canvas.style.border = "2px solid #333";
     
-    // Get rendered MainCanvas size
+    // Append first
+    document.body.appendChild(canvas);
+    
+    // Get map position
     const mc = document.getElementById("MainCanvas");
     const rect = mc.getBoundingClientRect();
     
-    // Choose height based on map size
-    const H = rect.height / 2;   // half the map height
-    const W = H * 2;             // maintain 2:1 ratio
-    
-    // Apply internal canvas size
-    canvas.width  = W;
-    canvas.height = H;
-    
-    // Apply CSS size (must match!)
-    canvas.style.width  = W + "px";
-    canvas.style.height = H + "px";
-    
-    canvas.style.border = "2px solid #333";
-    canvas.style.position = "absolute";
-    
-    // Position it at the top-left of the map
+    // Anchor BEFORE resizing
     canvas.style.left = rect.left + "px";
     canvas.style.top  = rect.top + "px";
     
-    document.body.appendChild(canvas);
+    // Now resize while keeping 2:1 ratio
+    const H = rect.height / 2;   // or whatever fraction you want
+    const W = H * 2;
+    
+    canvas.width  = W;
+    canvas.height = H;
+    
+    canvas.style.width  = W + "px";
+    canvas.style.height = H + "px";
+    
+    // Re‑anchor AFTER resizing (important!)
+    canvas.style.left = rect.left + "px";
+    canvas.style.top  = rect.top + "px";
     
     const ctx = canvas.getContext("2d");
     
