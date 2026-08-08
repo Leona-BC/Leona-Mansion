@@ -8,24 +8,21 @@ function startFishingGame() {
     
     // --- Create canvas ---
     const canvas = document.createElement("canvas");
-    canvas.width = 600;
-    canvas.height = 300;
-    
-    // Force correct display size
-    canvas.style.width = "600px";
-    canvas.style.height = "300px";
-    
-    canvas.style.border = "2px solid #333";
+    canvas.width = 500;
+    canvas.height = 250;
+
+    canvas.style.width = "500px";
+    canvas.style.height = "250px";
     canvas.style.position = "absolute";
+    canvas.style.left = "0px";
+    canvas.style.top = "0px";
     canvas.style.zIndex = "99999";
-    
-    // Append canvas FIRST
-    document.body.appendChild(canvas);
-    
-    // Create context AFTER append
+    canvas.style.border = "2px solid #333";
+
+    const mainCanvas = document.getElementById("MainCanvas");
+    mainCanvas.appendChild(canvas);
+
     const ctx = canvas.getContext("2d");
-    
-    // Define W and H AFTER context creation
     const W = canvas.width;
     const H = canvas.height;
     
@@ -37,18 +34,6 @@ function startFishingGame() {
         height: 40,
         visible: false
     };
-    
-    // --- Center AFTER browser paints it ---
-    requestAnimationFrame(() => {
-        const rect = canvas.getBoundingClientRect();
-    
-        canvas.style.left = "-600px";
-        canvas.style.top = "-200px";
-    
-        // Update close button position AFTER centering
-        closeButton.x = W / 2 - 60;
-        closeButton.y = H / 2 + 40;
-    });
     
     // Water wave parameters
     let t = 0;
