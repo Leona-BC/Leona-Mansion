@@ -39,7 +39,7 @@ function startFetchScentPrototype(dist) {
 
     const octx = overlay.getContext("2d");
 
-    // ⭐ Restored positioning block
+    // --- Center canvas AFTER paint ---
     requestAnimationFrame(() => {
         canvas.style.left = "-600px";
         canvas.style.top = "-200px";
@@ -74,6 +74,20 @@ function startFetchScentPrototype(dist) {
     else if (dist > 3) resultMessage = "Far.";
     else resultMessage = "";
 
+    // --- Game state ---
+    let gameOver = false;
+    let showInstruction = true;
+
+    let noseX = W / 2;
+    let noseY = H / 2;
+
+    // ⭐ If no distance info, skip the game entirely
+    if (dist === null || dist === undefined) {
+        gameOver = true;
+        resultMessage = "No clue where it is.";
+        closeButton.visible = true;
+    }
+
     // --- Heat level → sprite scale ---
     const ODOR_SCALE = {
         see:       0.40,
@@ -82,13 +96,6 @@ function startFetchScentPrototype(dist) {
         near:      0.32,
         far:       0.28
     }[heatLevel];
-
-    // --- Game state ---
-    let gameOver = false;
-    let showInstruction = true;
-
-    let noseX = W / 2;
-    let noseY = H / 2;
 
     let sniffTime = 0;
     const sniffRequired = 2500;
@@ -215,7 +222,12 @@ function startFetchScentPrototype(dist) {
     // --- Draw Everything ---
     function drawAll() {
         drawBackground();
-        drawOdor();
+
+        // ⭐ Hide odor trail when no ball exists
+        if (dist !== null && dist !== undefined) {
+            drawOdor();
+        }
+
         drawInstruction();
         drawTimerBar();
         drawResult();
@@ -234,13 +246,11 @@ function startFetchScentPrototype(dist) {
             return;
         }
 
-        // Horizontal movement
         const maxScrollX = bgImg.width - W;
         const mouseNormX = noseX / W;
         const offsetX = mouseNormX * maxScrollX;
 
-        // ⭐ Vertical movement (top = horizon, bottom = floor)
-        const horizonY = bgImg.height * 0.35;   // adjust if needed
+        const horizonY = bgImg.height * 0.35;
         const floorY = bgImg.height - H;
 
         const mouseNormY = noseY / H;
@@ -258,6 +268,7 @@ function startFetchScentPrototype(dist) {
     // --- Odor sprite ---
     function drawOdor() {
         if (!odorReady) return;
+		if (gameOver) return;
 
         const fw = odorImg.width / 4;
         const fh = odorImg.height;
@@ -336,32 +347,28 @@ function startFetchScentPrototype(dist) {
 
     // --- Draw muzzle image (NOSE TIP ALIGNMENT) ---
     function drawNose() {
-		octx.clearRect(0, 0, W, H);
+        octx.clearRect(0, 0, W, H);
 
-		if (!muzzleReady) return;
+        if (!muzzleReady) return;
 
-		const size = 32;
+        const size = 32;
 
-		octx.save();
-		octx.translate(noseX, noseY);
+        octx.save();
+        octx.translate(noseX, noseY);
 
-		// Vertical alignment (your discovery)
-		const tipOffset = size * 0.10;
+        const tipOffset  = size * 0.10;
+        const tipOffsetX = size * 0.10;
 
-		// Horizontal alignment (new fix)
-		const tipOffsetX = size * 0.1;
+        octx.drawImage(
+            muzzleImg,
+            -tipOffsetX,
+            -tipOffset,
+            size,
+            size
+        );
 
-		octx.drawImage(
-			muzzleImg,
-			-tipOffsetX,
-			-tipOffset,
-			size,
-			size
-		);
-
-		octx.restore();
-	}
-
+        octx.restore();
+    }
 
     function drawSniffProgress() {
         if (gameOver) return;
