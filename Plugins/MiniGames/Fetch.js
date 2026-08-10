@@ -40,12 +40,12 @@ function startFetchScentPrototype(dist) {
     const octx = overlay.getContext("2d");
 
     // ⭐ Restored positioning block
-    /*requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
         canvas.style.left = "-600px";
         canvas.style.top = "-200px";
         overlay.style.left = "-600px";
         overlay.style.top = "-200px";
-    });*/
+    });
 
     // --- Close button ---
     const closeButton = {
@@ -102,19 +102,19 @@ function startFetchScentPrototype(dist) {
     const bgImg = new Image();
     let bgReady = false;
     bgImg.onload = () => bgReady = true;
-    bgImg.src = "./CorridorView.png";
+    bgImg.src = "https://leona-bc.github.io/Leona-Mansion/Assets/CorridorView.png";
 
     // --- Load odor sprite sheet ---
     const odorImg = new Image();
     let odorReady = false;
     odorImg.onload = () => odorReady = true;
-    odorImg.src = "./odorSprites.png";
+    odorImg.src = "https://leona-bc.github.io/Leona-Mansion/Assets/odorSprites.png";
 
     // --- Load muzzle image ---
     const muzzleImg = new Image();
     let muzzleReady = false;
     muzzleImg.onload = () => muzzleReady = true;
-    muzzleImg.src = "./SniffingNose.png";
+    muzzleImg.src = "https://leona-bc.github.io/Leona-Mansion/Assets/SniffingNose.png";
 
     let frame = 0;
     let frameTimer = 0;
