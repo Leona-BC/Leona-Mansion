@@ -98,6 +98,19 @@
                         RemoveButton("Clean Dishes");
                     }
                 }
+
+                if ((Player.Position.X >= 30 && Player.Position.X <= 36) &&
+                    (Player.Position.Y >= 24 && Player.Position.Y <= 29)) {
+    
+                    if (!buttonRegistry["Search for ball"]) {
+                        AddButton("Search for ball", () => startFetchScentPrototype(3));
+                    }
+    
+                } else {
+                    if (buttonRegistry["Search for ball"]) {
+                        RemoveButton("Search for ball");
+                    }
+                }
             }
 
             await sleep(500);
