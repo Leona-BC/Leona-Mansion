@@ -1,9 +1,9 @@
 // Maid Clean‑Up Mini‑Game Module
-// Defines ONE function: startMaidCleanUpGame(imageURL, clumsyLevel)
+// Defines ONE function: startMaidCleanUpGame(imageURL, clumsyLevel, dustLevel, potCount)
 
-function startMaidCleanUpGame(imageURL, clumsyLevel = 0, dustLevel = 100) {
+function startMaidCleanUpGame(imageURL, clumsyLevel = 0, dustLevel = 100, potCount = 0) {
     MenuLock(true);
-    
+
     // Prevent multiple instances
     if (window.maidGameActive) return;
     window.maidGameActive = true;
@@ -78,13 +78,33 @@ function startMaidCleanUpGame(imageURL, clumsyLevel = 0, dustLevel = 100) {
     const bgImg = new Image();
     bgImg.src = imageURL;
 
-    let dustList = [];
+    const potImg = new Image();
+    potImg.src = "https://leona-bc.github.io/Leona-Mansion/Assets/pot_sprite.png"; // 2-frame sprite
 
-    // --- Initialize dust once background loads ---
+    let dustList = [];
+    let potList = [];
+
+    // --- Initialize once background loads ---
     bgImg.onload = () => {
+        initPots();
         initDust();
         drawAll();
     };
+
+    function initPots() {
+        potList = [];
+
+        const potW = 50;  // scaled width
+        const potH = 67;  // scaled height
+
+        for (let i = 0; i < potCount; i++) {
+            potList.push({
+                x: Math.random() * (W - potW),
+                y: Math.random() * (H - potH),
+                broken: false
+            });
+        }
+    }
 
     function initDust() {
         let dustCount = dustLevel; // default
@@ -96,9 +116,33 @@ function startMaidCleanUpGame(imageURL, clumsyLevel = 0, dustLevel = 100) {
         dustList = [];
 
         for (let i = 0; i < dustCount; i++) {
+            let x, y;
+            let safe = false;
+
+            while (!safe) {
+                x = Math.random() * (W - 32);
+                y = Math.random() * (H - 32);
+
+                safe = true;
+
+                potList.forEach(p => {
+                    const potW = 50;
+                    const potH = 67;
+
+                    if (
+                        x < p.x + potW &&
+                        x + 32 > p.x &&
+                        y < p.y + potH &&
+                        y + 32 > p.y
+                    ) {
+                        safe = false;
+                    }
+                });
+            }
+
             dustList.push({
-                x: Math.random() * (W - 32),
-                y: Math.random() * (H - 32),
+                x,
+                y,
                 stage: 4,
                 cleaned: false,
                 inside: false
@@ -149,6 +193,7 @@ function startMaidCleanUpGame(imageURL, clumsyLevel = 0, dustLevel = 100) {
         angle = Math.atan2(dy, dx);
 
         if (!gameOver) {
+            checkPotCollision();
             cleanDust();
             checkCompletion();
         }
@@ -159,6 +204,7 @@ function startMaidCleanUpGame(imageURL, clumsyLevel = 0, dustLevel = 100) {
     // --- Draw Everything ---
     function drawAll() {
         drawBackground();
+        drawPots();        // pots before dust
         drawDust();
         drawInstruction();
         drawMessage();
@@ -169,6 +215,21 @@ function startMaidCleanUpGame(imageURL, clumsyLevel = 0, dustLevel = 100) {
     function drawBackground() {
         ctx.clearRect(0, 0, W, H);
         ctx.drawImage(bgImg, 0, 0, W, H);
+    }
+
+    function drawPots() {
+        const potW = 50;
+        const potH = 67;
+
+        potList.forEach(p => {
+            // Assuming horizontal sprite: frame1 (fine) at x=0, frame2 (broken) at x=504
+            const frameX = p.broken ? 504 : 0;
+            ctx.drawImage(
+                potImg,
+                frameX, 0, 504, 669,   // source frame
+                p.x, p.y, potW, potH   // destination scaled
+            );
+        });
     }
 
     function drawDust() {
@@ -272,6 +333,26 @@ function startMaidCleanUpGame(imageURL, clumsyLevel = 0, dustLevel = 100) {
             closeButton.visible = true;
             drawAll();
         }
+    }
+
+    // --- Pot Collision Logic ---
+    function checkPotCollision() {
+        const potW = 50;
+        const potH = 67;
+
+        potList.forEach(p => {
+            if (p.broken) return;
+
+            const dx = mouseX - (p.x + potW / 2);
+            const dy = mouseY - (p.y + potH / 2);
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist < 40) {
+                p.broken = true;
+
+                drawAll();
+            }
+        });
     }
 
     // --- Close Button Click ---
