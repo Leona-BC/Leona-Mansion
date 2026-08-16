@@ -105,10 +105,16 @@
                     if (!buttonRegistry["Search for ball"]) {
                         AddButton("Search for ball", () => startFetchScentPrototype(3));
                     }
+                    if (!buttonRegistry["Fetch the ball"]) {
+                        AddButton("Fetch the ball", () => startFetchScentPrototype(3));
+                    }
     
                 } else {
                     if (buttonRegistry["Search for ball"]) {
                         RemoveButton("Search for ball");
+                    }
+                    if (buttonRegistry["Fetch the ball"]) {
+                        RemoveButton("Fetch the ball");
                     }
                 }
             }
@@ -182,6 +188,14 @@
             await new Promise((resolve, reject) => {
                 const dishesCleanupMiniGamescript = document.createElement("script");
                 dishesCleanupMiniGamescript.src = "https://leona-bc.github.io/Leona-Mansion/Plugins/MiniGames/Fetch.js";
+                dishesCleanupMiniGamescript.onload = resolve;
+                dishesCleanupMiniGamescript.onerror = reject;
+                document.head.appendChild(dishesCleanupMiniGamescript);
+            });
+    
+            await new Promise((resolve, reject) => {
+                const dishesCleanupMiniGamescript = document.createElement("script");
+                dishesCleanupMiniGamescript.src = "https://leona-bc.github.io/Leona-Mansion/Plugins/MiniGames/Fetch2.js";
                 dishesCleanupMiniGamescript.onload = resolve;
                 dishesCleanupMiniGamescript.onerror = reject;
                 document.head.appendChild(dishesCleanupMiniGamescript);
