@@ -77,7 +77,7 @@
                     (Player.Position.Y >= 24 && Player.Position.Y <= 29)) {
     
                     if (!buttonRegistry["Start Cleaning"]) {
-                        AddButton("Start Cleaning", () => startMaidCleanUpGame("https://leona-bc.github.io/Leona-Mansion/Assets/Mansion-BG.png", Math.ceil(CharacterGetClumsiness(Player)), 100));
+                        AddButton("Start Cleaning", () => startMaidCleanUpGame("https://leona-bc.github.io/Leona-Mansion/Assets/Mansion-BG.png", Math.ceil(CharacterGetClumsiness(Player)), 100, 3));
                     }
     
                 } else {
