@@ -87,6 +87,7 @@ function startMaidCleanUpGame(imageURL, clumsyLevel = 0, dustLevel = 100, potCou
     // --- Initialize once background loads ---
     bgImg.onload = () => {
         initPots();
+        ensureDusterSafeSpawn();
         initDust();
         drawAll();
     };
@@ -102,6 +103,31 @@ function startMaidCleanUpGame(imageURL, clumsyLevel = 0, dustLevel = 100, potCou
                 x: Math.random() * (W - potW),
                 y: Math.random() * (H - potH),
                 broken: false
+            });
+        }
+    }
+
+    function ensureDusterSafeSpawn() {
+        const potW = 50;
+        const potH = 67;
+    
+        let safe = false;
+    
+        while (!safe) {
+            safe = true;
+    
+            potList.forEach(p => {
+                if (
+                    mouseX > p.x &&
+                    mouseX < p.x + potW &&
+                    mouseY > p.y &&
+                    mouseY < p.y + potH
+                ) {
+                    // Duster is inside a pot → move it
+                    mouseX = Math.random() * W;
+                    mouseY = Math.random() * H;
+                    safe = false;
+                }
             });
         }
     }
@@ -328,8 +354,17 @@ function startMaidCleanUpGame(imageURL, clumsyLevel = 0, dustLevel = 100, potCou
         if (gameOver) return;
 
         if (getProgress() >= 0.95) {
+           // Check if any pot is broken
+            const brokeSomething = potList.some(p => p.broken);
+    
             gameOver = true;
-            message = "Room cleaned!";
+    
+            if (brokeSomething) {
+                message = "Room cleaned but you broke something...";
+            } else {
+                message = "Room cleaned!";
+            }
+    
             closeButton.visible = true;
             drawAll();
         }
