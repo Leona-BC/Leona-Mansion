@@ -37,7 +37,7 @@ function startClawCraneGame() {
     const octx = overlay.getContext("2d");
     
     // --- Center AFTER browser paints it ---
-    /*requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
         const rect = canvas.getBoundingClientRect();
     
         canvas.style.left = "-600px";
@@ -46,7 +46,7 @@ function startClawCraneGame() {
         // Update close button position AFTER centering
         closeButton.x = W / 2 - 60;
         closeButton.y = H / 2 + 40;
-    });*/
+    });
 
     // --- Playable zone ---
     const PLAY_LEFT = 20;
@@ -86,11 +86,11 @@ function startClawCraneGame() {
     const bgImg = new Image();
     let bgReady = false;
     bgImg.onload = () => bgReady = true;
-    bgImg.src = "./CorridorView.png";
+    bgImg.src = "https://leona-bc.github.io/Leona-Mansion/Assets/CorridorView.png";
 
     // --- Claw sprite sheet ---
     const clawSheet = new Image();
-    clawSheet.src = "./MouthClaw.png";
+    clawSheet.src = "https://leona-bc.github.io/Leona-Mansion/Assets/MouthClaw.png";
 
     // --- Scaling factor ---
     const CLAW_SCALE = 80 / 538; // original height 538 → scaled to 80px
@@ -103,11 +103,11 @@ function startClawCraneGame() {
     ];
 
     // --- Object sprites ---
-    const dustImg = new Image(); dustImg.src = "./dust.png";
-    const spongeImg = new Image(); spongeImg.src = "./sponge.png";
-    const sockImg = new Image(); sockImg.src = "./Sock.png";
-    const underwearImg = new Image(); underwearImg.src = "./Panties.png";
-    const ballImg = new Image(); ballImg.src = "./Ball.png";
+    const dustImg = new Image(); dustImg.src = "https://leona-bc.github.io/Leona-Mansion/Assets/dust.png";
+    const spongeImg = new Image(); spongeImg.src = "https://leona-bc.github.io/Leona-Mansion/Assets/sponge.png";
+    const sockImg = new Image(); sockImg.src = "https://leona-bc.github.io/Leona-Mansion/Assets/Sock.png";
+    const underwearImg = new Image(); underwearImg.src = "https://leona-bc.github.io/Leona-Mansion/Assets/Panties.png";
+    const ballImg = new Image(); ballImg.src = "https://leona-bc.github.io/Leona-Mansion/Assets/Ball.png";
 
     // --- Random object placement ---
     const floorY = 220;
