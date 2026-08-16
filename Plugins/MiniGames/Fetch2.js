@@ -104,7 +104,7 @@ function startClawCraneGame() {
 
     // --- Object sprites ---
     const dustImg = new Image(); dustImg.src = "https://leona-bc.github.io/Leona-Mansion/Assets/dust.png";
-    const spongeImg = new Image(); spongeImg.src = "https://leona-bc.github.io/Leona-Mansion/Assets/sponge.png";
+    const spongeImg = new Image(); spongeImg.src = "https://leona-bc.github.io/Leona-Mansion/Assets/Sponge.png";
     const sockImg = new Image(); sockImg.src = "https://leona-bc.github.io/Leona-Mansion/Assets/Sock.png";
     const underwearImg = new Image(); underwearImg.src = "https://leona-bc.github.io/Leona-Mansion/Assets/Panties.png";
     const ballImg = new Image(); ballImg.src = "https://leona-bc.github.io/Leona-Mansion/Assets/Ball.png";
