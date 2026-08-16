@@ -106,7 +106,7 @@
                         AddButton("Search for ball", () => startFetchScentPrototype(3));
                     }
                     if (!buttonRegistry["Fetch the ball"]) {
-                        AddButton("Fetch the ball", () => startFetchScentPrototype(3));
+                        AddButton("Fetch the ball", () => startClawCraneGame());
                     }
     
                 } else {
