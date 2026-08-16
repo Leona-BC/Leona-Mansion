@@ -79,7 +79,7 @@ function startMaidCleanUpGame(imageURL, clumsyLevel = 0, dustLevel = 100, potCou
     bgImg.src = imageURL;
 
     const potImg = new Image();
-    potImg.src = "https://leona-bc.github.io/Leona-Mansion/Assets/pot_sprite.png"; // 2-frame sprite
+    potImg.src = "https://leona-bc.github.io/Leona-Mansion/Assets/Vase.png"; // 2-frame sprite
 
     let dustList = [];
     let potList = [];
