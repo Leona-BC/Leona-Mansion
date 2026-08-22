@@ -6,7 +6,7 @@ let fishingActive = false;
 function startFishingGame() {
     MenuLock(true);
 
-    const container = MiniGameManager.getContainer();
+    const container = window.MiniGameManager.getContainer();
     // --- Create canvas ---
     const canvas = document.createElement("canvas");
     canvas.width = 600;
