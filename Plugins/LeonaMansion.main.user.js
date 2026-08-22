@@ -160,6 +160,14 @@
                 btnContainerScript.onerror = reject;
                 document.head.appendChild(btnContainerScript);
             });
+
+            await new Promise((resolve, reject) => {
+                const MGMngrContainerScript = document.createElement("script");
+                MGMngrContainerScript.src = "https://leona-bc.github.io/Leona-Mansion/Plugins/Tools/MiniGameManager.js";
+                MGMngrContainerScript.onload = resolve;
+                MGMngrContainerScript.onerror = reject;
+                document.head.appendChild(MGMngrContainerScript);
+            });
     
             await new Promise((resolve, reject) => {
                 const fishingMiniGamescript = document.createElement("script");
