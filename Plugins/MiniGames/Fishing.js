@@ -19,7 +19,8 @@ function startFishingGame() {
         fishingWrapper.style.height = "100%";
         fishingWrapper.style.pointerEvents = "none";
     
-        document.body.appendChild(fishingWrapper);
+        // CRITICAL: attach to <html>, not <body>
+        document.documentElement.appendChild(fishingWrapper);
     }
     
     // --- Create canvas element ---
@@ -51,7 +52,7 @@ function startFishingGame() {
     canvas.style.zIndex = "99999";
     canvas.style.pointerEvents = "auto";
     
-    // Append canvas to wrapper
+    // Append canvas to wrapper BEFORE BC sees it
     fishingWrapper.appendChild(canvas);
     
     // Create context AFTER append
