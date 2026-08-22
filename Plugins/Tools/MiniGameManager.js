@@ -5,6 +5,14 @@ class MiniGameManager {
 
         // Append OUTSIDE BC's UI
         document.body.appendChild(this.gameWrapper);
+
+        // Force wrapper to escape BC's global transform
+        this.gameWrapper.style.position = "fixed";
+        this.gameWrapper.style.left = "0";
+        this.gameWrapper.style.top = "0";
+        this.gameWrapper.style.zIndex = "999999";
+        this.gameWrapper.style.transform = "none";
+        this.gameWrapper.style.pointerEvents = "none"; // optional
     }
 
     getContainer() {
