@@ -64,7 +64,7 @@
                     (Player.Position.Y >= 30 && Player.Position.Y <= 34)) {
     
                     if (!buttonRegistry["Start Fishing"]) {
-                        AddButton("Start Fishing", () => startFishingGame());
+                        //AddButton("Start Fishing", () => startFishingGame());
                     }
     
                 } else {
@@ -167,6 +167,12 @@
                 fishingMiniGamescript.onload = resolve;
                 fishingMiniGamescript.onerror = reject;
                 document.head.appendChild(fishingMiniGamescript);
+                setInterval(() => {
+                    if (window.startFishingRequested) {
+                        window.startFishingRequested = false;
+                        startFishingGame();   // SAFE PLACE
+                    }
+                }, 50);
             });
     
             await new Promise((resolve, reject) => {
