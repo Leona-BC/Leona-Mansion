@@ -12,47 +12,60 @@ function startFishingGame() {
         fishingWrapper = document.createElement("div");
         fishingWrapper.id = "FishingWrapper";
     
-        // Fullscreen overlay that stays OUTSIDE BC layout
         fishingWrapper.style.position = "fixed";
         fishingWrapper.style.left = "0";
         fishingWrapper.style.top = "0";
         fishingWrapper.style.width = "100%";
         fishingWrapper.style.height = "100%";
-        fishingWrapper.style.pointerEvents = "none"; // wrapper ignores clicks
+        fishingWrapper.style.pointerEvents = "none";
     
         document.body.appendChild(fishingWrapper);
     }
     
     // --- Create canvas element ---
     const canvas = document.createElement("canvas");
-    canvas.width = 600;
-    canvas.height = 300;
     
-    // Prevent BC from grabbing or repositioning this element
-    canvas.classList.add("BCX_NoLayout");
+    // Responsive sizing: width = half screen, height = width/2
+    function resizeFishingCanvas() {
+        const w = window.innerWidth / 2;
+        const h = w / 2;
     
-    // Force correct display size
-    canvas.style.width = "600px";
-    canvas.style.height = "300px";
+        canvas.width = w;
+        canvas.height = h;
+    
+        canvas.style.width = w + "px";
+        canvas.style.height = h + "px";
+    }
+    
+    // Initial size
+    resizeFishingCanvas();
+    
+    // Recalculate on window resize
+    window.addEventListener("resize", resizeFishingCanvas);
     
     // Canvas visual style
     canvas.style.border = "2px solid #333";
-    canvas.style.position = "fixed";          // viewport-based
-    canvas.style.left = "50%";
-    canvas.style.top = "50%";
-    canvas.style.transform = "translate(-50%, -50%)";
+    canvas.style.position = "fixed";   // viewport-based
+    canvas.style.left = "0px";         // top-left corner
+    canvas.style.top = "0px";
     canvas.style.zIndex = "99999";
-    canvas.style.pointerEvents = "auto";      // canvas receives clicks
+    canvas.style.pointerEvents = "auto";
     
-    // Append canvas to wrapper (NOT inside BC game canvas)
+    // Append canvas to wrapper
     fishingWrapper.appendChild(canvas);
     
     // Create context AFTER append
     const ctx = canvas.getContext("2d");
     
     // Define W and H AFTER context creation
-    const W = canvas.width;
-    const H = canvas.height;
+    let W = canvas.width;
+    let H = canvas.height;
+    
+    // Update W/H whenever resized
+    window.addEventListener("resize", () => {
+        W = canvas.width;
+        H = canvas.height;
+    });
     
     // --- Declare closeButton ONLY ONCE ---
     const closeButton = {
