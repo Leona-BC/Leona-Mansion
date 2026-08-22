@@ -12,16 +12,15 @@ function startFishingGame() {
         fishingWrapper = document.createElement("div");
         fishingWrapper.id = "FishingWrapper";
     
-        // Fullscreen overlay that BC cannot reposition
+        // Fullscreen overlay that stays OUTSIDE BC layout
         fishingWrapper.style.position = "fixed";
         fishingWrapper.style.left = "0";
         fishingWrapper.style.top = "0";
         fishingWrapper.style.width = "100%";
         fishingWrapper.style.height = "100%";
-        fishingWrapper.style.pointerEvents = "none";
+        fishingWrapper.style.pointerEvents = "none"; // wrapper ignores clicks
     
-        // IMPORTANT: attach to <html>, not <body>
-        document.documentElement.appendChild(fishingWrapper);
+        document.body.appendChild(fishingWrapper);
     }
     
     // --- Create canvas element ---
@@ -29,18 +28,23 @@ function startFishingGame() {
     canvas.width = 600;
     canvas.height = 300;
     
+    // Prevent BC from grabbing or repositioning this element
+    canvas.classList.add("BCX_NoLayout");
+    
+    // Force correct display size
     canvas.style.width = "600px";
     canvas.style.height = "300px";
     
+    // Canvas visual style
     canvas.style.border = "2px solid #333";
-    canvas.style.position = "fixed";
+    canvas.style.position = "fixed";          // viewport-based
     canvas.style.left = "50%";
     canvas.style.top = "50%";
     canvas.style.transform = "translate(-50%, -50%)";
     canvas.style.zIndex = "99999";
-    canvas.style.pointerEvents = "auto";
+    canvas.style.pointerEvents = "auto";      // canvas receives clicks
     
-    // Append canvas to wrapper (BC cannot move it)
+    // Append canvas to wrapper (NOT inside BC game canvas)
     fishingWrapper.appendChild(canvas);
     
     // Create context AFTER append
