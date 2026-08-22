@@ -5,7 +5,8 @@ let fishingActive = false;
 
 function startFishingGame() {
     MenuLock(true);
-    
+
+    const container = MiniGameManager.getContainer();
     // --- Create canvas ---
     const canvas = document.createElement("canvas");
     canvas.width = 600;
@@ -20,7 +21,8 @@ function startFishingGame() {
     canvas.style.zIndex = "99999";
     
     // Append canvas FIRST
-    document.body.appendChild(canvas);
+    //document.body.appendChild(canvas);
+    container.appendChild(canvas);
     
     // Create context AFTER append
     const ctx = canvas.getContext("2d");
