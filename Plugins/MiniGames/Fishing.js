@@ -6,67 +6,28 @@ let fishingActive = false;
 function startFishingGame() {
     MenuLock(true);
     
-    // Create (or reuse) a viewport-level wrapper OUTSIDE all BC-managed DOM
-    let fishingWrapper = document.getElementById("FishingWrapper");
-    if (!fishingWrapper) {
-        fishingWrapper = document.createElement("div");
-        fishingWrapper.id = "FishingWrapper";
-    
-        fishingWrapper.style.position = "fixed";
-        fishingWrapper.style.left = "0";
-        fishingWrapper.style.top = "0";
-        fishingWrapper.style.width = "100%";
-        fishingWrapper.style.height = "100%";
-        fishingWrapper.style.pointerEvents = "none";
-    
-        // CRITICAL: attach to <html>, not <body>
-        document.documentElement.appendChild(fishingWrapper);
-    }
-    
-    // --- Create canvas element ---
+    // --- Create canvas ---
     const canvas = document.createElement("canvas");
+    canvas.width = 600;
+    canvas.height = 300;
     
-    // Responsive sizing: width = half screen, height = width/2
-    function resizeFishingCanvas() {
-        const w = window.innerWidth / 2;
-        const h = w / 2;
+    // Force correct display size
+    canvas.style.width = "600px";
+    canvas.style.height = "300px";
     
-        canvas.width = w;
-        canvas.height = h;
-    
-        canvas.style.width = w + "px";
-        canvas.style.height = h + "px";
-    }
-    
-    // Initial size
-    resizeFishingCanvas();
-    
-    // Recalculate on window resize
-    window.addEventListener("resize", resizeFishingCanvas);
-    
-    // Canvas visual style
     canvas.style.border = "2px solid #333";
-    canvas.style.position = "fixed";   // viewport-based
-    canvas.style.left = "0px";         // top-left corner
-    canvas.style.top = "0px";
+    canvas.style.position = "absolute";
     canvas.style.zIndex = "99999";
-    canvas.style.pointerEvents = "auto";
     
-    // Append canvas to wrapper BEFORE BC sees it
-    fishingWrapper.appendChild(canvas);
+    // Append canvas FIRST
+    document.body.appendChild(canvas);
     
     // Create context AFTER append
     const ctx = canvas.getContext("2d");
     
     // Define W and H AFTER context creation
-    let W = canvas.width;
-    let H = canvas.height;
-    
-    // Update W/H whenever resized
-    window.addEventListener("resize", () => {
-        W = canvas.width;
-        H = canvas.height;
-    });
+    const W = canvas.width;
+    const H = canvas.height;
     
     // --- Declare closeButton ONLY ONCE ---
     const closeButton = {
@@ -76,6 +37,18 @@ function startFishingGame() {
         height: 40,
         visible: false
     };
+    
+    // --- Center AFTER browser paints it ---
+    requestAnimationFrame(() => {
+        const rect = canvas.getBoundingClientRect();
+    
+        canvas.style.left = "-600px";
+        canvas.style.top = "-200px";
+    
+        // Update close button position AFTER centering
+        closeButton.x = W / 2 - 60;
+        closeButton.y = H / 2 + 40;
+    });
     
     // Water wave parameters
     let t = 0;
