@@ -6,23 +6,22 @@ let fishingActive = false;
 function startFishingGame() {
     MenuLock(true);
     
-    // --- Create canvas ---
-
-    // Create (or reuse) a viewport-level wrapper OUTSIDE the BC game canvas
+    // Create (or reuse) a viewport-level wrapper OUTSIDE all BC-managed DOM
     let fishingWrapper = document.getElementById("FishingWrapper");
     if (!fishingWrapper) {
         fishingWrapper = document.createElement("div");
         fishingWrapper.id = "FishingWrapper";
     
-        // Fullscreen overlay that ignores BC layout
+        // Fullscreen overlay that BC cannot reposition
         fishingWrapper.style.position = "fixed";
         fishingWrapper.style.left = "0";
         fishingWrapper.style.top = "0";
         fishingWrapper.style.width = "100%";
         fishingWrapper.style.height = "100%";
-        fishingWrapper.style.pointerEvents = "none"; // wrapper ignores clicks
+        fishingWrapper.style.pointerEvents = "none";
     
-        document.body.appendChild(fishingWrapper);
+        // IMPORTANT: attach to <html>, not <body>
+        document.documentElement.appendChild(fishingWrapper);
     }
     
     // --- Create canvas element ---
@@ -30,20 +29,18 @@ function startFishingGame() {
     canvas.width = 600;
     canvas.height = 300;
     
-    // Force correct display size
     canvas.style.width = "600px";
     canvas.style.height = "300px";
     
-    // Canvas visual style
     canvas.style.border = "2px solid #333";
-    canvas.style.position = "fixed"; // IMPORTANT: viewport-based
+    canvas.style.position = "fixed";
     canvas.style.left = "50%";
     canvas.style.top = "50%";
     canvas.style.transform = "translate(-50%, -50%)";
     canvas.style.zIndex = "99999";
-    canvas.style.pointerEvents = "auto"; // canvas receives clicks
+    canvas.style.pointerEvents = "auto";
     
-    // Append canvas to wrapper (NOT to BC game canvas)
+    // Append canvas to wrapper (BC cannot move it)
     fishingWrapper.appendChild(canvas);
     
     // Create context AFTER append
