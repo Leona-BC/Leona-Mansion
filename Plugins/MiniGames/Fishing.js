@@ -41,12 +41,7 @@ function startFishingGame() {
     };
     
     // --- Center AFTER browser paints it ---
-    requestAnimationFrame(() => {
-        const rect = canvas.getBoundingClientRect();
-    
-        canvas.style.left = "-600px";
-        canvas.style.top = "-200px";
-    
+    requestAnimationFrame(() => {    
         // Update close button position AFTER centering
         closeButton.x = W / 2 - 60;
         closeButton.y = H / 2 + 40;
