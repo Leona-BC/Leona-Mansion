@@ -65,6 +65,7 @@
     
                     if (!buttonRegistry["Start Fishing"]) {
                         //AddButton("Start Fishing", () => startFishingGame());
+                        AddButton("Start Fishing", () => { window.startFishingRequested = true; });
                     }
     
                 } else {
