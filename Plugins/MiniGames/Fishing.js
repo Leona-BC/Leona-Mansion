@@ -11,9 +11,17 @@ function startFishingGame() {
     const canvas = document.createElement("canvas");
     canvas.width = 600;
     canvas.height = 300;
+
+    canvas.style.position = "absolute";
+    canvas.style.pointerEvents = "auto";
+    
+    // Position the canvas (mini‑game responsibility)
+    canvas.style.left = "calc(50% - 300px)";
+    canvas.style.top = "calc(50% - 150px)";
     
     // Force correct display size
-    canvas.style.width = "600px";
+    
+    /*canvas.style.width = "600px";
     canvas.style.height = "300px";
     
     canvas.style.border = "2px solid #333";
@@ -21,7 +29,8 @@ function startFishingGame() {
     canvas.style.zIndex = "99999";
     
     // Append canvas FIRST
-    //document.body.appendChild(canvas);
+    //document.body.appendChild(canvas);*/
+    
     container.appendChild(canvas);
     
     // Create context AFTER append
