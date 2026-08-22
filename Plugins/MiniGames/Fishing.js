@@ -7,9 +7,26 @@ function startFishingGame() {
     MenuLock(true);
     
     // --- Create canvas ---
+
+    // Create (or reuse) a viewport-level wrapper OUTSIDE the BC game canvas
+    let fishingWrapper = document.getElementById("FishingWrapper");
+    if (!fishingWrapper) {
+        fishingWrapper = document.createElement("div");
+        fishingWrapper.id = "FishingWrapper";
+    
+        // Fullscreen overlay that ignores BC layout
+        fishingWrapper.style.position = "fixed";
+        fishingWrapper.style.left = "0";
+        fishingWrapper.style.top = "0";
+        fishingWrapper.style.width = "100%";
+        fishingWrapper.style.height = "100%";
+        fishingWrapper.style.pointerEvents = "none"; // wrapper ignores clicks
+    
+        document.body.appendChild(fishingWrapper);
+    }
+    
+    // --- Create canvas element ---
     const canvas = document.createElement("canvas");
-    canvas.style.left = "0px";
-    canvas.style.top = "0px";
     canvas.width = 600;
     canvas.height = 300;
     
@@ -17,12 +34,17 @@ function startFishingGame() {
     canvas.style.width = "600px";
     canvas.style.height = "300px";
     
+    // Canvas visual style
     canvas.style.border = "2px solid #333";
-    canvas.style.position = "absolute";
+    canvas.style.position = "fixed"; // IMPORTANT: viewport-based
+    canvas.style.left = "50%";
+    canvas.style.top = "50%";
+    canvas.style.transform = "translate(-50%, -50%)";
     canvas.style.zIndex = "99999";
+    canvas.style.pointerEvents = "auto"; // canvas receives clicks
     
-    // Append canvas FIRST
-    document.body.appendChild(canvas);
+    // Append canvas to wrapper (NOT to BC game canvas)
+    fishingWrapper.appendChild(canvas);
     
     // Create context AFTER append
     const ctx = canvas.getContext("2d");
@@ -39,22 +61,6 @@ function startFishingGame() {
         height: 40,
         visible: false
     };
-    
-    // --- Center AFTER browser paints it ---
-    requestAnimationFrame(() => {
-        const rect = canvas.getBoundingClientRect();
-    
-        // --- Position canvas relative to the viewport ---
-        canvas.style.position = "fixed";
-        canvas.style.left = "50%";
-        canvas.style.top = "50%";
-        canvas.style.transform = "translate(-50%, -50%)";
-        canvas.style.zIndex = "99999";
-        
-        // Update close button position AFTER centering
-        closeButton.x = W / 2 - 60;
-        closeButton.y = H / 2 + 40;
-    });
     
     // Water wave parameters
     let t = 0;
