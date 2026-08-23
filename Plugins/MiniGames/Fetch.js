@@ -5,14 +5,14 @@ function startFetchScentPrototype(dist) {
     window.fetchGameActive = true;
 
     // --- Create main canvas ---
-    const canvasWidth = window.innerWidth * 0.48;
+   const canvasWidth = window.innerWidth * 0.48;
     const canvasHeight = canvasWidth / 2; // 2:1 ratio
     const headerHeight = 32;
     
     const win = window.MiniGameManager.openWindow(
         canvasWidth,
         canvasHeight + headerHeight,
-        "Searching the ball activity"
+        "Room Cleaning activity"
     );
     
     const canvas = document.createElement("canvas");
@@ -35,6 +35,24 @@ function startFetchScentPrototype(dist) {
     win.appendChild(canvas);
 
     const octx = overlay.getContext("2d");
+	
+    const W = canvas.width;
+    const H = canvas.height;
+	
+	 // Overlay canvas for duster
+    const overlay = document.createElement("canvas");
+    overlay.width = canvasWidth;
+    overlay.height = canvasHeight;
+    overlay.style.width = canvasWidth + "px";
+    overlay.style.height = canvasHeight + "px";
+    overlay.style.position = "absolute";
+    overlay.style.left = canvas.style.left;
+    overlay.style.top = canvas.style.top;
+    overlay.style.zIndex = "100000";
+    overlay.style.pointerEvents = "none";
+    overlay.style.cursor = "none";
+
+    win.appendChild(overlay);
 
     // --- Close button ---
     const closeButton = {
