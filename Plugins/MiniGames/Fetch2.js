@@ -118,7 +118,7 @@ function startClawCraneGame() {
 
     // --- Random object placement ---
     const floorY = canvasHeight * 0.70;
-	const DROP_Y = canvasHeight * 0.55;
+	const DROP_Y = canvasHeight * 0.70;
     const objectTypes = [
         { type: "dust", img: dustImg },
         { type: "dust", img: dustImg },
