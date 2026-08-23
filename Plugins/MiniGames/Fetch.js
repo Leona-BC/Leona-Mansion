@@ -34,8 +34,7 @@ function startFetchScentPrototype(dist) {
     
     win.appendChild(canvas);
 
-    const octx = overlay.getContext("2d");
-	
+    const ctx = canvas.getContext("2d");
     const W = canvas.width;
     const H = canvas.height;
 	
@@ -53,6 +52,8 @@ function startFetchScentPrototype(dist) {
     overlay.style.cursor = "none";
 
     win.appendChild(overlay);
+
+    const octx = overlay.getContext("2d");
 
     // --- Close button ---
     const closeButton = {
