@@ -109,6 +109,8 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     // OVERLAY CANVAS (hand + sponge)
     // -------------------------------
     const overlay = document.createElement("canvas");
+    overlay.width = canvasWidth;
+    overlay.height = canvasHeight;
     overlay.style.width = canvasWidth + "px";
     overlay.style.height = canvasHeight + "px";
     
