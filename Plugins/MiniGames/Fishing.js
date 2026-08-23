@@ -16,7 +16,6 @@ function startFishingGame() {
     canvas.style.pointerEvents = "auto";
     
     win.appendChild(canvas);
-    
     const ctx = canvas.getContext("2d");
     
     // Define W and H AFTER context creation
