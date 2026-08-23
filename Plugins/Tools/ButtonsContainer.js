@@ -214,7 +214,6 @@ function AddButton(name, callback) {
 
   btn.onclick = () => {
     if (menuLocked) return;
-    MenuLock(true);
     callback();
   };
 
@@ -247,10 +246,8 @@ function UpdateManagerVisibility() {
 
   if (insideMansion) {
     menuWrapper.style.display = "block";
-    MenuLock(false); // unlock if previously locked
   } else {
     menuWrapper.style.display = "none";
-    MenuLock(true); // lock everything while hidden
     isOpen = false;
     panelVisible = false;
   }
