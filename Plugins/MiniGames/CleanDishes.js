@@ -125,16 +125,16 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
 // -------------------------------
     const baseYRatio = 220 / 300; // keep alignment with background
     const SpongeHome = {
-        x: W * (100 / 600),
-        y: H * baseYRatio
+        x: canvasWidth * (100 / 600),
+        y: canvasHeight * baseYRatio
     };
     const PlatePos = {
-        x: W * (300 / 600),
-        y: H * baseYRatio
+        x: canvasWidth * (300 / 600),
+        y: canvasHeight * baseYRatio
     };
     const StackPos = {
-        x: W * (500 / 600),
-        y: H * baseYRatio + 20 // PlatePos.y + 20
+        x: canvasWidth * (500 / 600),
+        y: canvasHeight * baseYRatio + 20 // PlatePos.y + 20
     };
 
     // -------------------------------
