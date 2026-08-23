@@ -10,8 +10,8 @@ function startFishingGame() {
     // --- Create canvas ---
     const canvas = document.createElement("canvas");
     const tempWidth = (window.innerWidth / 2);
-    canvas.width = tempWidth + "px";
-    canvas.height = (tempWidth / 2) + "px";
+    canvas.width = tempWidth;
+    canvas.height = (tempWidth / 2);
     
     // Force correct display size
     canvas.style.width = tempWidth + "px";
