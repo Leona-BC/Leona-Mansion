@@ -55,8 +55,8 @@ function startClawCraneGame() {
     const octx = overlay.getContext("2d");
 
     // --- Playable zone ---
-    const PLAY_LEFT = 20;
-    const PLAY_RIGHT = 400;
+    const PLAY_LEFT = canvasWidth * 0.05;   // 5% from left
+	const PLAY_RIGHT = canvasWidth * 0.80;  // 80% from left
 
     // --- Buttons ---
     const closeButton = {
@@ -388,27 +388,39 @@ function startClawCraneGame() {
     // --- Control panel ---
     function drawControlPanel() {
         ctx.fillStyle = "rgba(0,0,0,0.4)";
-        ctx.fillRect(420, 0, 180, 300);
-
-        ctx.fillStyle = "white";
-        ctx.font = "18px Arial";
-        ctx.textAlign = "center";
-        ctx.fillText("Press the button", 510, 60);
-        ctx.fillText("to catch the ball.", 510, 80);
-
-        if (fetchButton.visible) {
-            ctx.fillStyle = "#222";
-            ctx.fillRect(fetchButton.x, fetchButton.y, fetchButton.width, fetchButton.height);
-
-            ctx.strokeStyle = "white";
-            ctx.lineWidth = 2;
-            ctx.strokeRect(fetchButton.x, fetchButton.y, fetchButton.width, fetchButton.height);
-
-            ctx.fillStyle = "white";
-            ctx.font = "20px Arial";
-            ctx.textAlign = "center";
-            ctx.fillText("Fetch!", fetchButton.x + fetchButton.width / 2, fetchButton.y + 27);
-        }
+        // Panel anchored to the right side
+		const PANEL_WIDTH = canvasWidth * 0.30;
+		const PANEL_X = canvasWidth - PANEL_WIDTH;
+		
+		ctx.fillStyle = "rgba(0,0,0,0.4)";
+		ctx.fillRect(PANEL_X, 0, PANEL_WIDTH, canvasHeight);
+		
+		// Text
+		ctx.fillStyle = "white";
+		ctx.font = "18px Arial";
+		ctx.textAlign = "center";
+		ctx.fillText("Press the button", PANEL_X + PANEL_WIDTH / 2, 60);
+		ctx.fillText("to catch the ball.", PANEL_X + PANEL_WIDTH / 2, 80);
+		
+		// Fetch button
+		if (fetchButton.visible) {
+		    fetchButton.x = PANEL_X + PANEL_WIDTH * 0.15;
+		    fetchButton.y = canvasHeight * 0.45;
+		    fetchButton.width = PANEL_WIDTH * 0.70;
+		    fetchButton.height = 40;
+		
+		    ctx.fillStyle = "#222";
+		    ctx.fillRect(fetchButton.x, fetchButton.y, fetchButton.width, fetchButton.height);
+		
+		    ctx.strokeStyle = "white";
+		    ctx.lineWidth = 2;
+		    ctx.strokeRect(fetchButton.x, fetchButton.y, fetchButton.width, fetchButton.height);
+		
+		    ctx.fillStyle = "white";
+		    ctx.font = "20px Arial";
+		    ctx.textAlign = "center";
+		    ctx.fillText("Fetch!", fetchButton.x + fetchButton.width / 2, fetchButton.y + 27);
+		}
     }
 
     // --- Result message ---
