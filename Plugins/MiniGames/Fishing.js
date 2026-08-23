@@ -122,6 +122,7 @@ function startFishingGame() {
             ) {
                 fishingActive = false;
                 canvas.remove();
+                window.MiniGameManager.closeWindow();
                 MenuLock(false);
                 return;
             }
