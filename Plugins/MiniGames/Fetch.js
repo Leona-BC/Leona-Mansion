@@ -414,7 +414,7 @@ function startFetchScentPrototype(dist) {
     }
 
     // --- Close Button ---
-    canvas.addEventListener("click", (e) => {
+    overlay.addEventListener("click", (e) => {
         if (!closeButton.visible) return;
 
         const mx = e.offsetX;
