@@ -18,6 +18,21 @@ class MiniGameManager {
     getContainer() {
         return this.gameWrapper;
     }
+
+    setCanvasSettings(canvas) {
+        const tempWidth = document.getElementById("MainCanvas").getBoundingClientRect().width;
+        canvas.width = tempWidth;
+        canvas.height = tempWidth / 2;
+        
+        // Force correct display size
+        canvas.style.width = tempWidth;
+        canvas.style.height = tempWidth / 2;
+        
+        canvas.style.border = "2px solid #333";
+        canvas.style.position = "absolute";
+        canvas.style.zIndex = "99999";
+        return canvas;
+    }
 }
 
 window.MiniGameManager = new MiniGameManager();
