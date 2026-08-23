@@ -100,6 +100,9 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     canvas.style.margin = "0";            // no weird offsets
     canvas.style.padding = "0";
     canvas.style.boxSizing = "border-box";
+
+    win.appendChild(canvas);
+    
     const ctx = canvas.getContext("2d");
 
     // -------------------------------
@@ -114,8 +117,11 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     overlay.style.left = canvas.style.left;
     overlay.style.top = canvas.style.top;
     overlay.style.zIndex = "100000";
-    overlay.style.pointerEvents = "none";
-    overlay.style.cursor = "none";
+    overlay.style.pointerEvents = "auto";
+    overlay.style.position = "relative";
+    overlay.style.flex = "none";
+    overlay.style.display = "block";
+    overlay.style.boxSizing = "border-box";
 
     win.appendChild(overlay);
     const octx = overlay.getContext("2d");
@@ -214,8 +220,8 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     // Draw Functions (main canvas)
 // -------------------------------
     function drawBackground() {
-        ctx.clearRect(0, 0, canvasWidth, canvasWidth);
-        ctx.drawImage(Images.background, 0, 0, canvasWidth, canvasWidth);
+        ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+        ctx.drawImage(Images.background, 0, 0, canvasWidth, canvasHeight);
     }
 
     function drawPlate(ctxLocal, plate) {
@@ -550,7 +556,7 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
         drawCloseButton(ctx);
 
         // Overlay canvas
-        octx.clearRect(0, 0, canvasWidth, canvasWidth);
+        octx.clearRect(0, 0, canvasWidth, canvasHeight);
         drawHeldSponge(octx);
         drawCursor(octx);
 
