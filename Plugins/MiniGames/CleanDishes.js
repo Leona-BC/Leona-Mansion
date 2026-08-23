@@ -76,9 +76,6 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     const W = 600;
     const H = 300;
 
-    const win = window.MiniGameManager.openWindow(W, H + 32, "Dish Cleaning activity");
-
-    const canvas = document.createElement("canvas");
     const canvasWidth = window.innerWidth * 0.48;
     const canvasHeight = canvasWidth / 2; // 2:1 ratio
     const headerHeight = 32;
