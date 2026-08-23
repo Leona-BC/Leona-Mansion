@@ -73,7 +73,6 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     // -------------------------------
     // MAIN CANVAS (inside popup window)
     // -------------------------------
-    // --- Create canvas ---
     const canvasWidth = window.innerWidth * 0.48;
     const canvasHeight = canvasWidth / 2; // 2:1 ratio
     const headerHeight = 32;
@@ -84,8 +83,10 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
         "Room Cleaning activity"
     );
     
+    // --- Create main canvas ---
     const canvas = document.createElement("canvas");
-    // Drawing buffer
+    
+    // Drawing buffer size
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
     
@@ -93,40 +94,45 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     canvas.style.width = canvasWidth + "px";
     canvas.style.height = canvasHeight + "px";
     
-    // ⭐ CRITICAL FIXES
-    canvas.style.position = "relative";   // not absolute, not fixed
-    canvas.style.flex = "none";           // prevents covering the header
-    canvas.style.display = "block";       // ensures normal layout
-    canvas.style.margin = "0";            // no weird offsets
+    // Layout
+    canvas.style.position = "relative";
+    canvas.style.flex = "none";
+    canvas.style.display = "block";
+    canvas.style.margin = "0";
     canvas.style.padding = "0";
     canvas.style.boxSizing = "border-box";
-
-    win.appendChild(canvas);
     
+    // Hide cursor under overlay
+    canvas.style.cursor = "none";
+    
+    win.appendChild(canvas);
     const ctx = canvas.getContext("2d");
-
+    
     // -------------------------------
     // OVERLAY CANVAS (hand + sponge)
     // -------------------------------
     const overlay = document.createElement("canvas");
+    
+    // Drawing buffer size (CRITICAL)
     overlay.width = canvasWidth;
     overlay.height = canvasHeight;
+    
+    // Display size
     overlay.style.width = canvasWidth + "px";
     overlay.style.height = canvasHeight + "px";
     
-    overlay.style.position = "relative";   // SAME AS CANVAS
-    overlay.style.flex = "none";           // SAME AS CANVAS
-    overlay.style.display = "block";       // SAME AS CANVAS
-    overlay.style.margin = "0";
-    overlay.style.padding = "0";
-    overlay.style.boxSizing = "border-box";
+    // ⭐ MUST BE ABSOLUTE TO OVERLAY THE MAIN CANVAS
+    overlay.style.position = "absolute";
+    overlay.style.left = "0px";
+    overlay.style.top = headerHeight + "px"; // ⭐ CRITICAL: align overlay with canvas inside window
     
     overlay.style.zIndex = "100000";
-    overlay.style.pointerEvents = "auto";  // CRITICAL
+    overlay.style.pointerEvents = "auto";
     overlay.style.cursor = "none";
-
+    
     win.appendChild(overlay);
     const octx = overlay.getContext("2d");
+
 
     // -------------------------------
     // Positions (ratio-based)
