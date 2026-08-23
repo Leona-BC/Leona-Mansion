@@ -45,11 +45,11 @@ function startFetchScentPrototype(dist) {
     overlay.style.width = canvasWidth + "px";
     overlay.style.height = canvasHeight + "px";
     overlay.style.position = "absolute";
-    overlay.style.left = canvas.style.left;
-    overlay.style.top = canvas.style.top;
+	overlay.style.left = "0px";
+	overlay.style.top = headerHeight + "px"; // below the window header
     overlay.style.zIndex = "100000";
-    overlay.style.pointerEvents = "none";
-    overlay.style.cursor = "none";
+    overlay.style.pointerEvents = "auto";
+	overlay.style.cursor = "none";   // hide the real cursor
 
     win.appendChild(overlay);
 
@@ -194,8 +194,12 @@ function startFetchScentPrototype(dist) {
     function updateOdorMovement(dt) {
         t += dt * 0.001;
 
-        odorX = W / 2 + Math.cos(t * 0.8) * 80;
-        odorY = H / 2 + Math.sin(t * 1.1) * 60;
+		const radiusX = W * 0.20;   // 20% of canvas width
+		const radiusY = H * 0.15;   // 15% of canvas height
+		const odorCenterY = H * 0.65;
+		
+		odorX = W / 2 + Math.cos(t * 0.8) * radiusX;
+		odorY = odorCenterY + Math.sin(t * 1.1) * radiusY;
 
         const dx = Math.cos(t * 0.8) * 80;
         const dy = Math.sin(t * 1.1) * 60;
