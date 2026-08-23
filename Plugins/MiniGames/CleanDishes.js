@@ -73,9 +73,7 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     // -------------------------------
     // MAIN CANVAS (inside popup window)
     // -------------------------------
-    const W = 600;
-    const H = 300;
-
+    // --- Create canvas ---
     const canvasWidth = window.innerWidth * 0.48;
     const canvasHeight = canvasWidth / 2; // 2:1 ratio
     const headerHeight = 32;
@@ -87,7 +85,6 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     );
     
     const canvas = document.createElement("canvas");
-    
     // Drawing buffer
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
@@ -103,13 +100,11 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     canvas.style.margin = "0";            // no weird offsets
     canvas.style.padding = "0";
     canvas.style.boxSizing = "border-box";
-    
-    win.appendChild(canvas);
     const ctx = canvas.getContext("2d");
 
     // -------------------------------
     // OVERLAY CANVAS (hand + sponge)
-// -------------------------------
+    // -------------------------------
     const overlay = document.createElement("canvas");
     overlay.width = canvasWidth;
     overlay.height = canvasHeight;
