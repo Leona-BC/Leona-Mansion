@@ -428,7 +428,7 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     // -------------------------------
     // Mouse Events (overlay)
     // -------------------------------
-    canvas.addEventListener("mousemove", e => {
+    overlay.addEventListener("mousemove", e => {
         DishGameState.rawMouseX = e.offsetX;
         DishGameState.rawMouseY = e.offsetY;
 
@@ -439,7 +439,7 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
         }
     });
 
-    canvas.addEventListener("mousedown", e => {
+    overlay.addEventListener("mousedown", e => {
         if (DishGameState.failed) return;
 
         const mx = e.offsetX;
@@ -471,7 +471,7 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
         }
     });
 
-    canvas.addEventListener("mouseup", e => {
+    overlay.addEventListener("mouseup", e => {
         const mx = e.offsetX;
         const my = e.offsetY;
 
