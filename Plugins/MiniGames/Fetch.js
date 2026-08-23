@@ -45,11 +45,11 @@ function startFetchScentPrototype(dist) {
     overlay.style.width = canvasWidth + "px";
     overlay.style.height = canvasHeight + "px";
     overlay.style.position = "absolute";
-	overlay.style.left = "0px";
-	overlay.style.top = headerHeight + "px"; // below the window header
-    overlay.style.zIndex = "100000";
-	overlay.style.cursor = "none";   // hide the real cursor
-    overlay.style.pointerEvents = "auto";
+	overlay.style.left = canvas.offsetLeft + "px";
+	overlay.style.top = canvas.offsetTop + "px";
+	overlay.style.zIndex = "100000";
+	overlay.style.cursor = "none";
+	overlay.style.pointerEvents = "auto";
 
     win.appendChild(overlay);
 
