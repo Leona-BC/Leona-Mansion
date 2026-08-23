@@ -6,7 +6,7 @@ let fishingActive = false;
 function startFishingGame() {
     MenuLock(true);
 
-    const canvasWidth = window.innerWidth * 0.40;
+    const canvasWidth = window.innerWidth * 0.48;
     const canvasHeight = canvasWidth / 2; // 2:1 ratio
     const headerHeight = 32;
     
