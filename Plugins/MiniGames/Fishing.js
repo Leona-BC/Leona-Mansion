@@ -6,16 +6,31 @@ let fishingActive = false;
 function startFishingGame() {
     MenuLock(true);
 
-    const win = window.MiniGameManager.openWindow(600, 350);
-
-    const canvas = document.createElement("canvas");
-    canvas.width = 600;
-    canvas.height = 300;
+    const canvasWidth = 600;
+    const canvasHeight = canvasWidth / 2; // 2:1 ratio
+    const headerHeight = 32;
     
-    canvas.style.flex = "1";
-    canvas.style.pointerEvents = "auto";
+    const win = MiniGameManager.openWindow(
+        canvasWidth,
+        canvasHeight + headerHeight
+    );
+    
+    const canvas = document.createElement("canvas");
+    
+    // Drawing buffer
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+    
+    // Display size
+    canvas.style.width = canvasWidth + "px";
+    canvas.style.height = canvasHeight + "px";
+    
+    // IMPORTANT: prevent canvas from covering header
+    canvas.style.flex = "none";
+    canvas.style.display = "block";
     
     win.appendChild(canvas);
+    
     const ctx = canvas.getContext("2d");
     
     // Define W and H AFTER context creation
