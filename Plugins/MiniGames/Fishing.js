@@ -9,7 +9,7 @@ function startFishingGame() {
     const container = window.MiniGameManager.getContainer();
     // --- Create canvas ---
     const canvas = document.createElement("canvas");
-    const tempWidth = window.innerWidth;
+    const tempWidth = (window.innerWidth / 2);
     canvas.width = tempWidth + "px";
     canvas.height = (tempWidth / 2) + "px";
     
