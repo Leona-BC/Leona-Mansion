@@ -16,7 +16,6 @@ function startFishingGame() {
     );
     
     const canvas = document.createElement("canvas");
-    
     // Drawing buffer
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
@@ -25,9 +24,13 @@ function startFishingGame() {
     canvas.style.width = canvasWidth + "px";
     canvas.style.height = canvasHeight + "px";
     
-    // IMPORTANT: prevent canvas from covering header
-    canvas.style.flex = "none";
-    canvas.style.display = "block";
+    // ⭐ CRITICAL FIXES
+    canvas.style.position = "relative";   // not absolute, not fixed
+    canvas.style.flex = "none";           // prevents covering the header
+    canvas.style.display = "block";       // ensures normal layout
+    canvas.style.margin = "0";            // no weird offsets
+    canvas.style.padding = "0";
+    canvas.style.boxSizing = "border-box";
     
     win.appendChild(canvas);
     
