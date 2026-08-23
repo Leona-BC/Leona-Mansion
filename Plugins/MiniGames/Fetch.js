@@ -140,7 +140,7 @@ function startFetchScentPrototype(dist) {
     let angle = 0;
 
     // --- Mouse movement ---
-    canvas.addEventListener("mousemove", (e) => {
+    overlay.addEventListener("mousemove", (e) => {
         noseX = e.offsetX;
         noseY = e.offsetY;
     });
