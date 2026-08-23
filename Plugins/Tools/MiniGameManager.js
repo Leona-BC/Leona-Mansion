@@ -1,22 +1,45 @@
 class MiniGameManager {
     constructor() {
-        this.gameWrapper = document.createElement("div");
-        this.gameWrapper.id = "MiniGameWrapper";
-
-        // Append OUTSIDE BC's UI
-        document.body.appendChild(this.gameWrapper);
-
-        // Force wrapper to escape BC's global transform
-        this.gameWrapper.style.position = "fixed";
-        this.gameWrapper.style.left = "0";
-        this.gameWrapper.style.top = "0";
-        this.gameWrapper.style.zIndex = "999999";
-        this.gameWrapper.style.transform = "none";
-        this.gameWrapper.style.pointerEvents = "none"; // optional
+        this.window = null;
     }
 
-    getContainer() {
-        return this.gameWrapper;
+    openWindow(width, height) {
+        // Remove previous window
+        if (this.window) this.window.remove();
+
+        // Create popup
+        const win = document.createElement("div");
+        win.id = "MiniGameWindow";
+
+        // Style it like a real popup
+        Object.assign(win.style, {
+            position: "fixed",
+            left: "50%",
+            top: "50%",
+            transform: "translate(-50%, -50%)",
+            width: width + "px",
+            height: height + "px",
+            background: "#222",
+            border: "2px solid #555",
+            borderRadius: "8px",
+            zIndex: "999999",
+            display: "flex",
+            flexDirection: "column",
+            pointerEvents: "auto"
+        });
+
+        // Add to page
+        document.body.appendChild(win);
+        this.window = win;
+
+        return win;
+    }
+
+    closeWindow() {
+        if (this.window) {
+            this.window.remove();
+            this.window = null;
+        }
     }
 }
 
