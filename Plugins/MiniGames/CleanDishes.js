@@ -130,7 +130,7 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
 
     // -------------------------------
     // Positions (ratio-based)
-// -------------------------------
+    // -------------------------------
     const baseYRatio = 220 / 300; // keep alignment with background
     const SpongeHome = {
         x: canvasWidth * (100 / 600),
@@ -220,7 +220,7 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
 
     // -------------------------------
     // Draw Functions (main canvas)
-// -------------------------------
+    // -------------------------------
     function drawBackground() {
         ctx.clearRect(0, 0, canvasWidth, canvasHeight);
         ctx.drawImage(Images.background, 0, 0, canvasWidth, canvasHeight);
@@ -328,7 +328,7 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
 
     // -------------------------------
     // Overlay Draw (hand + held sponge)
-// -------------------------------
+    // -------------------------------
     function drawHeldSponge(octxLocal) {
         if (!DishGameState.spongeActive) return;
 
@@ -353,7 +353,7 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
 
     // -------------------------------
     // Scrubbing Logic (RAW mouse)
-// -------------------------------
+    // -------------------------------
     function scrubPlate() {
         if (!DishGameState.currentPlate) return;
         if (!DishGameState.spongeActive) return;
@@ -399,7 +399,7 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
 
     // -------------------------------
     // Collapse Stack (Failure)
-// -------------------------------
+    // -------------------------------
     function collapseStack() {
         DishGameState.failed = true;
         closeButton.visible = true;
@@ -421,8 +421,8 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
 
     // -------------------------------
     // Mouse Events (overlay)
-// -------------------------------
-    overlay.addEventListener("mousemove", e => {
+    // -------------------------------
+    canvas.addEventListener("mousemove", e => {
         DishGameState.rawMouseX = e.offsetX;
         DishGameState.rawMouseY = e.offsetY;
 
@@ -433,7 +433,7 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
         }
     });
 
-    overlay.addEventListener("mousedown", e => {
+    canvas.addEventListener("mousedown", e => {
         if (DishGameState.failed) return;
 
         const mx = e.offsetX;
@@ -465,7 +465,7 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
         }
     });
 
-    overlay.addEventListener("mouseup", e => {
+    canvas.addEventListener("mouseup", e => {
         const mx = e.offsetX;
         const my = e.offsetY;
 
