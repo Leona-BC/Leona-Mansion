@@ -3,7 +3,7 @@ class MiniGameManager {
         this.window = null;
     }
 
-    openWindow(width, height) {
+    openWindow(width, height, title) {
         if (this.window) this.window.remove();
     
         const win = document.createElement("div");
@@ -41,7 +41,7 @@ class MiniGameManager {
             flexShrink: "0" // ⭐ prevents collapsing
         });
     
-        header.textContent = "Mini-Game";
+        header.textContent = title;
     
         const closeBtn = document.createElement("div");
         closeBtn.textContent = "✕";
