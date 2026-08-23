@@ -8,8 +8,8 @@ function startFishingGame() {
 
     const container = window.MiniGameManager.getContainer();
     // --- Create canvas ---
-    const canvas = document.createElement("canvas");
-    canvas.width = 600;
+    const canvas = window.MiniGameManager.setCanvasSettings(document.createElement("canvas"));
+    /*canvas.width = 600;
     canvas.height = 300;
     
     // Force correct display size
@@ -19,7 +19,7 @@ function startFishingGame() {
     
     canvas.style.border = "2px solid #333";
     canvas.style.position = "absolute";
-    canvas.style.zIndex = "99999";
+    canvas.style.zIndex = "99999";*/
         
     container.appendChild(canvas);
     
