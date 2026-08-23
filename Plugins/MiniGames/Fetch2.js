@@ -55,8 +55,9 @@ function startClawCraneGame() {
     const octx = overlay.getContext("2d");
 
     // --- Playable zone ---
-    const PLAY_LEFT = canvasWidth * 0.05;   // 5% from left
-	const PLAY_RIGHT = canvasWidth * 0.80;  // 80% from left
+	const PANEL_WIDTH = canvasWidth * 0.30;
+	const PLAY_LEFT = canvasWidth * 0.05;
+	const PLAY_RIGHT = canvasWidth - PANEL_WIDTH - 20;
 
     // --- Buttons ---
     const closeButton = {
@@ -116,7 +117,8 @@ function startClawCraneGame() {
     const ballImg = new Image(); ballImg.src = "https://leona-bc.github.io/Leona-Mansion/Assets/Ball.png";
 
     // --- Random object placement ---
-    const floorY = 220;
+    const floorY = canvasHeight * 0.70;
+	const DROP_Y = canvasHeight * 0.55;
     const objectTypes = [
         { type: "dust", img: dustImg },
         { type: "dust", img: dustImg },
