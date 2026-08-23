@@ -4,17 +4,35 @@ function startClawCraneGame() {
     if (window.clawGameActive) return;
     window.clawGameActive = true;
 
-    // --- Canvas setup ---
+    // --- Create canvas ---
+    const canvasWidth = window.innerWidth * 0.48;
+    const canvasHeight = canvasWidth / 2; // 2:1 ratio
+    const headerHeight = 32;
+    
+    const win = window.MiniGameManager.openWindow(
+        canvasWidth,
+        canvasHeight + headerHeight,
+        "Fishing activity"
+    );
+    
     const canvas = document.createElement("canvas");
-    canvas.width = 600;
-    canvas.height = 300;
-    canvas.style.width = "600px";
-    canvas.style.height = "300px";
-    canvas.style.border = "2px solid #333";
-    canvas.style.position = "absolute";
-    canvas.style.zIndex = "99999";
-    canvas.style.cursor = "default";
-    document.body.appendChild(canvas);
+    // Drawing buffer
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+    
+    // Display size
+    canvas.style.width = canvasWidth + "px";
+    canvas.style.height = canvasHeight + "px";
+    
+    // ⭐ CRITICAL FIXES
+    canvas.style.position = "relative";   // not absolute, not fixed
+    canvas.style.flex = "none";           // prevents covering the header
+    canvas.style.display = "block";       // ensures normal layout
+    canvas.style.margin = "0";            // no weird offsets
+    canvas.style.padding = "0";
+    canvas.style.boxSizing = "border-box";
+    
+    win.appendChild(canvas);
 
     const ctx = canvas.getContext("2d");
     const W = canvas.width;
@@ -22,31 +40,19 @@ function startClawCraneGame() {
 
     // --- Overlay canvas ---
     const overlay = document.createElement("canvas");
-    overlay.width = 600;
-    overlay.height = 300;
-    overlay.style.width = "600px";
-    overlay.style.height = "300px";
+    overlay.width = canvasWidth;
+    overlay.height = canvasHeight;
+    overlay.style.width = canvasWidth + "px";
+    overlay.style.height = canvasHeight + "px";
     overlay.style.position = "absolute";
     overlay.style.left = canvas.style.left;
     overlay.style.top = canvas.style.top;
     overlay.style.zIndex = "100000";
     overlay.style.pointerEvents = "none";
     overlay.style.cursor = "default";
-    document.body.appendChild(overlay);
+    win.appendChild(overlay);
 
     const octx = overlay.getContext("2d");
-    
-    // --- Center AFTER browser paints it ---
-    requestAnimationFrame(() => {
-        const rect = canvas.getBoundingClientRect();
-    
-        canvas.style.left = "-600px";
-        canvas.style.top = "-200px";
-    
-        // Update close button position AFTER centering
-        closeButton.x = W / 2 - 60;
-        closeButton.y = H / 2 + 40;
-    });
 
     // --- Playable zone ---
     const PLAY_LEFT = 20;
@@ -450,6 +456,8 @@ function startClawCraneGame() {
         canvas.remove();
         overlay.remove();
         window.clawGameActive = false;
+		
+        window.MiniGameManager.closeWindow();
         MenuLock(false);
     });
 }
