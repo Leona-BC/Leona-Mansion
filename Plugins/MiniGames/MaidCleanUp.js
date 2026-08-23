@@ -44,10 +44,10 @@ function startMaidCleanUpGame(imageURL, clumsyLevel = 0, dustLevel = 100, potCou
 
     // Overlay canvas for duster
     const overlay = document.createElement("canvas");
-    overlay.width = 600;
-    overlay.height = 300;
-    overlay.style.width = "600px";
-    overlay.style.height = "300px";
+    overlay.width = canvasWidth;
+    overlay.height = canvasHeight;
+    overlay.style.width = canvasWidth + "px";
+    overlay.style.height = canvasHeight + "px";
     overlay.style.position = "absolute";
     overlay.style.left = canvas.style.left;
     overlay.style.top = canvas.style.top;
@@ -55,7 +55,7 @@ function startMaidCleanUpGame(imageURL, clumsyLevel = 0, dustLevel = 100, potCou
     overlay.style.pointerEvents = "none";
     overlay.style.cursor = "none";
 
-    document.body.appendChild(overlay);
+    win.appendChild(overlay);
     const octx = overlay.getContext("2d");
 
     // --- Close button ---
