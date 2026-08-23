@@ -9,7 +9,7 @@ function startFishingGame() {
     const container = window.MiniGameManager.getContainer();
     // --- Create canvas ---
     const canvas = document.createElement("canvas");
-    const tempWidth = (window.innerWidth / 2);
+    const tempWidth = (window.innerWidth / 2) - 150;
     canvas.width = tempWidth;
     canvas.height = (tempWidth / 2);
     
@@ -42,6 +42,7 @@ function startFishingGame() {
     // --- Center AFTER browser paints it ---
     requestAnimationFrame(() => {    
         // Update close button position AFTER centering
+        canvas.style.left = "150px";
         canvas.style.top = (tempWidth / 4) + "px";
         closeButton.x = W / 2 - 60;
         closeButton.y = H / 2 + 40;
