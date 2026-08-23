@@ -415,6 +415,7 @@ function startMaidCleanUpGame(imageURL, clumsyLevel = 0, dustLevel = 100, potCou
         canvas.remove();
         overlay.remove();
         window.maidGameActive = false;
+        window.MiniGameManager.closeWindow();
         MenuLock(false);
     });
 }
