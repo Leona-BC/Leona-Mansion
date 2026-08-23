@@ -12,7 +12,7 @@ function startClawCraneGame() {
     const win = window.MiniGameManager.openWindow(
         canvasWidth,
         canvasHeight + headerHeight,
-        "Fishing activity"
+        "Ball fetching activity"
     );
     
     const canvas = document.createElement("canvas");
@@ -118,7 +118,7 @@ function startClawCraneGame() {
 
     // --- Random object placement ---
     const floorY = canvasHeight * 0.70;
-	const DROP_Y = canvasHeight * 0.70;
+	const DROP_Y = floorY - 30;
     const objectTypes = [
         { type: "dust", img: dustImg },
         { type: "dust", img: dustImg },
