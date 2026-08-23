@@ -16,7 +16,7 @@ function startMaidCleanUpGame(imageURL, clumsyLevel = 0, dustLevel = 100, potCou
     const win = window.MiniGameManager.openWindow(
         canvasWidth,
         canvasHeight + headerHeight,
-        "Fishing activity"
+        "Room Cleaning activity"
     );
     
     const canvas = document.createElement("canvas");
