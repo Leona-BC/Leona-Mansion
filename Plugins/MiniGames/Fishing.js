@@ -14,7 +14,6 @@ function startFishingGame() {
     canvas.height = tempWidth / 2;
     
     // Force correct display size
-    
     canvas.style.width = tempWidth;
     canvas.style.height = tempWidth / 2;
     
