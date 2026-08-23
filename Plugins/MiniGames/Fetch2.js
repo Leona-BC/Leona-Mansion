@@ -228,8 +228,8 @@ function startClawCraneGame() {
 			clawFrameIndex = 0;
 			clawY += clawSpeed;
 
-			if (clawY >= 180) {
-				clawY = 180;
+			if (clawY >= DROP_Y) {
+    			clawY = DROP_Y;
 
 				clawState = "pause_open";
 				clawPauseTimer = 500; // 0.5 sec
