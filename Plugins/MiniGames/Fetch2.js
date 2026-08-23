@@ -16,6 +16,7 @@ function startClawCraneGame() {
     );
     
     const canvas = document.createElement("canvas");
+	
     // Drawing buffer
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
