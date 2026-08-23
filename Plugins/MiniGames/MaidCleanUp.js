@@ -58,14 +58,6 @@ function startMaidCleanUpGame(imageURL, clumsyLevel = 0, dustLevel = 100, potCou
     document.body.appendChild(overlay);
     const octx = overlay.getContext("2d");
 
-    // --- Center canvas AFTER paint ---
-    requestAnimationFrame(() => {
-        canvas.style.left = "-600px";
-        canvas.style.top = "-200px";
-        overlay.style.left = "-600px";
-        overlay.style.top = "-200px";
-    });
-
     // --- Close button ---
     const closeButton = {
         x: W / 2 - 60,
