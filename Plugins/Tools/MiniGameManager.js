@@ -22,10 +22,11 @@ class MiniGameManager {
             zIndex: "999999",
             display: "flex",
             flexDirection: "column",
-            pointerEvents: "auto"
+            pointerEvents: "auto",
+            overflow: "hidden" // ⭐ prevents canvas from spilling out
         });
     
-        // ⭐ HEADER BAR (this must appear visually)
+        // ⭐ HEADER BAR
         const header = document.createElement("div");
         Object.assign(header.style, {
             height: "32px",
@@ -37,12 +38,11 @@ class MiniGameManager {
             padding: "0 10px",
             cursor: "move",
             userSelect: "none",
-            flexShrink: "0"   // ⭐ prevents collapsing
+            flexShrink: "0" // ⭐ prevents collapsing
         });
     
         header.textContent = "Mini-Game";
     
-        // ⭐ Close button
         const closeBtn = document.createElement("div");
         closeBtn.textContent = "✕";
         Object.assign(closeBtn.style, {
@@ -55,7 +55,7 @@ class MiniGameManager {
         header.appendChild(closeBtn);
         win.appendChild(header);
     
-        // ⭐ Dragging logic
+        // ⭐ DRAGGING LOGIC
         let isDragging = false;
         let offsetX = 0;
         let offsetY = 0;
@@ -83,6 +83,7 @@ class MiniGameManager {
     
         return win;
     }
+
 
 
     closeWindow() {
