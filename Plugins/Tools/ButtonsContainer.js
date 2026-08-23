@@ -214,6 +214,7 @@ function AddButton(name, callback) {
 
   btn.onclick = () => {
     if (menuLocked) return;
+    MenuLock(true);
     callback();
   };
 
