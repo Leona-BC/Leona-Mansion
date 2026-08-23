@@ -141,8 +141,8 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     // Close Button
     // -------------------------------
     const closeButton = {
-        x: W / 2 - 60,
-        y: H / 2 + 40,
+        x: canvasWidth / 2 - 60,
+        y: canvasHeight / 2 + 40,
         width: 120,
         height: 40,
         visible: false
@@ -214,8 +214,8 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     // Draw Functions (main canvas)
 // -------------------------------
     function drawBackground() {
-        ctx.clearRect(0, 0, W, H);
-        ctx.drawImage(Images.background, 0, 0, W, H);
+        ctx.clearRect(0, 0, canvasWidth, canvasWidth);
+        ctx.drawImage(Images.background, 0, 0, canvasWidth, canvasWidth);
     }
 
     function drawPlate(ctxLocal, plate) {
@@ -289,16 +289,16 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
         ctxLocal.textAlign = "center";
 
         if (DishGameState.failed) {
-            ctxLocal.fillText("The stack collapsed!", W / 2, 40);
+            ctxLocal.fillText("The stack collapsed!", canvasWidth / 2, 40);
             return;
         }
 
         if (DishGameState.dirtLevel > 0 && DishGameState.currentPlate) {
-            ctxLocal.fillText("Clean the plate", W / 2, 40);
+            ctxLocal.fillText("Clean the plate", canvasWidth / 2, 40);
         } else if (DishGameState.currentPlate) {
-            ctxLocal.fillText("Place the plate on the stack", W / 2, 40);
+            ctxLocal.fillText("Place the plate on the stack", canvasWidth / 2, 40);
         } else {
-            ctxLocal.fillText("All plates cleaned!", W / 2, 40);
+            ctxLocal.fillText("All plates cleaned!", canvasWidth / 2, 40);
         }
     }
 
@@ -550,7 +550,7 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
         drawCloseButton(ctx);
 
         // Overlay canvas
-        octx.clearRect(0, 0, W, H);
+        octx.clearRect(0, 0, canvasWidth, canvasWidth);
         drawHeldSponge(octx);
         drawCursor(octx);
 
