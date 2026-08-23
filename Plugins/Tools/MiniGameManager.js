@@ -11,9 +11,9 @@ class MiniGameManager {
     
         Object.assign(win.style, {
             position: "fixed",
-            left: "50%",
-            top: "50%",
-            transform: "translate(-50%, -50%)",
+            left: "40px",
+            top: "40px",
+            transform: "none",
             width: width + "px",
             height: height + "px",
             background: "#222",
@@ -23,7 +23,7 @@ class MiniGameManager {
             display: "flex",
             flexDirection: "column",
             pointerEvents: "auto",
-            overflow: "hidden" // ⭐ prevents canvas from spilling out
+            overflow: "hidden"
         });
     
         // ⭐ HEADER BAR
