@@ -10,7 +10,7 @@ function startFishingGame() {
     const canvasHeight = canvasWidth / 2; // 2:1 ratio
     const headerHeight = 32;
     
-    const win = MiniGameManager.openWindow(
+    const win = window.MiniGameManager.openWindow(
         canvasWidth,
         canvasHeight + headerHeight
     );
