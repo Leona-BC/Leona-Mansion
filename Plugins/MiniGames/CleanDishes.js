@@ -60,69 +60,72 @@ Images.handGrabWrist.onload = checkImagesLoaded;
 Images.background.onload = checkImagesLoaded;
 
 // =====================================================
-// Start Dish Cleaning Mini-Game (Unified Display System)
+// Start Dish Cleaning Mini-Game (Popup Window Version)
 // =====================================================
 function startDishesCleaningMiniGame(trembleLevel = 0) {
     MenuLock(true);
-    
+
     if (DishGameState.active) return;
     DishGameState.active = true;
 
     DishGameState.trembleLevel = Math.max(0, Math.min(100, trembleLevel));
 
     // -------------------------------
-    // MAIN CANVAS (same style as maid game)
+    // MAIN CANVAS (inside popup window)
     // -------------------------------
+    const W = 600;
+    const H = 300;
+
+    const win = window.MiniGameManager.openWindow(W, H + 32, "Dish Cleaning activity");
+
     const canvas = document.createElement("canvas");
-    canvas.width = 600;
-    canvas.height = 300;
-
-    canvas.style.width = "600px";
-    canvas.style.height = "300px";
+    canvas.width = W;
+    canvas.height = H;
+    canvas.style.width = W + "px";
+    canvas.style.height = H + "px";
     canvas.style.position = "absolute";
+    canvas.style.left = "0px";
+    canvas.style.top = "0px";
     canvas.style.zIndex = "99999";
-    canvas.style.cursor = "none";
+    // canvas cursor stays default; overlay will hide it
 
-    document.body.appendChild(canvas);
+    win.appendChild(canvas);
     const ctx = canvas.getContext("2d");
 
-    const W = canvas.width;
-    const H = canvas.height;
-
     // -------------------------------
-    // OVERLAY CANVAS (for hand/sponge)
-    // -------------------------------
+    // OVERLAY CANVAS (hand + sponge)
+// -------------------------------
     const overlay = document.createElement("canvas");
-    overlay.width = 600;
-    overlay.height = 300;
-
-    overlay.style.width = "600px";
-    overlay.style.height = "300px";
+    overlay.width = W;
+    overlay.height = H;
+    overlay.style.width = W + "px";
+    overlay.style.height = H + "px";
     overlay.style.position = "absolute";
+    overlay.style.left = canvas.offsetLeft + "px";
+    overlay.style.top = canvas.offsetTop + "px";
     overlay.style.zIndex = "100000";
-    overlay.style.pointerEvents = "none";
+    overlay.style.pointerEvents = "auto";
     overlay.style.cursor = "none";
 
-    document.body.appendChild(overlay);
+    win.appendChild(overlay);
     const octx = overlay.getContext("2d");
 
     // -------------------------------
-    // CENTER BOTH CANVASES
-    // -------------------------------
-    requestAnimationFrame(() => {
-        canvas.style.left = "-600px";
-        canvas.style.top = "-200px";
-
-        overlay.style.left = "-600px";
-        overlay.style.top = "-200px";
-    });
-
-    // -------------------------------
-    // Positions
-    // -------------------------------
-    const SpongeHome = { x: 100, y: 220 };
-    const PlatePos   = { x: 300, y: 220 };
-    const StackPos   = { x: 500, y: 240 };
+    // Positions (ratio-based)
+// -------------------------------
+    const baseYRatio = 220 / 300; // keep alignment with background
+    const SpongeHome = {
+        x: W * (100 / 600),
+        y: H * baseYRatio
+    };
+    const PlatePos = {
+        x: W * (300 / 600),
+        y: H * baseYRatio
+    };
+    const StackPos = {
+        x: W * (500 / 600),
+        y: H * baseYRatio + 20 // PlatePos.y + 20
+    };
 
     // -------------------------------
     // Close Button
@@ -332,7 +335,7 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
 
     // -------------------------------
     // Scrubbing Logic (RAW mouse)
-    // -------------------------------
+// -------------------------------
     function scrubPlate() {
         if (!DishGameState.currentPlate) return;
         if (!DishGameState.spongeActive) return;
@@ -378,7 +381,7 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
 
     // -------------------------------
     // Collapse Stack (Failure)
-    // -------------------------------
+// -------------------------------
     function collapseStack() {
         DishGameState.failed = true;
         closeButton.visible = true;
@@ -399,12 +402,11 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     }
 
     // -------------------------------
-    // Mouse Events
-    // -------------------------------
-    canvas.addEventListener("mousemove", e => {
-        const rect = canvas.getBoundingClientRect();
-        DishGameState.rawMouseX = e.clientX - rect.left;
-        DishGameState.rawMouseY = e.clientY - rect.top;
+    // Mouse Events (overlay)
+// -------------------------------
+    overlay.addEventListener("mousemove", e => {
+        DishGameState.rawMouseX = e.offsetX;
+        DishGameState.rawMouseY = e.offsetY;
 
         if (DishGameState.failed) return;
 
@@ -413,12 +415,11 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
         }
     });
 
-    canvas.addEventListener("mousedown", e => {
+    overlay.addEventListener("mousedown", e => {
         if (DishGameState.failed) return;
 
-        const rect = canvas.getBoundingClientRect();
-        const mx = e.clientX - rect.left;
-        const my = e.clientY - rect.top;
+        const mx = e.offsetX;
+        const my = e.offsetY;
 
         DishGameState.rawMouseX = mx;
         DishGameState.rawMouseY = my;
@@ -446,10 +447,9 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
         }
     });
 
-    canvas.addEventListener("mouseup", e => {
-        const rect = canvas.getBoundingClientRect();
-        const mx = e.clientX - rect.left;
-        const my = e.clientY - rect.top;
+    overlay.addEventListener("mouseup", e => {
+        const mx = e.offsetX;
+        const my = e.offsetY;
 
         // Close button click
         if (closeButton.visible) {
@@ -460,8 +460,9 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
                 my <= closeButton.y + closeButton.height
             ) {
                 DishGameState.active = false;
-                document.body.removeChild(canvas);
-                document.body.removeChild(overlay);
+                canvas.remove();
+                overlay.remove();
+                window.MiniGameManager.closeWindow();
                 MenuLock(false);
                 return;
             }
