@@ -9,17 +9,34 @@ function startMaidCleanUpGame(imageURL, clumsyLevel = 0, dustLevel = 100, potCou
     window.maidGameActive = true;
 
     // --- Create canvas ---
+    const canvasWidth = window.innerWidth * 0.48;
+    const canvasHeight = canvasWidth / 2; // 2:1 ratio
+    const headerHeight = 32;
+    
+    const win = window.MiniGameManager.openWindow(
+        canvasWidth,
+        canvasHeight + headerHeight,
+        "Fishing activity"
+    );
+    
     const canvas = document.createElement("canvas");
-    canvas.width = 600;
-    canvas.height = 300;
-
-    canvas.style.width = "600px";
-    canvas.style.height = "300px";
-    canvas.style.border = "2px solid #333";
-    canvas.style.position = "absolute";
-    canvas.style.zIndex = "99999";
-
-    document.body.appendChild(canvas);
+    // Drawing buffer
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+    
+    // Display size
+    canvas.style.width = canvasWidth + "px";
+    canvas.style.height = canvasHeight + "px";
+    
+    // ⭐ CRITICAL FIXES
+    canvas.style.position = "relative";   // not absolute, not fixed
+    canvas.style.flex = "none";           // prevents covering the header
+    canvas.style.display = "block";       // ensures normal layout
+    canvas.style.margin = "0";            // no weird offsets
+    canvas.style.padding = "0";
+    canvas.style.boxSizing = "border-box";
+    
+    win.appendChild(canvas);
 
     const ctx = canvas.getContext("2d");
     const W = canvas.width;
