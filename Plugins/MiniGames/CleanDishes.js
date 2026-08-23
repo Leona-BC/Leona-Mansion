@@ -79,16 +79,34 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     const win = window.MiniGameManager.openWindow(W, H + 32, "Dish Cleaning activity");
 
     const canvas = document.createElement("canvas");
-    canvas.width = W;
-    canvas.height = H;
-    canvas.style.width = W + "px";
-    canvas.style.height = H + "px";
-    canvas.style.position = "absolute";
-    canvas.style.left = "0px";
-    canvas.style.top = "0px";
-    canvas.style.zIndex = "99999";
-    // canvas cursor stays default; overlay will hide it
-
+    const canvasWidth = window.innerWidth * 0.48;
+    const canvasHeight = canvasWidth / 2; // 2:1 ratio
+    const headerHeight = 32;
+    
+    const win = window.MiniGameManager.openWindow(
+        canvasWidth,
+        canvasHeight + headerHeight,
+        "Room Cleaning activity"
+    );
+    
+    const canvas = document.createElement("canvas");
+    
+    // Drawing buffer
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+    
+    // Display size
+    canvas.style.width = canvasWidth + "px";
+    canvas.style.height = canvasHeight + "px";
+    
+    // ⭐ CRITICAL FIXES
+    canvas.style.position = "relative";   // not absolute, not fixed
+    canvas.style.flex = "none";           // prevents covering the header
+    canvas.style.display = "block";       // ensures normal layout
+    canvas.style.margin = "0";            // no weird offsets
+    canvas.style.padding = "0";
+    canvas.style.boxSizing = "border-box";
+    
     win.appendChild(canvas);
     const ctx = canvas.getContext("2d");
 
