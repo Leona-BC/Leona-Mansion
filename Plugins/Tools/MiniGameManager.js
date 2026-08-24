@@ -1,11 +1,14 @@
 class MiniGameManager {
     constructor() {
         this.window = null;
+        this.onClose = null;
     }
 
     openWindow(width, height, title) {
         if (this.window) this.window.remove();
         MenuLock(true);
+
+        this.onClose = null;
     
         const win = document.createElement("div");
         win.id = "MiniGameWindow";
@@ -85,9 +88,12 @@ class MiniGameManager {
         return win;
     }
 
-
-
     closeWindow() {
+        if (this.onClose) {
+            this.onClose();
+            this.onClose = null;
+        }
+    
         if (this.window) {
             MenuLock(false);
             this.window.remove();
