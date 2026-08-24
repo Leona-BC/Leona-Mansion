@@ -56,7 +56,7 @@ function startFetchScentPrototype(dist) {
     window.MiniGameManager.onClose = () => {
         canvas.remove();
         overlay.remove();
-        window.clawGameActive = false;
+        window.fetchGameActive = false;
     };
 
     const octx = overlay.getContext("2d");
