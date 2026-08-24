@@ -80,7 +80,7 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     const win = window.MiniGameManager.openWindow(
         canvasWidth,
         canvasHeight + headerHeight,
-        "Room Cleaning activity"
+        "Cleaning Dishes activity"
     );
     
     // --- Create main canvas ---
