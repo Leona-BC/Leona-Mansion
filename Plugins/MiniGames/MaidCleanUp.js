@@ -56,6 +56,17 @@ function startMaidCleanUpGame(imageURL, clumsyLevel = 0, dustLevel = 100, potCou
     overlay.style.cursor = "none";
 
     win.appendChild(overlay);
+
+    window.MiniGameManager.onClose = () => {
+        document.exitPointerLock();
+        document.removeEventListener("mousemove", onLockedMouseMove);
+    
+        canvas.remove();
+        overlay.remove();
+    
+        window.maidGameActive = false;
+    };
+    
     const octx = overlay.getContext("2d");
 
     // --- Close button ---
