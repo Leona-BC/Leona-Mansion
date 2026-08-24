@@ -131,8 +131,14 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     overlay.style.cursor = "none";
     
     win.appendChild(overlay);
-    const octx = overlay.getContext("2d");
 
+    window.MiniGameManager.onClose = () => {
+        canvas.remove();
+        overlay.remove();
+        window.clawGameActive = false;
+    };
+    
+    const octx = overlay.getContext("2d");
 
     // -------------------------------
     // Positions (ratio-based)
