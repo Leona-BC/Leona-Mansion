@@ -1,4 +1,5 @@
 function startFetchScentPrototype(dist) {
+	let resultGiven = false;
     MenuLock(true);
 
     if (window.fetchGameActive) return;
@@ -54,6 +55,10 @@ function startFetchScentPrototype(dist) {
     win.appendChild(overlay);
 
     window.MiniGameManager.onClose = () => {
+		if(!resultGiven) {
+			window.MiniGameManager.sendChatAction(CharacterNickname(Player) + " interrupted the search.");
+			resultGiven = true;
+		}
         canvas.remove();
         overlay.remove();
         window.fetchGameActive = false;
@@ -162,6 +167,10 @@ function startFetchScentPrototype(dist) {
             if (totalTime >= maxTime) {
                 gameOver = true;
                 resultMessage = "You've got distracted and lost the trail.";
+				if(!resultGiven) {
+	                window.MiniGameManager.sendChatAction(CharacterNickname(Player) + " got distracted and lost the trail.");
+	                resultGiven = true;
+	            }
                 closeButton.visible = true;
             }
 
@@ -340,6 +349,10 @@ function startFetchScentPrototype(dist) {
 
     function drawResult() {
         if (!gameOver) return;
+		if(!resultGiven) {
+			window.MiniGameManager.sendChatAction(CharacterNickname(Player) + " is following the trail of the ball.");
+			resultGiven = true;
+		}
 
         ctx.fillStyle = "white";
         ctx.font = "28px Arial";
