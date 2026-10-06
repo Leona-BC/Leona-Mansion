@@ -310,6 +310,7 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
 
         if (DishGameState.failed) {
             ctxLocal.fillText("The stack collapsed!", canvasWidth / 2, 40);
+            window.sendChatAction(CharacterNickname(Player) + " knocked over the stack of plates, and they all broke.");
             return;
         }
 
@@ -492,6 +493,7 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
                 DishGameState.active = false;
                 canvas.remove();
                 overlay.remove();
+                window.sendChatAction(CharacterNickname(Player) + " leaves the dishwashing unfinished.");
                 window.MiniGameManager.closeWindow();
                 MenuLock(false);
                 return;
