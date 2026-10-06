@@ -63,6 +63,7 @@ Images.background.onload = checkImagesLoaded;
 // Start Dish Cleaning Mini-Game (Popup Window Version)
 // =====================================================
 function startDishesCleaningMiniGame(trembleLevel = 0) {
+    resultGiven = false;
     MenuLock(true);
 
     if (DishGameState.active) return;
