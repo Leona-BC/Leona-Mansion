@@ -2,6 +2,7 @@
 // Defines ONE function: startMaidCleanUpGame(imageURL, clumsyLevel, dustLevel, potCount)
 
 function startMaidCleanUpGame(imageURL, clumsyLevel = 0, dustLevel = 100, potCount = 0) {
+    let resultGiven = false;
     MenuLock(true);
 
     // Prevent multiple instances
@@ -58,6 +59,10 @@ function startMaidCleanUpGame(imageURL, clumsyLevel = 0, dustLevel = 100, potCou
     win.appendChild(overlay);
 
     window.MiniGameManager.onClose = () => {
+        if(!resultGiven) {
+			window.MiniGameManager.sendChatAction(CharacterNickname(Player) + " stopped cleaning the room, leaving it unfinished.");
+			resultGiven = true;
+		}
         document.exitPointerLock();
         document.removeEventListener("mousemove", onLockedMouseMove);
     
@@ -381,8 +386,16 @@ function startMaidCleanUpGame(imageURL, clumsyLevel = 0, dustLevel = 100, potCou
     
             if (brokeSomething) {
                 message = "Room cleaned but you broke something...";
+                if(!resultGiven) {
+        			window.MiniGameManager.sendChatAction(CharacterNickname(Player) + " has cleaned the room but broke something...");
+        			resultGiven = true;
+        		}
             } else {
                 message = "Room cleaned!";
+                if(!resultGiven) {
+        			window.MiniGameManager.sendChatAction(CharacterNickname(Player) + " has cleaned the room.");
+        			resultGiven = true;
+        		}
             }
     
             closeButton.visible = true;
