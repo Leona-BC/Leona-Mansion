@@ -1,7 +1,7 @@
 // =====================================================
 // DishCleaning.js - Unified with Maid Clean-Up System
 // =====================================================
-const resultGiven = false;
+let resultGiven = false;
 // -------------------------------
 // Global Game State
 // -------------------------------
@@ -133,6 +133,10 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
     win.appendChild(overlay);
 
     window.MiniGameManager.onClose = () => {
+        if (!resultGiven) {
+            window.MiniGameManager.sendChatAction(CharacterNickname(Player) + " dropped cleaning the dishes, leaving it incomplete.");
+            resultGiven = true;
+        }
         canvas.remove();
         overlay.remove();
         DishGameState.active = false;
