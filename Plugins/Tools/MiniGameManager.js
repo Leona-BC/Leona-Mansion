@@ -55,7 +55,6 @@ class MiniGameManager {
         });
     
         closeBtn.onclick = () => {
-            window.MiniGameManager.sendChatAction(CharacterNickname(Player) + " dropped performing the " + title + " unfinished.");
             this.closeWindow();
         };
     
