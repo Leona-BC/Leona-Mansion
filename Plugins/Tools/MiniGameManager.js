@@ -100,6 +100,22 @@ class MiniGameManager {
             this.window = null;
         }
     }
+
+    function sendChatAction(message) {
+        ServerSend("ChatRoomChat", { Content: "Beep", Type: "Action", Dictionary:
+            [
+                { Tag: "Beep", Text: "msg" }, // EN
+                { Tag: "发送私聊", Text: "msg" }, // CN
+                { Tag: "Biep", Text: "msg" }, // DE
+                { Tag: "Sonner", Text: "msg" }, // FR
+                { Tag: "Sonner", Text: "msg" }, // FR
+                { Tag: "Звуковой сигнал", Text: "msg" }, // RU
+                { Tag: "Гудок", Text: "msg" }, // UA
+                { Tag: "msg", Text: message }, // Message itself
+            ],
+        });
+    }
+
 }
 
 window.MiniGameManager = new MiniGameManager();
