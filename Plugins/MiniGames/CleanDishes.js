@@ -1,7 +1,7 @@
 // =====================================================
 // DishCleaning.js - Unified with Maid Clean-Up System
 // =====================================================
-
+const resultGiven = false;
 // -------------------------------
 // Global Game State
 // -------------------------------
@@ -310,7 +310,10 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
 
         if (DishGameState.failed) {
             ctxLocal.fillText("The stack collapsed!", canvasWidth / 2, 40);
-            window.MiniGameManager.sendChatAction(CharacterNickname(Player) + " knocked over the stack of plates, and they all broke.");
+            if(!resultGiven) {
+                window.MiniGameManager.sendChatAction(CharacterNickname(Player) + " knocked over the stack of plates, and they all broke.");
+                resultGiven = true;
+            }
             return;
         }
 
@@ -320,6 +323,10 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
             ctxLocal.fillText("Place the plate on the stack", canvasWidth / 2, 40);
         } else {
             ctxLocal.fillText("All plates cleaned!", canvasWidth / 2, 40);
+            if(!resultGiven) {
+                window.MiniGameManager.sendChatAction(CharacterNickname(Player) + " has successfully cleaned all plates.");
+                resultGiven = true;
+            }
         }
     }
 
@@ -493,7 +500,6 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
                 DishGameState.active = false;
                 canvas.remove();
                 overlay.remove();
-                window.MiniGameManager.sendChatAction(CharacterNickname(Player) + " leaves the dishwashing unfinished.");
                 window.MiniGameManager.closeWindow();
                 MenuLock(false);
                 return;
