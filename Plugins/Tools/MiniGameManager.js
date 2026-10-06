@@ -54,7 +54,10 @@ class MiniGameManager {
             padding: "0 6px"
         });
     
-        closeBtn.onclick = () => this.closeWindow();
+        closeBtn.onclick = () => {
+            sendChatAction(CharacterNickname(Player) + " dropped performing the " + title + " unfinished.");
+            this.closeWindow();
+        };
     
         header.appendChild(closeBtn);
         win.appendChild(header);
