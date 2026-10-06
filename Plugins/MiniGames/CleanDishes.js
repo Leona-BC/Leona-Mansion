@@ -1,7 +1,7 @@
 // =====================================================
 // DishCleaning.js - Unified with Maid Clean-Up System
 // =====================================================
-let resultGiven = false;
+
 // -------------------------------
 // Global Game State
 // -------------------------------
@@ -63,7 +63,7 @@ Images.background.onload = checkImagesLoaded;
 // Start Dish Cleaning Mini-Game (Popup Window Version)
 // =====================================================
 function startDishesCleaningMiniGame(trembleLevel = 0) {
-    resultGiven = false;
+    let resultGiven = false;
     MenuLock(true);
 
     if (DishGameState.active) return;
@@ -316,7 +316,7 @@ function startDishesCleaningMiniGame(trembleLevel = 0) {
         if (DishGameState.failed) {
             ctxLocal.fillText("The stack collapsed!", canvasWidth / 2, 40);
             if(!resultGiven) {
-                window.MiniGameManager.sendChatAction(CharacterNickname(Player) + " knocked over the stack of plates, and they all broke.");
+                window.MiniGameManager.sendChatAction(CharacterNickname(Player) + " knocked over the stack of plates and they all broke.");
                 resultGiven = true;
             }
             return;
