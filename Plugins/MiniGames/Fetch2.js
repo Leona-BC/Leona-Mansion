@@ -1,4 +1,5 @@
 function startClawCraneGame() {
+	let resultGiven = false;
     MenuLock(true);
 
     if (window.clawGameActive) return;
@@ -54,6 +55,10 @@ function startClawCraneGame() {
     win.appendChild(overlay);
 
     window.MiniGameManager.onClose = () => {
+		if(!resultGiven) {
+			window.MiniGameManager.sendChatAction(CharacterNickname(Player) + " stopped trying to fetch the ball.");
+			resultGiven = true;
+		}
         canvas.remove();
         overlay.remove();
         window.clawGameActive = false;
@@ -327,20 +332,36 @@ function startClawCraneGame() {
     function evaluateGrab() {
         if (!grabbedObject) {
             resultMessage = "You caught nothing.";
+			if(!resultGiven) {
+				window.MiniGameManager.sendChatAction(CharacterNickname(Player) + " failed to fetch the ball.");
+				resultGiven = true;
+			}
         } else {
             switch (grabbedObject.type) {
                 case "dust":
                 case "sponge":
                     resultMessage = "You caught something but you let it go.";
+					if(!resultGiven) {
+						window.MiniGameManager.sendChatAction(CharacterNickname(Player) + " grabbed something else then the ball and let it go.");
+						resultGiven = true;
+					}
                     break;
 
                 case "sock":
                 case "underwear":
                     resultMessage = "You caught something but not what you wanted.";
+					if(!resultGiven) {
+						window.MiniGameManager.sendChatAction(CharacterNickname(Player) + " grabbed something else then the ball and let it go.");
+						resultGiven = true;
+					}
                     break;
 
                 case "ball":
                     resultMessage = "You got the ball!";
+					if(!resultGiven) {
+						window.MiniGameManager.sendChatAction(CharacterNickname(Player) + " fetched the ball.");
+						resultGiven = true;
+					}
                     break;
             }
         }
