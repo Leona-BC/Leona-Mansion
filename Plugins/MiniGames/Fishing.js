@@ -4,6 +4,7 @@
 let fishingActive = false;
 
 function startFishingGame() {
+    let resultGiven = false;
     MenuLock(true);
 
     const canvasWidth = window.innerWidth * 0.48;
@@ -34,6 +35,15 @@ function startFishingGame() {
     canvas.style.boxSizing = "border-box";
     
     win.appendChild(canvas);
+
+    window.MiniGameManager.onClose = () => {
+		if(!resultGiven) {
+			window.MiniGameManager.sendChatAction(CharacterNickname(Player) + " reeled the fishing pole and stopped fishing.");
+			resultGiven = true;
+		}
+        canvas.remove();
+        window.clawGameActive = false;
+    };
     
     const ctx = canvas.getContext("2d");
     
@@ -174,6 +184,17 @@ function startFishingGame() {
         waveSpeed = 0.03;
     
         message = success ? "You got a fish!" : "The fish got away...";
+        
+        if(!resultGiven) {
+            if (success) {
+                window.MiniGameManager.sendChatAction(CharacterNickname(Player) + " just caught a fish.");
+                resultGiven = true;
+            } else {
+                window.MiniGameManager.sendChatAction(CharacterNickname(Player) + " failed to catch a fish.");
+                resultGiven = true;
+            }
+            
+        }
     
         // Show canvas button
         closeButton.visible = true;
