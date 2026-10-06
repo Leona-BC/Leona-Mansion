@@ -101,7 +101,7 @@ class MiniGameManager {
         }
     }
 
-    sendChatAction(message) {
+    function sendChatAction(message) {
         ServerSend("ChatRoomChat", {
             Content: "Beep",
             Type: "Action",
