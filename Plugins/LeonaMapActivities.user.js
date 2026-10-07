@@ -2,7 +2,7 @@
 // @name         Leona's Map Activities
 // @namespace    https://gitgud.io/LeonaBC/leonamansion
 // @supportURL   https://gitgud.io/LeonaBC/leonamansion
-// @version      0.1
+// @version      0.2
 // @description  Some fun activities for maps by Leona
 // @author       Leona
 // @include      /^https:\/\/(www\.)?bondage(projects\.elementfx|-(europe|asia))\.com\/.*/
@@ -57,8 +57,8 @@
             UpdateManagerVisibility();
             
             if (ChatRoomData != null &&
-                ChatRoomData.MapData.Type == "Always" && 
-                (ChatRoomData.Name == "Leona's Mansion" || ChatRoomData.Name == "Leona's  Mansion")) {
+                ChatRoomData.MapData.Type == "Always" /*&& 
+                (ChatRoomData.Name == "Leona's Mansion" || ChatRoomData.Name == "Leona's  Mansion")*/) {
     
                 if ((Player.Position.X >= 30 && Player.Position.X <= 36) &&
                     (Player.Position.Y >= 30 && Player.Position.Y <= 34)) {
@@ -96,25 +96,6 @@
                 } else {
                     if (buttonRegistry["Clean Dishes"]) {
                         RemoveButton("Clean Dishes");
-                    }
-                }
-
-                if ((Player.Position.X >= 30 && Player.Position.X <= 36) &&
-                    (Player.Position.Y >= 24 && Player.Position.Y <= 29)) {
-    
-                    if (!buttonRegistry["Search for ball"]) {
-                        AddButton("Search for ball", () => startFetchScentPrototype(3));
-                    }
-                    if (!buttonRegistry["Fetch the ball"]) {
-                        AddButton("Fetch the ball", () => startClawCraneGame());
-                    }
-    
-                } else {
-                    if (buttonRegistry["Search for ball"]) {
-                        RemoveButton("Search for ball");
-                    }
-                    if (buttonRegistry["Fetch the ball"]) {
-                        RemoveButton("Fetch the ball");
                     }
                 }
             }
@@ -215,47 +196,6 @@
         }
     }
 
-    /*function setupHooks() {
-        safeHookFunction("ChatRoomLoad", 0, (args, next) => {
-            const result = next(args);
-            if (!hookBound) {
-                hookBound = true;
-
-                try {
-                    if (ServerSocket && typeof ServerSocket.on === 'function') {
-                        if (socketListener) {
-                            ServerSocket.off("ChatRoomMessage", socketListener);
-                        }
-
-                        socketListener = handleMessage;
-                        ServerSocket.on("ChatRoomMessage", socketListener);
-                        DebugMsg("setupHooks ServerSocket hook successful.");
-                    } else {
-                        DebugMsg("setupHooks ServerSocket hook unavailable.");
-                    }
-                } catch (e) {
-                        DebugMsg("setupHooks ServerSocket failed.");
-                }
-            }
-            return result;
-        });
-        safeHookFunction("DrawProcess", 4, (args, next) => {
-            const result = next(args);
-            try {
-               if (typeof CurrentScreen !== 'undefined' && CurrentScreen === 'ChatRoom' && (typeof CurrentCharacter === 'undefined' || CurrentCharacter === null)) {
-                    DrawButton(
-                        btnX, btnY, size, size,
-                        autoEnabled ? "🧹" : "⚙️",
-                        autoEnabled ? "Orange" : "Gray", "", "Something, something"
-                    );
-                }
-            } catch (e) {
-                DebugMsg("setupHooks DrawProcess failed.");
-            }
-            return result;
-        });
-    }*/
-
     async function initializeModApi() {
         const success = await waitForBcModSdk();
         if (!success) {
@@ -328,10 +268,10 @@
                 });
             }
 
-            DebugMsg("Leona Mansion mod successfully loaded. Version: " + MOD_VER);
+            DebugMsg("Leona's Map Activities mod successfully loaded. Version: " + MOD_VER);
 
             if (typeof CurrentScreen !== 'undefined' && CurrentScreen === "ChatRoom") {
-                sendLocalMessage("Leona Mansion addon loaded！");
+                sendLocalMessage("Leona's Map Activities addon loaded！");
             }
 
         } catch (e) {
