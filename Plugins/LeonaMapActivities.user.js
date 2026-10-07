@@ -331,7 +331,7 @@
                 if (!obj) continue;
     
                 // Sink ID
-                if (obj.ID === 3024) {
+                if (obj.ID === 250) {
                     return true; // Early exit: sink found
                 }
             }
