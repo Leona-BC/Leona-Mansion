@@ -38,7 +38,7 @@
                 return;
             }
             ChatRoomMessage({
-                Content: `<font color="#00FF00">[Leona's Map Activities] ${message}</font>`,
+                Content: `<font color="#00FF00">[Leona's Map Activities Beta] ${message}</font>`,
                 Type: "LocalMessage",
                 Sender: Player.MemberNumber
             });
