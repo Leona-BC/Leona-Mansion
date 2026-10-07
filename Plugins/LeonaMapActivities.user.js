@@ -255,36 +255,6 @@
         }
         return false;
     }
-
-    function checkFishing() {
-        const px = Player.Position.X;
-        const py = Player.Position.Y;
-        if (isStandingOnWall(px, py)) return false;
-    
-        let floorCount = 0;
-    
-        for (let dy = -1; dy <= 1; dy++) {
-            for (let dx = -1; dx <= 1; dx++) {
-    
-                const x = px + dx;
-                const y = py + dy;
-    
-                // Out-of-bounds protection
-                if (x < 0 || x >= 40 || y < 0 || y >= 40) continue;
-    
-                const tile = ChatRoomMapViewGetTileAtPos(x, y);
-                if (tile && tile.Type === "Floor") {
-                    floorCount++;
-    
-                    // Early exit: no need to continue
-                    if (floorCount >= 4) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
     
     function canFishHere() {
         const px = Player.Position.X;
@@ -325,6 +295,7 @@
     function hasSinkNearby() {
         const px = Player.Position.X;
         const py = Player.Position.Y;
+        if (isStandingOnWall(px, py)) return false;
     
         for (let dy = -1; dy <= 1; dy++) {
             for (let dx = -1; dx <= 1; dx++) {
