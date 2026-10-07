@@ -248,7 +248,8 @@ function RemoveButton(name) {
 function UpdateManagerVisibility(mansionOnly = true) {
   const insideMansion =
     ChatRoomData != null &&
-    CurrentScreen === "ChatRoom" &&
+    CurrentScreen === "ChatRoom" && 
+    ChatRoomChatHidden === false &&
     ChatRoomData.MapData?.Type === "Always" &&
     (mansionOnly === false || 
      ChatRoomData.Name === "Leona's Mansion" ||
