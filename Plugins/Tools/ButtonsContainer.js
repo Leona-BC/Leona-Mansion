@@ -32,8 +32,8 @@ style.textContent = `
   #menuWrapper {
     position: fixed;
     top: 00px;
-    left: 46%;
-    transform: translateX(-46%);
+    left: 49%;
+    transform: translateX(-49%);
     font-family: sans-serif;
   }
 
