@@ -6,6 +6,9 @@ The addon is in beta right now, keep in mind that bugs may occur and changes wil
 
 As of now, it will only works on rooms that are set to "Only use Map".
 
+Loading it will create, when you're on a map only room, a little toggle button near the room exit button. </p>
+![Descriptive alt text](https://leona-bc.github.io/Leona-Mansion/Menu.png)
+
 Activities:
 
 - Room Clean-up: Will be available if the avatar is surrounded by 4 interior tiles.
