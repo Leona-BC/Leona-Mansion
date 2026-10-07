@@ -33,6 +33,7 @@ style.textContent = `
     position: absolute;
     top: 0px;
     left: 0px;
+    transform: translateX(-50%);
     font-family: sans-serif;
   }
 
@@ -49,20 +50,24 @@ style.textContent = `
   }
 
   #menuPanel {
+    position: absolute;
+    top: 35px;   
+    right: 0;    
+  
     overflow: hidden;
     background: Canvas;
     color: CanvasText;
     padding: 5px;
     border-radius: 6px;
     border: 1px solid ButtonBorder;
-
+  
     width: 0;
     height: 0;
-
+  
     transition:
       width 0.5s ease,
       height 0.5s ease;
-
+  
     white-space: nowrap;
     opacity: 0;
   }
@@ -217,7 +222,7 @@ function AddButton(name, callback) {
     callback();
   };
 
-  panel.appendChild(btn);
+  panel.prepend(btn);
   buttonRegistry[name] = btn;
 
   updateEmptyMessage();
