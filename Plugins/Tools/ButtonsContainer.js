@@ -220,6 +220,9 @@ function AddButton(name, callback) {
   btn.onclick = () => {
     if (menuLocked) return;
     callback();
+
+    isOpen = false;
+    animateClose();
   };
 
   panel.prepend(btn);
