@@ -245,11 +245,12 @@ function RemoveButton(name) {
   if (isOpen) animateResize();
 }
 
-function UpdateManagerVisibility() {
+function UpdateManagerVisibility(mansionOnly = true) {
   const insideMansion =
     ChatRoomData != null &&
     ChatRoomData.MapData?.Type === "Always" &&
-    (ChatRoomData.Name === "Leona's Mansion" ||
+    (mansionOnly === false || 
+     ChatRoomData.Name === "Leona's Mansion" ||
      ChatRoomData.Name === "Leona's  Mansion");
 
   if (insideMansion) {
