@@ -57,11 +57,9 @@
             UpdateManagerVisibility();
             
             if (ChatRoomData != null &&
-                ChatRoomData.MapData.Type == "Always" /*&& 
-                (ChatRoomData.Name == "Leona's Mansion" || ChatRoomData.Name == "Leona's  Mansion")*/) {
+                ChatRoomData.MapData.Type == "Always") {
     
-                if ((Player.Position.X >= 30 && Player.Position.X <= 36) &&
-                    (Player.Position.Y >= 30 && Player.Position.Y <= 34)) {
+                if (canFishHere()) {
     
                     if (!buttonRegistry["Start Fishing"]) {
                         AddButton("Start Fishing", () => startFishingGame());
@@ -73,8 +71,7 @@
                     }
                 }
 
-                if ((Player.Position.X >= 23 && Player.Position.X <= 29) &&
-                    (Player.Position.Y >= 24 && Player.Position.Y <= 29)) {
+                if (checkMaidCleanUp()) {
     
                     if (!buttonRegistry["Start Cleaning"]) {
                         AddButton("Start Cleaning", () => startMaidCleanUpGame("https://leona-bc.github.io/Leona-Mansion/Assets/Mansion-BG.png", Math.ceil(CharacterGetClumsiness(Player)), 100, 3));
@@ -86,8 +83,7 @@
                     }
                 }
 
-                if ((Player.Position.X >= 32 && Player.Position.X <= 35) &&
-                    (Player.Position.Y >= 30 && Player.Position.Y <= 31)) {
+                if (hasSinkNearby()) {
     
                     if (!buttonRegistry["Clean Dishes"]) {
                         AddButton("Clean Dishes", () => startDishesCleaningMiniGame(Player.ArousalSettings.Progress));
@@ -223,6 +219,125 @@
             };
             check();
         });
+    }
+
+    function checkMaidCleanUp() {
+        const px = Player.Position.X;
+        const py = Player.Position.Y;
+    
+        let floorCount = 0;
+    
+        for (let dy = -1; dy <= 1; dy++) {
+            for (let dx = -1; dx <= 1; dx++) {
+    
+                const x = px + dx;
+                const y = py + dy;
+    
+                // Out-of-bounds protection
+                if (x < 0 || x >= 40 || y < 0 || y >= 40) continue;
+    
+                const tile = ChatRoomMapViewGetTileAtPos(x, y);
+                if (tile && tile.Type === "Floor") {
+                    floorCount++;
+    
+                    // Early exit: no need to continue
+                    if (floorCount >= 4) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    function checkFishing() {
+        const px = Player.Position.X;
+        const py = Player.Position.Y;
+    
+        let floorCount = 0;
+    
+        for (let dy = -1; dy <= 1; dy++) {
+            for (let dx = -1; dx <= 1; dx++) {
+    
+                const x = px + dx;
+                const y = py + dy;
+    
+                // Out-of-bounds protection
+                if (x < 0 || x >= 40 || y < 0 || y >= 40) continue;
+    
+                const tile = ChatRoomMapViewGetTileAtPos(x, y);
+                if (tile && tile.Type === "Floor") {
+                    floorCount++;
+    
+                    // Early exit: no need to continue
+                    if (floorCount >= 4) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    
+    function canFishHere() {
+        const px = Player.Position.X;
+        const py = Player.Position.Y;
+    
+        let waterCount = 0;
+    
+        for (let dy = -1; dy <= 1; dy++) {
+            for (let dx = -1; dx <= 1; dx++) {
+    
+                const x = px + dx;
+                const y = py + dy;
+    
+                // Out-of-bounds protection
+                if (x < 0 || x >= 40 || y < 0 || y >= 40) continue;
+    
+                const tile = ChatRoomMapViewGetTileAtPos(x, y);
+                if (!tile) continue;
+    
+                // Must be water
+                if (tile.Type !== "Water") continue;
+    
+                // Excluded pool and lava
+                if (tile.ID === 2000 || tile.ID === 2090) continue;
+    
+                waterCount++;
+    
+                // Early exit: fishing is available
+                if (waterCount >= 2) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    function hasSinkNearby() {
+        const px = Player.Position.X;
+        const py = Player.Position.Y;
+    
+        for (let dy = -1; dy <= 1; dy++) {
+            for (let dx = -1; dx <= 1; dx++) {
+    
+                const x = px + dx;
+                const y = py + dy;
+    
+                // Out-of-bounds protection
+                if (x < 0 || x >= 40 || y < 0 || y >= 40) continue;
+    
+                const obj = ChatRoomMapViewGetObjectAtPos(x, y);
+                if (!obj) continue;
+    
+                // Sink ID
+                if (obj.ID === 3024) {
+                    return true; // Early exit: sink found
+                }
+            }
+        }
+    
+        return false; // No sink in the 3×3 area
     }
 
     async function initialize() {
