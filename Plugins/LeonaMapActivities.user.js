@@ -38,7 +38,7 @@
                 return;
             }
             ChatRoomMessage({
-                Content: `<font color="#00FF00">[Leona's Mansion] ${message}</font>`,
+                Content: `<font color="#00FF00">[Leona's Map Activities] ${message}</font>`,
                 Type: "LocalMessage",
                 Sender: Player.MemberNumber
             });
@@ -221,9 +221,15 @@
         });
     }
 
+    function isStandingOnWall(px, py) {    
+        const tile = ChatRoomMapViewGetTileAtPos(px, py);
+        return tile && tile.Type === "Wall";
+    }
+
     function checkMaidCleanUp() {
         const px = Player.Position.X;
         const py = Player.Position.Y;
+        if (isStandingOnWall(px, py)) return false;
     
         let floorCount = 0;
     
@@ -253,6 +259,7 @@
     function checkFishing() {
         const px = Player.Position.X;
         const py = Player.Position.Y;
+        if (isStandingOnWall(px, py)) return false;
     
         let floorCount = 0;
     
@@ -282,6 +289,7 @@
     function canFishHere() {
         const px = Player.Position.X;
         const py = Player.Position.Y;
+        if (isStandingOnWall(px, py)) return false;
     
         let waterCount = 0;
     
