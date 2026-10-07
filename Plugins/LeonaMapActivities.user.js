@@ -174,22 +174,6 @@
                 document.head.appendChild(dishesCleanupMiniGamescript);
             });
     
-            await new Promise((resolve, reject) => {
-                const dishesCleanupMiniGamescript = document.createElement("script");
-                dishesCleanupMiniGamescript.src = "https://leona-bc.github.io/Leona-Mansion/Plugins/MiniGames/Fetch.js";
-                dishesCleanupMiniGamescript.onload = resolve;
-                dishesCleanupMiniGamescript.onerror = reject;
-                document.head.appendChild(dishesCleanupMiniGamescript);
-            });
-    
-            await new Promise((resolve, reject) => {
-                const dishesCleanupMiniGamescript = document.createElement("script");
-                dishesCleanupMiniGamescript.src = "https://leona-bc.github.io/Leona-Mansion/Plugins/MiniGames/Fetch2.js";
-                dishesCleanupMiniGamescript.onload = resolve;
-                dishesCleanupMiniGamescript.onerror = reject;
-                document.head.appendChild(dishesCleanupMiniGamescript);
-            });
-    
             DebugMsg("loadModules Load successful.");
         } catch (error) {
             DebugMsg("loadModules Load failed.");
@@ -252,8 +236,6 @@
                 DebugMsg("waitForGame failed.");
                 return;
             }
-
-            //setupHooks();
 
             if (modApi && typeof modApi.onUnload === 'function') {
                 modApi.onUnload(() => {
