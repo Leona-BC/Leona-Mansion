@@ -54,7 +54,7 @@
     async function mainThread() {
         while(true) {
 
-            UpdateManagerVisibility();
+            UpdateManagerVisibility(false);
             
             if (ChatRoomData != null &&
                 ChatRoomData.MapData.Type == "Always") {
