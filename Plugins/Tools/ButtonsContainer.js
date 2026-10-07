@@ -31,9 +31,9 @@ const style = document.createElement("style");
 style.textContent = `
   #menuWrapper {
     position: fixed;
-    top: -20px;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 00px;
+    left: 46%;
+    transform: translateX(-46%);
     font-family: sans-serif;
   }
 
