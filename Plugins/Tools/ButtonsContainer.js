@@ -30,9 +30,9 @@ panel.appendChild(emptyMessage);
 const style = document.createElement("style");
 style.textContent = `
   #menuWrapper {
-    position: absolute;
+    position: fixed;
     top: 0px;
-    left: 0px;
+    left: 50%;
     transform: translateX(-50%);
     font-family: sans-serif;
   }
