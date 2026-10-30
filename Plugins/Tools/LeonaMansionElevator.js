@@ -20,7 +20,7 @@ async function joinBdsmStudio() {
   if (room) {
     ChatRoomLeave();
     CommonSetScreen("Online", "ChatSearch");
-    await sleep(500);
+    await sleep(2000);
     ServerSend("ChatRoomJoin", { Name: room.Name });
   } else {
     createPreDefinedRoom(Leona_bdsm_studio);
@@ -48,7 +48,7 @@ async function joinMansion() {
   if (room) {
     ChatRoomLeave();
     CommonSetScreen("Online", "ChatSearch");
-    await sleep(500);
+    await sleep(2000);
     ServerSend("ChatRoomJoin", { Name: room.Name });
   } else {
     createPreDefinedRoom(Leona_Mansion);
