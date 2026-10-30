@@ -17,7 +17,7 @@ async function joinBdsmStudio() {
 
 // Move toward the Leona's mansion.
 async function joinMansion() {
-  const SearchData = {Language: "", Space: space, Game: "", FullRooms: true};
+  const SearchData = {Language: "", Space: "Leona", Game: "", FullRooms: true};
   const roomList = await ServerRoomSearch("", SearchData);
 
   if (!Array.isArray(roomList)) return;
