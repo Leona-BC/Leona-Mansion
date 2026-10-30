@@ -3,9 +3,14 @@ const Leona_bdsm_studio = "N4IgcghgtgpiBcIAyMD2A7CByAzgAgCEARAZQFk8SAXAVwBMBLVEA
 // Move toward the bdsmStudio.
 function joinBdsmStudio() {
   const room = JSON.parse(LZString.decompressFromBase64(Leona_bdsm_studio));
-
+  
+  ChatRoomLeave();
+  await sleep(500);
+  
+  ServerSend("ChatRoomCreate", room);
+  await sleep(500);
+  
   ServerSend("ChatRoomAdmin", { MemberNumber: Player.ID, Room: room, Action: "Update" });
-  ServerSend("ChatRoomJoin", { Name: room.Name });
 }
 
 // Move toward the Leona's mansion.
