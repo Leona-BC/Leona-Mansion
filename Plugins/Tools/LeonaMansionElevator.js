@@ -27,9 +27,10 @@ async function joinMansion() {
     );
 
     if (room) {
-        ServerSend("ChatRoomJoin", {
-            Name: room.Name
-        });
+      ChatRoomLeave();
+      CommonSetScreen("Online", "ChatSearch");
+      await sleep(500);
+      ServerSend("ChatRoomJoin", { Name: room.Name });
     }
 }
 
