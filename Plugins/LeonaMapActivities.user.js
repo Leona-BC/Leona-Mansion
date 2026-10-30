@@ -95,7 +95,7 @@
                     }
                 }
 
-                let elevatorNumber = getElevatorNumber();
+                /*let elevatorNumber = getElevatorNumber();
                 if ( elevatorNumber != 0 ) {
                     if (elevatorNumber == 1 && !buttonRegistry["Press Studio"]) {
                         AddButton("Press Studio", () => joinBdsmStudio());
@@ -110,7 +110,7 @@
                     if (buttonRegistry["Press Main Floor"]) {
                         RemoveButton("Press Main Floor");
                     }
-                }
+                }*/
             }
 
             await sleep(500);
