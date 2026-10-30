@@ -10,14 +10,19 @@ function joinBdsmStudio() {
 
 // Move toward the Leona's mansion.
 async function joinMansion() {
-  let query = "";
-  const roomList = await ServerRoomSearch(query, SearchData);
-  if (Array.isArray(roomList)) {
-      roomList.forEach(room => {
-          if (room && (room.Name == "Leona's Mansion" || room.Name == "Leona's  Mansion") {
-              ServerSend("ChatRoomJoin", { Name: room.Name });
-              return;
-          }
-      });
-  }
+    const roomList = await ServerRoomSearch("", SearchData);
+
+    if (!Array.isArray(roomList)) return;
+
+    const room = roomList.find(r =>
+        r &&
+        (r.Name === "Leona's Mansion" ||
+         r.Name === "Leona's  Mansion")
+    );
+
+    if (room) {
+        ServerSend("ChatRoomJoin", {
+            Name: room.Name
+        });
+    }
 }
