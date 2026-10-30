@@ -11,13 +11,16 @@ async function joinBdsmStudio() {
     createPreDefinedRoom(Leona_bdsm_studio);
     return;
   };
+  
+  let room2 = null;
+  for (const room of roomList.value) {
+    if (room.Name === "Leona's Mansion") {
+        room2 = room;
+        break;
+    }
+  }
 
-  const room = roomList.find(r =>
-      r &&
-      (r.Name === "Leona's BDSM Studio")
-  );
-
-  if (room) {
+  if (room2) {
     ChatRoomLeave();
     CommonSetScreen("Online", "ChatSearch");
     await sleep(2000);
@@ -38,14 +41,15 @@ async function joinMansion() {
     return;
   };
 
-  const room = roomList.find(r =>
-      r &&
-      (r.Name === "Leona's Mansion" ||
-       r.Name === "Leona's  Mansion")
-  );
+  let room2 = null;
+  for (const room of roomList.value) {
+    if (room.Name === "Leona's Mansion") {
+        room2 = room;
+        break;
+    }
+  }
 
-  // Room exist.
-  if (room) {
+  if (room2) {
     ChatRoomLeave();
     CommonSetScreen("Online", "ChatSearch");
     await sleep(2000);
