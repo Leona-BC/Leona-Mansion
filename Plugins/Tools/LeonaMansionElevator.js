@@ -9,7 +9,7 @@ function joinBdsmStudio() {
 }
 
 // Move toward the Leona's mansion.
-function joinBdsmStudio() {
+function joinMansion() {
   let query = "";
   const roomList = await ServerRoomSearch(query, SearchData);
   if (Array.isArray(roomList)) {
