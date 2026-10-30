@@ -94,6 +94,23 @@
                         RemoveButton("Clean Dishes");
                     }
                 }
+
+                let elevatorNumber = getElevatorNumber();
+                if ( elevatorNumber != 0 ) {
+                    if (elevatorNumber == 1 && !buttonRegistry["Press Studio"]) {
+                        AddButton("Press Studio", () => joinBdsmStudio());
+                    }
+                    if (elevatorNumber == 2 && !buttonRegistry["Press Main Floor"]) {
+                        AddButton("Press Main Floor", () => joinMansion());
+                    }
+                } else {
+                    if (buttonRegistry["Press Studio"]) {
+                        RemoveButton("Press Studio");
+                    }
+                    if (buttonRegistry["Press Main Floor"]) {
+                        RemoveButton("Press Main Floor");
+                    }
+                }
             }
 
             await sleep(500);
@@ -325,6 +342,18 @@
         }
     
         return false; // No sink in the 3×3 area
+    }
+
+    function elevatorNumber() {
+        if ( (ChatRoomData.Name == "Leona's Mansion" || ChatRoomData.Name == "Leona's  Mansion") &&
+            (Player.Position.X >= 23 && Player.Position.X <= 25 && Player.Position.Y == 16)) {
+            return 1;
+        }
+        if ( (ChatRoomData.Name == "Leona's BDSM Studio") &&
+            (Player.Position.X >= 19 && Player.Position.X <= 21 && Player.Position.Y == 7)) {
+            return 2;
+        }
+        return 0;
     }
 
     async function initialize() {
