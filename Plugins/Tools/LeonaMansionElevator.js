@@ -3,8 +3,8 @@ const Leona_Mansion = "N4IgcghgtgpiBcIAyMD2A7CByAzgAgFkJ0cBLDEAGhABEYcBjAJ1IAcAX
 
 // Move toward the bdsmStudio.
 async function joinBdsmStudio() {
-  let SearchData = { Query: "Leona".toUpperCase().trim(), Language: ChatSearchLanguage,   Space: ChatSearchGetSpace() ?? "", Game: ChatSearchGame,    FullRooms: Player.ChatSearchSettings.FullRooms, ShowLocked: Player.ChatSearchSettings.ShowLocked,   MapTypes: Player.ChatSearchSettings.MapTypes ? [Player.ChatSearchSettings.MapTypes] : [], SearchDescs: Player.ChatSearchSettings.SearchDescriptions,    };
-  await ServerRoomSearch("Leona".toUpperCase().trim(), SearchData);
+  const SearchData = { Query: "Leona".toUpperCase().trim(), Language: ChatSearchLanguage,   Space: ChatSearchGetSpace() ?? "", Game: ChatSearchGame,    FullRooms: Player.ChatSearchSettings.FullRooms, ShowLocked: Player.ChatSearchSettings.ShowLocked,   MapTypes: Player.ChatSearchSettings.MapTypes ? [Player.ChatSearchSettings.MapTypes] : [], SearchDescs: Player.ChatSearchSettings.SearchDescriptions,    };
+  const roomList = await ServerRoomSearch("Leona".toUpperCase().trim(), SearchData);
 
   if (!Array.isArray(roomList)) return;
 
@@ -34,8 +34,8 @@ async function joinBdsmStudio() {
 
 // Move toward the Leona's mansion.
 async function joinMansion() {
-  let SearchData = { Query: "Leona".toUpperCase().trim(), Language: ChatSearchLanguage,   Space: ChatSearchGetSpace() ?? "", Game: ChatSearchGame,    FullRooms: Player.ChatSearchSettings.FullRooms, ShowLocked: Player.ChatSearchSettings.ShowLocked,   MapTypes: Player.ChatSearchSettings.MapTypes ? [Player.ChatSearchSettings.MapTypes] : [], SearchDescs: Player.ChatSearchSettings.SearchDescriptions,    };
-  await ServerRoomSearch("Leona".toUpperCase().trim(), SearchData);
+  const SearchData = { Query: "Leona".toUpperCase().trim(), Language: ChatSearchLanguage,   Space: ChatSearchGetSpace() ?? "", Game: ChatSearchGame,    FullRooms: Player.ChatSearchSettings.FullRooms, ShowLocked: Player.ChatSearchSettings.ShowLocked,   MapTypes: Player.ChatSearchSettings.MapTypes ? [Player.ChatSearchSettings.MapTypes] : [], SearchDescs: Player.ChatSearchSettings.SearchDescriptions,    };
+  const roomList = await ServerRoomSearch("Leona".toUpperCase().trim(), SearchData);
 
   if (!Array.isArray(roomList)) return;
 
