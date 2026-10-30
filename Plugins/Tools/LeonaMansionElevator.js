@@ -7,3 +7,17 @@ function joinBdsmStudio() {
   ServerSend("ChatRoomAdmin", { MemberNumber: Player.ID, Room: room, Action: "Update" });
   ServerSend("ChatRoomJoin", { Name: room.Name });
 }
+
+// Move toward the Leona's mansion.
+function joinBdsmStudio() {
+  let query = "";
+  const roomList = await ServerRoomSearch(query, SearchData);
+  if (Array.isArray(roomList)) {
+      roomList.forEach(room => {
+          if (room && (room.Name == "Leona's Mansion" || room.Name == "Leona's  Mansion") {
+              ServerSend("ChatRoomJoin", { Name: room.Name });
+              return;
+          }
+      });
+  }
+}
