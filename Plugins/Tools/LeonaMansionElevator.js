@@ -5,6 +5,7 @@ async function joinBdsmStudio() {
   const room = JSON.parse(LZString.decompressFromBase64(Leona_bdsm_studio));
   
   ChatRoomLeave();
+  CommonSetScreen("Online", "ChatSearch");
   await sleep(500);
   
   ServerSend("ChatRoomCreate", room);
