@@ -3,22 +3,39 @@ const Leona_Mansion = "N4IgcghgtgpiBcIAyMD2A7CByAzgAgFkJ0cBLDEAGhABEYcBjAJ1IAcAX
 
 // Move toward the bdsmStudio.
 async function joinBdsmStudio() {
-  const room = JSON.parse(LZString.decompressFromBase64(Leona_bdsm_studio));
+  let SearchData = { Query: "Leona".toUpperCase().trim(), Language: ChatSearchLanguage,   Space: ChatSearchGetSpace() ?? "", Game: ChatSearchGame,    FullRooms: Player.ChatSearchSettings.FullRooms, ShowLocked: Player.ChatSearchSettings.ShowLocked,   MapTypes: Player.ChatSearchSettings.MapTypes ? [Player.ChatSearchSettings.MapTypes] : [], SearchDescs: Player.ChatSearchSettings.SearchDescriptions,    };
+  await ServerRoomSearch("Leona".toUpperCase().trim(), SearchData);
+
+  if (!Array.isArray(roomList)) return;
+
+  const room = roomList.find(r =>
+      r &&
+      (r.Name === "Leona's BDSM Studio")
+  );
+
+  if (room) {
+    ChatRoomLeave();
+    CommonSetScreen("Online", "ChatSearch");
+    await sleep(500);
+    ServerSend("ChatRoomJoin", { Name: room.Name });
+  } else {
+    const room = JSON.parse(LZString.decompressFromBase64(Leona_bdsm_studio));
   
-  ChatRoomLeave();
-  CommonSetScreen("Online", "ChatSearch");
-  await sleep(500);
-  
-  ServerSend("ChatRoomCreate", room);
-  await sleep(500);
-  
-  ServerSend("ChatRoomAdmin", { MemberNumber: Player.ID, Room: room, Action: "Update" });
+    ChatRoomLeave();
+    CommonSetScreen("Online", "ChatSearch");
+    await sleep(500);
+    
+    ServerSend("ChatRoomCreate", room);
+    await sleep(500);
+    
+    ServerSend("ChatRoomAdmin", { MemberNumber: Player.ID, Room: room, Action: "Update" });
+  }
 }
 
 // Move toward the Leona's mansion.
 async function joinMansion() {
-  const SearchData = {Language: "", Space: "", Game: "", FullRooms: true};
-  const roomList = await ServerRoomSearch("", SearchData);
+  let SearchData = { Query: "Leona".toUpperCase().trim(), Language: ChatSearchLanguage,   Space: ChatSearchGetSpace() ?? "", Game: ChatSearchGame,    FullRooms: Player.ChatSearchSettings.FullRooms, ShowLocked: Player.ChatSearchSettings.ShowLocked,   MapTypes: Player.ChatSearchSettings.MapTypes ? [Player.ChatSearchSettings.MapTypes] : [], SearchDescs: Player.ChatSearchSettings.SearchDescriptions,    };
+  await ServerRoomSearch("Leona".toUpperCase().trim(), SearchData);
 
   if (!Array.isArray(roomList)) return;
 
@@ -33,8 +50,7 @@ async function joinMansion() {
     CommonSetScreen("Online", "ChatSearch");
     await sleep(500);
     ServerSend("ChatRoomJoin", { Name: room.Name });
-  }
-  else {
+  } else {
     const room = JSON.parse(LZString.decompressFromBase64(Leona_Mansion));
   
     ChatRoomLeave();
