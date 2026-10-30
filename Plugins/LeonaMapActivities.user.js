@@ -344,7 +344,7 @@
         return false; // No sink in the 3×3 area
     }
 
-    function elevatorNumber() {
+    function getElevatorNumber() {
         if ( (ChatRoomData.Name == "Leona's Mansion" || ChatRoomData.Name == "Leona's  Mansion") &&
             (Player.Position.X >= 23 && Player.Position.X <= 25 && Player.Position.Y == 16)) {
             return 1;
