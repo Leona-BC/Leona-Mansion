@@ -145,6 +145,14 @@
                 MGMngrContainerScript.onerror = reject;
                 document.head.appendChild(MGMngrContainerScript);
             });
+
+            /*await new Promise((resolve, reject) => {
+                const LeonaMansionElevatorScript = document.createElement("script");
+                LeonaMansionElevatorScript.src = "https://leona-bc.github.io/Leona-Mansion/Plugins/Tools/LeonaMansionElevator.js";
+                LeonaMansionElevatorScript.onload = resolve;
+                LeonaMansionElevatorScript.onerror = reject;
+                document.head.appendChild(LeonaMansionElevatorScript);
+            });*/
     
             await new Promise((resolve, reject) => {
                 const fishingMiniGamescript = document.createElement("script");
