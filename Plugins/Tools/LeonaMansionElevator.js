@@ -6,7 +6,11 @@ async function joinBdsmStudio() {
   const SearchData = { Query: "Leona".toUpperCase().trim(), Language: ChatSearchLanguage,   Space: ChatSearchGetSpace() ?? "", Game: ChatSearchGame,    FullRooms: Player.ChatSearchSettings.FullRooms, ShowLocked: Player.ChatSearchSettings.ShowLocked,   MapTypes: Player.ChatSearchSettings.MapTypes ? [Player.ChatSearchSettings.MapTypes] : [], SearchDescs: Player.ChatSearchSettings.SearchDescriptions,    };
   const roomList = await ServerRoomSearch("Leona".toUpperCase().trim(), SearchData);
 
-  if (!Array.isArray(roomList)) return;
+  // Room clearly doesn't exist.
+  if (!Array.isArray(roomList)) {
+    createPreDefinedRoom(Leona_bdsm_studio);
+    return;
+  };
 
   const room = roomList.find(r =>
       r &&
@@ -19,16 +23,7 @@ async function joinBdsmStudio() {
     await sleep(500);
     ServerSend("ChatRoomJoin", { Name: room.Name });
   } else {
-    const room = JSON.parse(LZString.decompressFromBase64(Leona_bdsm_studio));
-  
-    ChatRoomLeave();
-    CommonSetScreen("Online", "ChatSearch");
-    await sleep(500);
-    
-    ServerSend("ChatRoomCreate", room);
-    await sleep(500);
-    
-    ServerSend("ChatRoomAdmin", { MemberNumber: Player.ID, Room: room, Action: "Update" });
+    createPreDefinedRoom(Leona_bdsm_studio);
   }
 }
 
@@ -37,7 +32,11 @@ async function joinMansion() {
   const SearchData = { Query: "Leona".toUpperCase().trim(), Language: ChatSearchLanguage,   Space: ChatSearchGetSpace() ?? "", Game: ChatSearchGame,    FullRooms: Player.ChatSearchSettings.FullRooms, ShowLocked: Player.ChatSearchSettings.ShowLocked,   MapTypes: Player.ChatSearchSettings.MapTypes ? [Player.ChatSearchSettings.MapTypes] : [], SearchDescs: Player.ChatSearchSettings.SearchDescriptions,    };
   const roomList = await ServerRoomSearch("Leona".toUpperCase().trim(), SearchData);
 
-  if (!Array.isArray(roomList)) return;
+  // Room clearly doesn't exist.
+  if (!Array.isArray(roomList)) {
+    createPreDefinedRoom(Leona_Mansion);
+    return;
+  };
 
   const room = roomList.find(r =>
       r &&
@@ -45,13 +44,19 @@ async function joinMansion() {
        r.Name === "Leona's  Mansion")
   );
 
+  // Room exist.
   if (room) {
     ChatRoomLeave();
     CommonSetScreen("Online", "ChatSearch");
     await sleep(500);
     ServerSend("ChatRoomJoin", { Name: room.Name });
   } else {
-    const room = JSON.parse(LZString.decompressFromBase64(Leona_Mansion));
+    createPreDefinedRoom(Leona_Mansion);
+  }
+}
+
+async function createPreDefinedRoom(value) {
+  const room = JSON.parse(LZString.decompressFromBase64(value));
   
     ChatRoomLeave();
     CommonSetScreen("Online", "ChatSearch");
@@ -61,7 +66,6 @@ async function joinMansion() {
     await sleep(500);
     
     ServerSend("ChatRoomAdmin", { MemberNumber: Player.ID, Room: room, Action: "Update" });
-  }
 }
 
 function sleep(ms) {
