@@ -3,8 +3,8 @@ const Leona_Mansion = "N4IgcghgtgpiBcIAyMD2A7CByAzgAgFkJ0cBLDEAGhABEYcBjAJ1IAcAX
 
 // Move toward the bdsmStudio.
 async function joinBdsmStudio() {
-  const SearchData = { Query: "Leona".toUpperCase().trim(), Language: ChatSearchLanguage,   Space: ChatSearchGetSpace() ?? "", Game: ChatSearchGame,    FullRooms: Player.ChatSearchSettings.FullRooms, ShowLocked: Player.ChatSearchSettings.ShowLocked,   MapTypes: Player.ChatSearchSettings.MapTypes ? [Player.ChatSearchSettings.MapTypes] : [], SearchDescs: Player.ChatSearchSettings.SearchDescriptions,    };
-  const roomList = await ServerRoomSearch("Leona".toUpperCase().trim(), SearchData);
+  const SearchData = { Query: "Leona's BDSM Studio".toUpperCase().trim(), Language: ChatSearchLanguage,   Space: ChatSearchGetSpace() ?? "", Game: ChatSearchGame,    FullRooms: Player.ChatSearchSettings.FullRooms, ShowLocked: Player.ChatSearchSettings.ShowLocked,   MapTypes: Player.ChatSearchSettings.MapTypes ? [Player.ChatSearchSettings.MapTypes] : [], SearchDescs: Player.ChatSearchSettings.SearchDescriptions,    };
+  const roomList = await ServerRoomSearch("Leona's BDSM Studio".toUpperCase(), SearchData);
 
   // Room clearly doesn't exist.
   if (!Array.isArray(roomList)) {
@@ -14,7 +14,7 @@ async function joinBdsmStudio() {
   
   let room2 = null;
   for (const room of roomList.value) {
-    if (room.Name === "Leona's Mansion") {
+    if (room.Name === "Leona's BDSM Studio") {
         room2 = room;
         break;
     }
@@ -43,7 +43,8 @@ async function joinMansion() {
 
   let room2 = null;
   for (const room of roomList.value) {
-    if (room.Name === "Leona's Mansion") {
+    if (room.Name === "Leona's Mansion" ||
+        room.Name === "Leona's Mansion" ) {
         room2 = room;
         break;
     }
