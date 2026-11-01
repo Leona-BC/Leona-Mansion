@@ -45,6 +45,7 @@ async function joinMansion() {
 
   let room2 = null;
   for (const room of roomList.value) {
+    console.error(room.Name);
     if (room.Name === "Leona's Mansion" ||
         room.Name === "Leona's Mansion" ) {
         console.error("room 2 is set");
