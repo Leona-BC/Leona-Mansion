@@ -7,7 +7,7 @@ async function joinBdsmStudio() {
   const roomList = await ServerRoomSearch("Leona's BDSM Studio".toUpperCase(), SearchData);
 
   // Room clearly doesn't exist.
-  if (!Array.isArray(roomList)) {
+  if (!Array.isArray(roomList.value)) {
     createPreDefinedRoom(Leona_bdsm_studio);
     return;
   };
@@ -38,7 +38,7 @@ async function joinMansion() {
   const roomList = await ServerRoomSearch("Leona".toUpperCase().trim(), SearchData);
 
   // Room clearly doesn't exist.
-  if (!Array.isArray(roomList)) {
+  if (!Array.isArray(roomList.value)) {
     createPreDefinedRoom(Leona_Mansion);
     return;
   };
