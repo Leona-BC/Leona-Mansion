@@ -15,7 +15,7 @@ async function joinBdsmStudio() {
   let room2 = null;
   for (const room of roomList.value) {
     if (room.Name === "Leona's BDSM Studio") {
-        console.log("room 2 is set");
+        console.error("room 2 is set");
         room2 = room;
         break;
     }
@@ -25,7 +25,7 @@ async function joinBdsmStudio() {
     ChatRoomLeave();
     CommonSetScreen("Online", "ChatSearch");
     await sleep(2000);
-    console.log(room2.Name);
+    console.error(room2.Name);
     ServerSend("ChatRoomJoin", { Name: room2.Name });
   } else {
     createPreDefinedRoom(Leona_bdsm_studio);
@@ -47,7 +47,7 @@ async function joinMansion() {
   for (const room of roomList.value) {
     if (room.Name === "Leona's Mansion" ||
         room.Name === "Leona's Mansion" ) {
-        console.log("room 2 is set");
+        console.error("room 2 is set");
         room2 = room;
         break;
     }
@@ -58,7 +58,7 @@ async function joinMansion() {
     CommonSetScreen("Online", "ChatSearch");
     await sleep(2000);
     
-    console.log(room2.Name);
+    console.error(room2.Name);
     ServerSend("ChatRoomJoin", { Name: room2.Name });
   } else {
     createPreDefinedRoom(Leona_Mansion);
