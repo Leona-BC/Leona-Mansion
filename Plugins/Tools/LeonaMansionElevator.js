@@ -24,7 +24,7 @@ async function joinBdsmStudio() {
   if (room2) {
     ChatRoomLeave();
     CommonSetScreen("Online", "ChatSearch");
-    await sleep(2000);
+    await sleep(500);
     console.error(room2.Name);
     ServerSend("ChatRoomJoin", { Name: room2.Name });
   } else {
@@ -57,7 +57,7 @@ async function joinMansion() {
   if (room2) {
     ChatRoomLeave();
     CommonSetScreen("Online", "ChatSearch");
-    await sleep(2000);
+    await sleep(500);
     
     console.error(room2.Name);
     ServerSend("ChatRoomJoin", { Name: room2.Name });
