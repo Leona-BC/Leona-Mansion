@@ -44,7 +44,7 @@ async function joinMansion() {
   };
 
   let room2 = null;
-  if (!Array.isArray(roomList.value) {
+  if (!Array.isArray(roomList.value)) {
     for (const room of roomList2.value) {
       console.error(room.Name);
       if (room.Name === "Leona's Mansion") {
