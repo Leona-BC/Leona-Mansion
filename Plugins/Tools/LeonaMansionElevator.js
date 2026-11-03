@@ -32,22 +32,33 @@ async function joinBdsmStudio() {
 
 // Move toward the Leona's mansion.
 async function joinMansion() {
-  const SearchData = { Query: "Leona".toUpperCase().trim(), Language: ChatSearchLanguage,   Space: ChatSearchGetSpace() ?? "", Game: ChatSearchGame,    FullRooms: Player.ChatSearchSettings.FullRooms, ShowLocked: Player.ChatSearchSettings.ShowLocked,   MapTypes: Player.ChatSearchSettings.MapTypes ? [Player.ChatSearchSettings.MapTypes] : [], SearchDescs: Player.ChatSearchSettings.SearchDescriptions,    };
-  const roomList = await ServerRoomSearch("Leona".toUpperCase().trim(), SearchData);
+  const SearchData = { Query: "Leona's  Mansion".toUpperCase().trim(), Language: ChatSearchLanguage,   Space: ChatSearchGetSpace() ?? "", Game: ChatSearchGame,    FullRooms: Player.ChatSearchSettings.FullRooms, ShowLocked: Player.ChatSearchSettings.ShowLocked,   MapTypes: Player.ChatSearchSettings.MapTypes ? [Player.ChatSearchSettings.MapTypes] : [], SearchDescs: Player.ChatSearchSettings.SearchDescriptions,    };
+  const roomList = await ServerRoomSearch("Leona's  Mansion".toUpperCase(), SearchData);
+  const SearchData2 = { Query: "Leona's Mansion".toUpperCase().trim(), Language: ChatSearchLanguage,   Space: ChatSearchGetSpace() ?? "", Game: ChatSearchGame,    FullRooms: Player.ChatSearchSettings.FullRooms, ShowLocked: Player.ChatSearchSettings.ShowLocked,   MapTypes: Player.ChatSearchSettings.MapTypes ? [Player.ChatSearchSettings.MapTypes] : [], SearchDescs: Player.ChatSearchSettings.SearchDescriptions,    };
+  const roomList2 = await ServerRoomSearch("Leona's Mansion".toUpperCase(), SearchData);
 
   // Room clearly doesn't exist.
-  if (!Array.isArray(roomList.value)) {
+  if (!Array.isArray(roomList.value) && !Array.isArray(roomList2.value)) {
     createPreDefinedRoom(Leona_Mansion);
     return;
   };
 
   let room2 = null;
-  for (const room of roomList.value) {
-    console.error(room.Name);
-    if (room.Name === "Leona's Mansion" ||
-        room.Name === "Leona's Mansion" ) {
-        room2 = room;
-        break;
+  if (!Array.isArray(roomList.value) {
+    for (const room of roomList2.value) {
+      console.error(room.Name);
+      if (room.Name === "Leona's Mansion") {
+          room2 = room;
+          break;
+      }
+    }
+  } else {
+    for (const room of roomList.value) {
+      console.error(room.Name);
+      if (room.Name === "Leona's  Mansion") {
+          room2 = room;
+          break;
+      }
     }
   }
 
