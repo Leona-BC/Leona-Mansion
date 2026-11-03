@@ -34,8 +34,8 @@ async function joinBdsmStudio() {
 async function joinMansion() {
   const SearchData = { Query: "Leona's  Mansion".toUpperCase().trim(), Language: ChatSearchLanguage,   Space: ChatSearchGetSpace() ?? "", Game: ChatSearchGame,    FullRooms: Player.ChatSearchSettings.FullRooms, ShowLocked: Player.ChatSearchSettings.ShowLocked,   MapTypes: Player.ChatSearchSettings.MapTypes ? [Player.ChatSearchSettings.MapTypes] : [], SearchDescs: Player.ChatSearchSettings.SearchDescriptions,    };
   const roomList = await ServerRoomSearch("Leona's  Mansion".toUpperCase(), SearchData);
-  const SearchData2 = { Query: "Leona's Mansion".toUpperCase().trim(), Language: ChatSearchLanguage,   Space: ChatSearchGetSpace() ?? "", Game: ChatSearchGame,    FullRooms: Player.ChatSearchSettings.FullRooms, ShowLocked: Player.ChatSearchSettings.ShowLocked,   MapTypes: Player.ChatSearchSettings.MapTypes ? [Player.ChatSearchSettings.MapTypes] : [], SearchDescs: Player.ChatSearchSettings.SearchDescriptions,    };
-  const roomList2 = await ServerRoomSearch("Leona's Mansion".toUpperCase(), SearchData);
+  const SearchData2 = { Query: "Leona".toUpperCase().trim(), Language: ChatSearchLanguage,   Space: ChatSearchGetSpace() ?? "", Game: ChatSearchGame,    FullRooms: Player.ChatSearchSettings.FullRooms, ShowLocked: Player.ChatSearchSettings.ShowLocked,   MapTypes: Player.ChatSearchSettings.MapTypes ? [Player.ChatSearchSettings.MapTypes] : [], SearchDescs: Player.ChatSearchSettings.SearchDescriptions,    };
+  const roomList2 = await ServerRoomSearch("Leona".toUpperCase(), SearchData);
 
   // Room clearly doesn't exist.
   if (!Array.isArray(roomList.value) && !Array.isArray(roomList2.value)) {
